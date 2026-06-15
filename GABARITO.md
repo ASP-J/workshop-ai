@@ -98,6 +98,14 @@ Cada etapa abaixo tem:
 - **Depois confira:** como saber se funcionou.
 - **Se der erro:** o que pedir para a IA.
 
+Neste workshop, o aluno usa Claude ou Codex. Entao o padrao e:
+
+```text
+copiar prompt -> a IA cria/altera/roda -> o aluno confere a tela
+```
+
+Quando aparecer um comando, ele e uma referencia do que a IA pode executar. O aluno nao precisa decorar nem digitar comandos sozinho.
+
 Nao pule etapas.
 
 So avance quando a etapa anterior estiver funcionando.
@@ -116,7 +124,8 @@ Criar a base do sistema no computador.
 Cria um sistema local chamado workshop-ai usando React com Vite.
 Quero uma tela inicial simples chamada "Painel de capacitacao".
 Ainda nao precisa conectar em API.
-Crie os arquivos basicos e me diga quais comandos eu preciso rodar para abrir no navegador.
+Crie os arquivos basicos, instale o que for necessario e abra o projeto local.
+No final, me diga qual endereco eu devo abrir no navegador.
 Explique como se eu nunca tivesse programado.
 ```
 
@@ -131,12 +140,7 @@ src/App.jsx
 src/styles.css
 ```
 
-Ela tambem deve mandar rodar:
-
-```bash
-npm install
-npm run dev
-```
+A IA deve instalar as dependencias e ligar o projeto local.
 
 Quando abrir no navegador, precisa aparecer alguma tela com o titulo do painel.
 
@@ -145,7 +149,7 @@ Quando abrir no navegador, precisa aparecer alguma tela com o titulo do painel.
 Copie o erro e mande:
 
 ```text
-Deu esse erro ao rodar o app. Me explica o que significa e corrige o projeto:
+Deu esse erro ao abrir o app. Me explica o que significa e corrige o projeto:
 [cole o erro aqui]
 ```
 
@@ -174,11 +178,7 @@ Nao mexa ainda na API real da Twygo.
 
 ## Depois confira
 
-No terminal, rode:
-
-```bash
-npm run dev
-```
+Peca para a IA abrir o projeto local.
 
 Abra no navegador:
 
@@ -200,7 +200,7 @@ Mande para a IA:
 O backend local nao abriu ou a rota /health nao respondeu.
 Aqui esta o erro:
 [cole o erro aqui]
-Corrige e me diga exatamente qual comando rodar.
+Corrige e depois tente abrir de novo.
 ```
 
 ---
@@ -235,10 +235,12 @@ No `.gitignore`, precisa ter:
 .env
 ```
 
-Agora crie seu `.env`:
+Agora peca para a IA criar seu `.env` a partir do `.env.example`:
 
-```bash
-cp .env.example .env
+```text
+Crie meu arquivo .env a partir do .env.example.
+Depois me diga onde colar o token real.
+Nao mostre meu token na resposta.
 ```
 
 Abra o `.env` e coloque o token real:
@@ -595,18 +597,18 @@ Adiciona testes automatizados com Vitest para:
 - cruzar usuarios + CSV
 - gerar fatias dos graficos de donut
 
-Me diga qual comando roda os testes.
+Depois rode os testes e me explique o resultado em linguagem simples.
 ```
 
 ## Depois confira
 
-Rode:
+Peca para a IA rodar os testes:
 
-```bash
-npm test
+```text
+Rode os testes do projeto e me diga quantos passaram.
 ```
 
-Tem que aparecer algo como:
+A resposta precisa mostrar algo como:
 
 ```text
 Test Files passed
@@ -623,12 +625,15 @@ Se aparecer vermelho, copie o erro e peça para a IA corrigir.
 
 Conferir que a entrega esta pronta.
 
-## Comandos finais
+## Prompt final para copiar
 
-```bash
-npm test
-npx vite build
-npm run dev
+```text
+Valide a entrega final:
+1. rode os testes automatizados
+2. gere o build do projeto
+3. abra o projeto local
+4. confira se a tela carrega usuarios, aceita CSV e mostra cards, tabela e graficos
+Me explique o resultado em linguagem simples.
 ```
 
 ## Checklist final

@@ -4,6 +4,33 @@ Esta apostila existe para explicar, em linguagem simples, o que cada coisa do pr
 
 Ela nao foi escrita para formar programadores em um dia. Ela foi escrita para a pessoa conseguir acompanhar o desafio sem travar em palavras como `API`, `.env`, `frontend`, `backend`, `token`, `CSV` e `localhost`.
 
+## Como vamos usar Claude ou Codex
+
+Neste workshop, a pessoa nao precisa decorar comandos nem saber programar sozinha.
+
+A regra da aula e:
+
+```text
+voce da prompts para o Claude/Codex -> a IA altera o projeto -> voce confere o resultado
+```
+
+Quando aparecer um comando nesta apostila, ele serve para entender o que acontece por baixo. Na pratica, o aluno pode pedir para a IA executar.
+
+Exemplo:
+
+```text
+Execute as acoes necessarias para instalar as dependencias e abrir o projeto local.
+Depois me diga qual endereco eu devo abrir no navegador.
+```
+
+Outro exemplo:
+
+```text
+Rode os testes do projeto e me explique o resultado em linguagem simples.
+```
+
+O aluno nao precisa saber de memoria o que e `npm install`, `npm run dev` ou `npx vite build`. Ele precisa saber pedir, conferir e explicar o que aconteceu.
+
 ## Mapa mental do projeto
 
 O sistema do workshop faz isto:
@@ -42,13 +69,7 @@ Ou seja, nao e um site publico na internet. E uma tela rodando na maquina da pes
 
 ### Exemplo no workshop
 
-Quando voce roda:
-
-```bash
-npm run dev
-```
-
-o computador liga duas partes:
+Quando voce pede para o Claude/Codex abrir o projeto local, a IA liga duas partes no computador:
 
 - a tela do sistema
 - o servidor local
@@ -124,13 +145,7 @@ Ele faz o React abrir rapido no navegador durante o desenvolvimento.
 
 ### Exemplo no workshop
 
-Este comando liga o frontend:
-
-```bash
-npm run client
-```
-
-E o Vite abre a tela em:
+Quando a IA liga o frontend, o Vite abre a tela em:
 
 ```text
 http://localhost:5183
@@ -425,15 +440,17 @@ TWYGO_API_BASE_URL=https://api.twygo.com
 PORT=5184
 ```
 
-### Como usar
+### Como usar com Claude ou Codex
 
-O aluno copia:
+O aluno pode pedir:
 
-```bash
-cp .env.example .env
+```text
+Crie meu arquivo .env a partir do .env.example.
+Depois me diga onde eu devo colar o token real.
+Nao mostre meu token na resposta.
 ```
 
-Depois edita o `.env` e coloca o token real.
+Depois ele coloca o token real no `.env`.
 
 ## 16. O que e token
 
@@ -534,24 +551,24 @@ Por isso o backend precisa permitir essa conversa.
 
 Ele instala ferramentas e bibliotecas usadas no projeto.
 
-### Comandos importantes
+### Como pedir para a IA usar npm
 
-Instalar dependencias:
+Para instalar dependencias:
 
-```bash
-npm install
+```text
+Instale as dependencias do projeto.
 ```
 
-Rodar o projeto:
+Para abrir o projeto:
 
-```bash
-npm run dev
+```text
+Rode o projeto local e me diga o link que devo abrir no navegador.
 ```
 
-Rodar testes:
+Para rodar testes:
 
-```bash
-npm test
+```text
+Rode os testes e me explique se passou ou se falhou.
 ```
 
 ## 22. O que e package.json
@@ -590,10 +607,10 @@ Ela tambem nao deve ser enviada para o GitHub.
 
 ### Regra simples
 
-Se apagou `node_modules`, rode:
+Se a pasta `node_modules` sumiu ou o projeto reclamar de dependencia, peca para a IA:
 
-```bash
-npm install
+```text
+Reinstale as dependencias do projeto e explique o que foi feito.
 ```
 
 ## 24. O que e Git
@@ -743,10 +760,10 @@ Os testes podem conferir:
 - se os calculos de horas estao certos
 - se os dados dos graficos estao corretos
 
-### Comando
+### Como pedir
 
-```bash
-npm test
+```text
+Rode os testes automatizados do projeto e me diga quantos passaram.
 ```
 
 ## 34. O que e build
@@ -757,10 +774,10 @@ Durante a aula usamos modo de desenvolvimento.
 
 No build, o Vite prepara arquivos otimizados.
 
-### Comando
+### Como pedir
 
-```bash
-npx vite build
+```text
+Gere o build do projeto e me diga se apareceu algum erro.
 ```
 
 Se o build falha, pode existir algum erro que impediria o sistema de ir para producao.
@@ -788,7 +805,7 @@ Fluxo completo:
 
 `README.md`
 
-Explica como rodar o projeto.
+Explica como usar o projeto.
 
 `GABARITO.md`
 
@@ -804,7 +821,7 @@ Modelo das configuracoes necessarias.
 
 `package.json`
 
-Lista comandos e dependencias.
+Lista as acoes que a IA pode executar e as dependencias do projeto.
 
 `server/index.js`
 
@@ -841,8 +858,8 @@ nao funcionou
 Mande assim:
 
 ```text
-Estou rodando o projeto do workshop.
-Eu executei o comando npm run dev.
+Estou usando o projeto do workshop com Claude/Codex.
+Pedi para abrir o projeto local.
 Esperava abrir a tela em http://localhost:5183.
 Mas apareceu este erro:
 [cole o erro completo aqui]
@@ -866,10 +883,10 @@ Confira se meu .env esta no formato correto, mas nao mostre nem repita meu token
 
 Antes de chamar o instrutor, conferir:
 
-1. Rodei `npm install`?
-2. Criei o arquivo `.env`?
-3. Coloquei o token no `.env`?
-4. Rodei `npm run dev`?
+1. Pedi para a IA instalar as dependencias?
+2. Pedi para a IA criar o arquivo `.env` a partir do `.env.example`?
+3. Coloquei o token real no `.env`?
+4. Pedi para a IA abrir o projeto local?
 5. Abri `http://localhost:5183`?
 6. O backend abriu em `http://localhost:5184/health`?
 7. O CSV tem a coluna `email`?
