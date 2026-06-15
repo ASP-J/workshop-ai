@@ -1,111 +1,437 @@
-# Gabarito - Workshop AI + API Twygo + CSV
+# Gabarito super guiado - Workshop AI + API Twygo + CSV
 
-## Objetivo do desafio
+Este gabarito foi escrito para pessoas que **nunca leram codigo**.
 
-Criar um sistema local que:
+A ideia nao e a pessoa entender cada linha. A ideia e ela aprender o fluxo:
 
-1. Consulta usuarios da Twygo pela API v2.
-2. Recebe um CSV de capacitacao fornecido pelo instrutor.
-3. Cruza API + CSV pelo email.
-4. Mostra cards, tabela e graficos de capacitacao.
+```text
+Pedir para a IA criar um app -> conectar na API da Twygo -> anexar CSV -> cruzar dados -> ver graficos
+```
 
-O CSV **nao precisa ser gerado pelos alunos**. Ele sera fornecido no workshop.
+## O que cada coisa significa
 
-## Preparacao do instrutor
+**App local**
 
-Entregue aos alunos:
+Um sisteminha que roda no computador da pessoa, abrindo no navegador.
 
-- Repositorio do projeto.
-- Bearer token da API ou instrucao de onde copiar.
-- CSV de capacitacao.
+**API**
 
-CSV esperado:
+Um endereco que entrega dados. Neste workshop, a API entrega usuarios da Twygo.
+
+**Token**
+
+Uma chave de acesso. Sem ela, a API nao deixa buscar os dados.
+
+**CSV**
+
+Uma planilha simples salva em formato `.csv`. Neste workshop, ela tem dados de capacitacao.
+
+**Cruzamento**
+
+Juntar duas fontes de dados usando uma informacao em comum. Aqui, a informacao em comum e o `email`.
+
+## Antes de comecar
+
+O instrutor precisa entregar para os alunos:
+
+1. Link do repositorio.
+2. Token da API.
+3. CSV de capacitacao.
+
+O CSV ja vem pronto. Os alunos **nao precisam criar o CSV**.
+
+Formato esperado do CSV:
 
 ```text
 email,area,categoria,curso,horas_capacitacao,status_capacitacao,nota,concluido_em
 ```
 
-Regra da coluna `area`:
-
-- usar a area/departamento do perfil do usuario na Twygo;
-- se `department` estiver vazio, usar outro campo de perfil que indique area, como segmento/cargo;
-- se o perfil nao tiver area preenchida, usar `Sem area no perfil`;
-- normalizar nomes para as areas do organograma, por exemplo `Sucesso do Cliente`, `Produto e Qualidade`, `Engenharia de Produto`, `Qualidade e Testes`, `Solucoes`, `Business Intelligence`.
-
-Exemplo de linha:
+Exemplo:
 
 ```text
-karin.rosario@twygo.com,Produto,Lideranca,Lideranca colaborativa,12,Concluido,9.7,2026-05-06
+karin.rosario@twygo.com,Backoffice,Processos,Gestao de processos internos,6,Concluido,8.5,2026-05-04
 ```
 
-## Roteiro prompt por prompt
+## Regra importante sobre area
 
-### Prompt 1 - Criar a base do sistema
+A coluna `area` deve vir do perfil do usuario na Twygo.
+
+Regra simples:
+
+1. Se o usuario tem area/departamento no perfil, usar essa area.
+2. Se nao tiver, tentar usar cargo ou segmento.
+3. Se nao tiver nada no perfil, usar `Sem area no perfil`.
+
+Exemplos de areas do organograma:
+
+- Diretoria Executiva
+- Backoffice
+- Financeiro
+- Recursos Humanos
+- Gestao de conteudo
+- Conteudo
+- Marketing
+- Geracao de Leads
+- Design de Marketing
+- Sucesso do Cliente
+- Atendimento
+- Engajamento
+- Produto e Qualidade
+- Engenharia de Produto
+- Qualidade e Testes
+- Sustentacao
+- Vendas
+- Qualificacao
+- Solucoes
+- Engenharia
+- Arquitetura Tecnologica
+- Desenvolvimento
+- Business Intelligence
+- Dados e Hubspot
+
+## Como usar este gabarito
+
+Cada etapa abaixo tem:
+
+- **Objetivo:** o que queremos construir.
+- **Prompt para copiar:** cole exatamente na IA.
+- **Depois confira:** como saber se funcionou.
+- **Se der erro:** o que pedir para a IA.
+
+Nao pule etapas.
+
+So avance quando a etapa anterior estiver funcionando.
+
+---
+
+# Etapa 1 - Criar o app local
+
+## Objetivo
+
+Criar a base do sistema no computador.
+
+## Prompt para copiar
 
 ```text
-Cria um sistema em React com Vite chamado workshop-ai.
-Ele deve rodar localmente e abrir uma tela inicial de painel de capacitacao.
-Use uma estrutura simples, com src/App.jsx, src/styles.css e package.json.
+Cria um sistema local chamado workshop-ai usando React com Vite.
+Quero uma tela inicial simples chamada "Painel de capacitacao".
+Ainda nao precisa conectar em API.
+Crie os arquivos basicos e me diga quais comandos eu preciso rodar para abrir no navegador.
+Explique como se eu nunca tivesse programado.
 ```
 
-O que verificar:
+## Depois confira
 
-- `npm install` funciona.
-- `npm run dev` abre uma tela local.
-- A tela ainda pode estar vazia, mas precisa renderizar sem erro.
-
-### Prompt 2 - Criar backend local para proteger o token
+A IA deve criar uma estrutura parecida com:
 
 ```text
-Adiciona um backend local com Node e Express.
-Cria uma rota GET /api/users.
-Essa rota deve chamar https://api.twygo.com/api/v2/users?page=1&per_page=50.
-O Bearer token deve ficar em .env como TWYGO_API_TOKEN.
-Nao coloque o token no React.
-Cria tambem .env.example.
+package.json
+index.html
+src/App.jsx
+src/styles.css
 ```
 
-O que verificar:
+Ela tambem deve mandar rodar:
 
-- `.env.example` existe.
-- `.env` fica fora do Git.
-- `GET http://localhost:5184/health` responde.
-- `GET http://localhost:5184/api/users` retorna `message: success`.
-
-### Prompt 3 - Listar usuarios da plataforma
-
-```text
-No React, chama /api/users quando a tela abrir.
-Mostra os usuarios retornados em uma tabela com nome, email e status.
-Inclui estados de carregando e erro.
-Nao cria busca por nome, email ou ID.
+```bash
+npm install
+npm run dev
 ```
 
-O que verificar:
+Quando abrir no navegador, precisa aparecer alguma tela com o titulo do painel.
 
-- A tela carrega usuarios automaticamente.
-- Nao existe campo de busca.
-- O frontend chama apenas `/api/users`, nao a API externa direto.
+## Se der erro
 
-### Prompt 4 - Adicionar upload do CSV
+Copie o erro e mande:
 
 ```text
-Adiciona uma area para anexar um arquivo CSV de capacitacao.
-O CSV tera as colunas email, area, categoria, curso, horas_capacitacao, status_capacitacao, nota e concluido_em.
-Leia o CSV no frontend e normalize os dados.
-Use o email em minusculo como chave de cruzamento.
+Deu esse erro ao rodar o app. Me explica o que significa e corrige o projeto:
+[cole o erro aqui]
 ```
 
-O que verificar:
+---
 
-- O botao de anexar CSV aparece.
-- Ao anexar o CSV, a tela mostra quantas linhas foram lidas.
-- Linhas sem email devem ser ignoradas.
+# Etapa 2 - Criar o servidor local
 
-### Prompt 5 - Cruzar usuarios da API com o CSV
+## Objetivo
+
+Criar um "meio de campo" entre a tela e a API da Twygo.
+
+Por que isso existe?
+
+Porque o token nao deve ficar dentro do React.
+
+## Prompt para copiar
 
 ```text
-Cruze os usuarios da API com os registros do CSV pelo email.
+Agora adiciona um backend local com Node e Express.
+Ele deve rodar na porta 5184.
+Crie uma rota GET /health que responda { "ok": true }.
+Crie uma rota GET /api/users que por enquanto pode responder uma lista fake de usuarios.
+Tambem configure o Vite para o React conseguir chamar /api/users.
+Nao mexa ainda na API real da Twygo.
+```
+
+## Depois confira
+
+No terminal, rode:
+
+```bash
+npm run dev
+```
+
+Abra no navegador:
+
+```text
+http://localhost:5184/health
+```
+
+Tem que aparecer:
+
+```json
+{"ok":true}
+```
+
+## Se der erro
+
+Mande para a IA:
+
+```text
+O backend local nao abriu ou a rota /health nao respondeu.
+Aqui esta o erro:
+[cole o erro aqui]
+Corrige e me diga exatamente qual comando rodar.
+```
+
+---
+
+# Etapa 3 - Proteger o token no .env
+
+## Objetivo
+
+Guardar a chave da API em um arquivo local seguro.
+
+## Prompt para copiar
+
+```text
+Adiciona suporte a arquivo .env.
+Crie um arquivo .env.example com a variavel TWYGO_API_TOKEN=cole_o_token_aqui.
+Garanta que .env esteja no .gitignore para nao subir token para o GitHub.
+O backend deve ler process.env.TWYGO_API_TOKEN.
+```
+
+## Depois confira
+
+Tem que existir:
+
+```text
+.env.example
+.gitignore
+```
+
+No `.gitignore`, precisa ter:
+
+```text
+.env
+```
+
+Agora crie seu `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Abra o `.env` e coloque o token real:
+
+```text
+TWYGO_API_TOKEN=seu_token_aqui
+```
+
+## Se der erro
+
+Mande para a IA:
+
+```text
+Nao sei se meu .env esta certo.
+Confere a configuracao e garante que o token nao vai para o GitHub.
+```
+
+---
+
+# Etapa 4 - Conectar na API real da Twygo
+
+## Objetivo
+
+Buscar usuarios reais da Twygo.
+
+## Prompt para copiar
+
+```text
+Agora altere a rota GET /api/users do backend.
+Ela deve chamar a API real:
+https://api.twygo.com/api/v2/users?page=1&per_page=50
+
+Use o header:
+Authorization: Bearer <TWYGO_API_TOKEN>
+
+O token deve vir do .env.
+Se a API der erro, retorne uma mensagem clara para a tela.
+```
+
+## Depois confira
+
+Com o app rodando, abra:
+
+```text
+http://localhost:5184/api/users
+```
+
+Tem que aparecer um JSON com:
+
+```text
+message: success
+data
+users
+pagination
+```
+
+Nao precisa entender o JSON inteiro. So confirme que nao apareceu erro.
+
+## Se der erro 401
+
+401 quase sempre significa token errado.
+
+Mande para a IA:
+
+```text
+A API retornou 401.
+Me ajuda a conferir se estou usando Authorization: Bearer e lendo o TWYGO_API_TOKEN do .env.
+```
+
+## Se der erro de CORS
+
+Mande:
+
+```text
+Deu erro de CORS.
+Lembra que o React deve chamar /api/users no backend local, e o backend local deve chamar a API da Twygo.
+Corrige isso.
+```
+
+---
+
+# Etapa 5 - Mostrar usuarios na tela
+
+## Objetivo
+
+Fazer o React mostrar os usuarios que vieram da API.
+
+## Prompt para copiar
+
+```text
+No React, busque /api/users quando a tela abrir.
+Mostre uma tabela simples com:
+- nome
+- email
+- status
+
+Inclua mensagens de:
+- carregando
+- erro
+- nenhum usuario encontrado
+
+Nao crie busca por nome, email ou ID.
+```
+
+## Depois confira
+
+A tela deve mostrar usuarios automaticamente.
+
+Nao deve ter campo de busca.
+
+Se abrir o DevTools, o React deve chamar:
+
+```text
+/api/users
+```
+
+Nao deve chamar direto:
+
+```text
+https://api.twygo.com
+```
+
+## Se der erro
+
+Mande:
+
+```text
+A tela nao esta mostrando usuarios.
+Confere se o React esta chamando /api/users e se esta lendo o formato data.users da resposta.
+```
+
+---
+
+# Etapa 6 - Criar upload do CSV
+
+## Objetivo
+
+Permitir anexar a planilha de capacitacao fornecida pelo instrutor.
+
+## Prompt para copiar
+
+```text
+Adiciona uma area na tela para anexar um arquivo CSV.
+O CSV tera essas colunas:
+email,area,categoria,curso,horas_capacitacao,status_capacitacao,nota,concluido_em
+
+Leia o arquivo no navegador.
+Depois de anexar, mostre quantas linhas foram lidas.
+Ignore linhas sem email.
+Nao envie esse CSV para nenhum servidor.
+```
+
+## Depois confira
+
+Na tela, deve aparecer um botao parecido com:
+
+```text
+Anexar CSV
+```
+
+Ao anexar o arquivo, deve aparecer algo como:
+
+```text
+149 linhas positivas
+```
+
+## Se der erro
+
+Mande:
+
+```text
+O CSV nao carregou.
+Confere se o input aceita .csv e se o parser esta lendo as colunas pelo cabecalho.
+```
+
+---
+
+# Etapa 7 - Cruzar API + CSV
+
+## Objetivo
+
+Juntar os usuarios da Twygo com a planilha.
+
+A regra e:
+
+```text
+usuario.email == csv.email
+```
+
+## Prompt para copiar
+
+```text
+Agora cruze os usuarios da API com as linhas do CSV usando o email.
 Para cada usuario, calcule:
 - area
 - categorias
@@ -113,98 +439,191 @@ Para cada usuario, calcule:
 - total de horas de capacitacao
 - nota media
 - status do cruzamento: Com dados ou Sem dados no CSV
-Mostre esses dados em uma tabela final.
+
+Se uma pessoa tiver varias linhas no CSV, some as horas.
+Nao duplique categorias e cursos repetidos.
+Mostre tudo em uma tabela final.
 ```
 
-O que verificar:
+## Depois confira
 
-- Usuarios com email no CSV aparecem como `Com dados`.
-- Usuarios sem email no CSV aparecem como `Sem dados no CSV`.
-- Horas de varias linhas do mesmo email sao somadas.
-- Cursos e categorias repetidos nao precisam aparecer duplicados.
-
-### Prompt 6 - Criar cards de resumo
+Na tabela final, uma pessoa com varios cursos deve ter:
 
 ```text
-Cria cards no topo do painel com:
-- usuarios na tela
-- usuarios com capacitacao
-- horas totais
-- percentual de cobertura
-Os numeros devem ser calculados a partir do cruzamento API + CSV.
+horas somadas
+nota media
+mais de um curso listado
+Com dados
 ```
 
-O que verificar:
-
-- Os cards mudam quando um CSV e anexado.
-- A cobertura e calculada como usuarios com capacitacao dividido por usuarios carregados.
-
-### Prompt 7 - Criar graficos
+Quem nao aparecer no CSV deve ficar:
 
 ```text
-Cria graficos para o painel:
-- grafico de pizza ou donut para horas por area
-- grafico de pizza ou donut para usuarios por categoria
-- grafico de pizza ou donut para situacao do cruzamento
-- grafico de barras para top cursos por horas
-Nao use biblioteca pesada se nao precisar; pode usar CSS com conic-gradient para os donuts.
+Sem dados no CSV
 ```
 
-O que verificar:
+## Se der erro
 
-- Graficos aparecem depois do CSV.
-- As pizzas/donuts mostram legenda com valor e percentual.
-- Top cursos fica em barras, porque e um ranking.
-
-### Prompt 8 - Melhorar o visual do painel
+Mande:
 
 ```text
-Melhora o layout para parecer uma ferramenta de trabalho:
+O cruzamento nao funcionou.
+Confere se esta comparando email com email, usando minusculas e removendo espacos.
+```
+
+---
+
+# Etapa 8 - Criar cards de resumo
+
+## Objetivo
+
+Mostrar numeros grandes no topo da tela.
+
+## Prompt para copiar
+
+```text
+Crie cards de resumo calculados a partir do cruzamento:
+- Usuarios na tela
+- Com capacitacao
+- Horas totais
+- Cobertura em porcentagem
+
+Cobertura significa:
+usuarios com capacitacao / usuarios carregados da API * 100
+```
+
+## Depois confira
+
+Depois de anexar o CSV, os cards devem mudar.
+
+Exemplo:
+
+```text
+Usuarios na tela: 50
+Com capacitacao: 50
+Horas totais: 1490h
+Cobertura: 100%
+```
+
+Os numeros exatos podem mudar, mas precisam fazer sentido.
+
+---
+
+# Etapa 9 - Criar graficos
+
+## Objetivo
+
+Transformar a tabela em visual.
+
+## Prompt para copiar
+
+```text
+Crie graficos no painel:
+- Donut de horas por area
+- Donut de usuarios por categoria
+- Donut de situacao do cruzamento
+- Barras de top cursos por horas
+
+Use os dados calculados no cruzamento.
+Cada donut deve ter legenda com nome, valor e percentual.
+Pode usar CSS com conic-gradient, sem instalar biblioteca pesada.
+```
+
+## Depois confira
+
+A tela deve mostrar:
+
+```text
+Horas por area
+Usuarios por categoria
+Situacao do cruzamento
+Top cursos por horas
+```
+
+Os donuts devem ter fatias coloridas.
+
+O grafico de top cursos deve ser barra, porque e ranking.
+
+---
+
+# Etapa 10 - Melhorar o visual
+
+## Objetivo
+
+Deixar a demo apresentavel para a empresa.
+
+## Prompt para copiar
+
+```text
+Melhora o visual para parecer uma ferramenta de trabalho, nao uma landing page.
+
+A tela deve ter:
 - topo compacto
 - area de upload do CSV
 - cards de resumo
 - graficos em grid
 - tabela final grande
-- painel lateral explicando o fluxo API + CSV
-Garanta que funcione em tela menor tambem.
+- painel lateral explicando: API + CSV = painel
+
+Garanta que nao tenha texto sobreposto e que funcione em telas menores.
 ```
 
-O que verificar:
+## Depois confira
 
-- Nao parece landing page.
-- A primeira tela ja mostra a ferramenta.
-- Textos nao se sobrepoem.
-- Tabela tem rolagem horizontal quando necessario.
+A tela deve ser facil de explicar:
 
-### Prompt 9 - Adicionar testes
+1. Primeiro carrega usuarios.
+2. Depois anexa CSV.
+3. Depois aparecem numeros e graficos.
+
+---
+
+# Etapa 11 - Criar testes
+
+## Objetivo
+
+Garantir que o sistema nao quebre quando mexer.
+
+## Prompt para copiar
 
 ```text
-Adiciona testes automatizados para:
-- montar query da API local
+Adiciona testes automatizados com Vitest para:
+- montar a query da API local
 - chamar o backend local com Bearer token
 - transformar usuarios da API para tabela
 - ler CSV
 - cruzar usuarios + CSV
-- gerar os dados dos graficos de pizza
+- gerar fatias dos graficos de donut
+
+Me diga qual comando roda os testes.
 ```
 
-O que verificar:
+## Depois confira
+
+Rode:
 
 ```bash
 npm test
 ```
 
-Todos os testes precisam passar.
-
-### Prompt 10 - Validar entrega
+Tem que aparecer algo como:
 
 ```text
-Rode os testes, rode o build e abra o sistema no navegador.
-Clique para anexar ou usar o CSV fornecido.
-Confirme que a API carrega, que o CSV cruza com os usuarios e que os graficos aparecem.
+Test Files passed
+Tests passed
 ```
 
-Comandos esperados:
+Se aparecer vermelho, copie o erro e peça para a IA corrigir.
+
+---
+
+# Etapa 12 - Validar tudo
+
+## Objetivo
+
+Conferir que a entrega esta pronta.
+
+## Comandos finais
 
 ```bash
 npm test
@@ -212,45 +631,106 @@ npx vite build
 npm run dev
 ```
 
-## Arquitetura esperada
+## Checklist final
+
+Marque mentalmente:
+
+- A tela abre no navegador.
+- Usuarios da Twygo carregam.
+- O CSV anexa.
+- A tabela cruza por email.
+- Os cards aparecem.
+- Os donuts aparecem.
+- O grafico de barras aparece.
+- O token nao esta dentro do React.
+- O `.env` nao foi para o GitHub.
+
+---
+
+# Explicacao final para o aluno falar em voz alta
+
+Se alguem perguntar "o que voce fez?", responder:
 
 ```text
-React
-  -> /api/users no servidor local
-  -> upload do CSV no navegador
-  -> cruzamento por email
-  -> cards + tabela + graficos
-
-Express
-  -> adiciona Authorization: Bearer
-  -> chama https://api.twygo.com/api/v2/users
+Eu criei um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra indicadores em cards, tabela e graficos.
 ```
 
-## Erros comuns
-
-- Usar a API 1.0 em vez da API 2.0.
-- Chamar `https://api.twygo.com` diretamente no React.
-- Colocar o token dentro do `src/`.
-- Esquecer `Bearer` antes do token.
-- Tentar cruzar por nome em vez de email.
-- Usar CSV sem cabecalho.
-- Nao somar varias linhas de capacitacao da mesma pessoa.
-- Criar busca manual e perder o foco do desafio.
-- Testar `POST` ou `PUT` em producao.
-
-## Resultado final esperado
-
-A tela final deve mostrar:
-
-- Usuarios carregados da plataforma.
-- Upload de CSV de capacitacao.
-- Cards com usuarios, cobertura e horas.
-- Donuts por area, categoria e status do cruzamento.
-- Barras com top cursos por horas.
-- Tabela cruzada por usuario.
-
-O aluno deve conseguir explicar o fluxo em uma frase:
+Se perguntarem "por que tem backend?", responder:
 
 ```text
-Eu busquei usuarios na API da Twygo, anexei um CSV de capacitacao, cruzei pelo email e gerei indicadores na tela.
+Porque o token da API nao pode ficar exposto no React. O backend local guarda o token e faz a chamada segura.
 ```
+
+Se perguntarem "por que cruzou por email?", responder:
+
+```text
+Porque email existe tanto na API quanto no CSV, entao ele funciona como chave comum entre as duas fontes.
+```
+
+# Erros comuns e como explicar
+
+## Erro: tela branca
+
+Provavel causa:
+
+- React quebrou.
+- Faltou renderizar o App.
+- Algum import esta errado.
+
+Prompt para corrigir:
+
+```text
+Minha tela ficou branca. Analisa os erros do console e corrige o React.
+```
+
+## Erro: 401
+
+Provavel causa:
+
+- token errado;
+- esqueceu `Bearer`;
+- `.env` nao foi lido.
+
+Prompt:
+
+```text
+A API retornou 401. Confere o token, o Bearer e a leitura do .env.
+```
+
+## Erro: CSV nao cruza
+
+Provavel causa:
+
+- email com espaco;
+- email maiusculo/minusculo;
+- cabecalho errado;
+- coluna se chama diferente.
+
+Prompt:
+
+```text
+O CSV carregou, mas nao cruzou com os usuarios. Normalize os emails com trim e lowercase e confira o cabecalho.
+```
+
+## Erro: grafico estranho
+
+Provavel causa:
+
+- dados vazios;
+- valores de horas como texto;
+- algum numero veio com virgula.
+
+Prompt:
+
+```text
+Os graficos ficaram errados. Confere se horas_capacitacao esta virando numero e se valores vazios viram zero.
+```
+
+# O que nao fazer no workshop
+
+- Nao usar `POST`, `PUT` ou `DELETE`.
+- Nao criar usuario real.
+- Nao alterar dados da plataforma.
+- Nao colocar token dentro do React.
+- Nao subir `.env` para o GitHub.
+- Nao tentar explicar cada linha de codigo para iniciantes. Explique o fluxo primeiro.
