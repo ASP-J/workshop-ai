@@ -4,6 +4,7 @@ Mini app para o workshop de consumo da API Twygo com cruzamento de planilha. A t
 
 ## Materiais da aula
 
+- `DESAFIO.md`: enunciado do desafio para os alunos.
 - `APOSTILA_CONCEITOS.md`: explicacao simples dos conceitos principais, como frontend, backend, API, `.env`, token, CSV, Git e GitHub.
 - `GABARITO.md`: passo a passo completo para recriar o sistema com prompts.
 
