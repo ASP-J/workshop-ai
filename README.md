@@ -1,5 +1,31 @@
 # Workshop AI - Painel de Capacitacao Twygo
 
+Esta e a **versao dos alunos** do repositorio.
+
+Se voce esta vendo esta pagina no GitHub, confira se a branch selecionada e:
+
+```text
+alunos
+```
+
+Se voce estiver usando Claude ou Codex, comece pedindo para a IA pegar a versao dos alunos:
+
+```text
+Clone a branch alunos deste repositorio:
+git@github.com:ASP-J/workshop-ai.git
+
+Depois leia o README.md e me guie passo a passo, em linguagem simples.
+```
+
+Se o instrutor pedir o link em HTTPS, use:
+
+```text
+Clone a branch alunos deste repositorio:
+https://github.com/ASP-J/workshop-ai.git
+
+Depois leia o README.md e me guie passo a passo, em linguagem simples.
+```
+
 Este repositorio e o ponto de partida do desafio.
 
 Voce vai usar Claude ou Codex para criar um painel que conecta a API da Twygo com uma planilha CSV de capacitacao.
@@ -29,6 +55,24 @@ Ele deve:
 5. Mostrar cards de resumo.
 6. Mostrar graficos por area, categoria e status.
 7. Proteger o token da API usando `.env`.
+
+## O que significa conectar na API da Twygo
+
+Quando o desafio falar em **conectar**, **ligar** ou **chamar** a API da Twygo, significa:
+
+```text
+usar o token entregue pelo instrutor para buscar usuarios reais da plataforma Twygo
+```
+
+Voce nao precisa saber todos os detalhes tecnicos da API.
+
+O que voce precisa entender e:
+
+1. A Twygo guarda os usuarios.
+2. A API e o caminho para buscar esses usuarios.
+3. O token e a chave que autoriza essa busca.
+4. O backend local usa esse token para falar com a Twygo.
+5. A tela mostra os usuarios que vieram dessa busca.
 
 ## Materiais da aula
 

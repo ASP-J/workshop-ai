@@ -14,6 +14,21 @@ A empresa quer um painel simples para responder perguntas como:
 
 O objetivo do desafio e criar um sisteminha local que conecte a API da Twygo com uma planilha CSV e mostre os resultados de forma visual.
 
+Quando este documento falar em **API da Twygo**, entenda assim:
+
+```text
+e o caminho que o sistema usa para buscar usuarios reais cadastrados na Twygo
+```
+
+Para acessar essa API, o instrutor vai entregar um token.
+
+Voce nao precisa decorar detalhes tecnicos da API. Voce precisa saber que:
+
+1. A API entrega os usuarios.
+2. O token autoriza o acesso.
+3. O backend local protege o token.
+4. A tela mostra os usuarios recebidos.
+
 ## Como voce vai trabalhar
 
 Neste desafio, voce vai usar Claude ou Codex.
