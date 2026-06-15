@@ -25,6 +25,13 @@ CSV esperado:
 email,area,categoria,curso,horas_capacitacao,status_capacitacao,nota,concluido_em
 ```
 
+Regra da coluna `area`:
+
+- usar a area/departamento do perfil do usuario na Twygo;
+- se `department` estiver vazio, usar outro campo de perfil que indique area, como segmento/cargo;
+- se o perfil nao tiver area preenchida, usar `Sem area no perfil`;
+- normalizar nomes para as areas do organograma, por exemplo `Sucesso do Cliente`, `Produto e Qualidade`, `Engenharia de Produto`, `Qualidade e Testes`, `Solucoes`, `Business Intelligence`.
+
 Exemplo de linha:
 
 ```text
