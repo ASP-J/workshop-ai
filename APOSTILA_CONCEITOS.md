@@ -643,7 +643,7 @@ GitHub e o site onde o projeto fica hospedado.
 O repositorio guarda:
 
 - codigo do app
-- gabarito
+- desafio
 - apostila
 - CSV de exemplo
 - instrucoes de uso
@@ -806,10 +806,6 @@ Fluxo completo:
 `README.md`
 
 Explica como usar o projeto.
-
-`GABARITO.md`
-
-Mostra o passo a passo do desafio.
 
 `APOSTILA_CONCEITOS.md`
 

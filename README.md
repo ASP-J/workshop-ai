@@ -42,11 +42,7 @@ Leia nesta ordem:
    - Explica conceitos como API, frontend, backend, CSV, token e `.env`.
    - Leia se alguma palavra parecer confusa.
 
-3. `GABARITO.md`
-   - Passo a passo completo.
-   - Use quando o instrutor liberar ou quando precisar conferir a solucao.
-
-4. `public/sample-capacitacao.csv`
+3. `public/sample-capacitacao.csv`
    - CSV de exemplo para anexar no painel.
 
 ## Passo 1 - Peca para a IA entender o projeto
