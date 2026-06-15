@@ -31,6 +31,63 @@ Rode os testes do projeto e me explique o resultado em linguagem simples.
 
 O aluno nao precisa saber de memoria o que e `npm install`, `npm run dev` ou `npx vite build`. Ele precisa saber pedir, conferir e explicar o que aconteceu.
 
+## Como pedir explicacoes melhores para a IA
+
+Nao use a IA apenas para fazer.
+
+Use a IA para explicar.
+
+Um bom pedido tem 5 partes:
+
+1. O que voce quer fazer.
+2. O contexto do projeto.
+3. O nivel de explicacao esperado.
+4. O que a IA deve alterar.
+5. Como a IA deve mostrar que funcionou.
+
+Exemplo:
+
+```text
+Quero entender como o projeto busca usuarios na Twygo.
+Explique em linguagem simples.
+Mostre quais arquivos participam disso.
+Nao altere nada ainda.
+No final, me diga como eu confiro se essa busca esta funcionando.
+```
+
+Antes de deixar a IA alterar arquivos, voce pode pedir:
+
+```text
+Antes de alterar qualquer arquivo, explique seu plano.
+Diga o que voce pretende fazer, por que isso e necessario e quais arquivos podem mudar.
+Use linguagem simples.
+```
+
+Depois que a IA alterar arquivos, peca:
+
+```text
+Agora explique o que voce mudou.
+Liste os arquivos alterados.
+Para cada arquivo, diga o que mudou, por que mudou e como eu confiro se funcionou.
+```
+
+Se a resposta vier tecnica demais, peca:
+
+```text
+Explica de novo como se eu nunca tivesse programado.
+Use uma comparacao simples e um exemplo deste projeto.
+```
+
+Se voce se perder no meio da aula, peca:
+
+```text
+Resume tudo que ja fizemos ate agora.
+Separe em:
+1. o que ja esta funcionando
+2. o que ainda falta
+3. qual deve ser o proximo passo
+```
+
 ## Mapa mental do projeto
 
 O sistema do workshop faz isto:

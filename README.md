@@ -15,6 +15,8 @@ Clone a branch alunos deste repositorio:
 git@github.com:ASP-J/workshop-ai.git
 
 Depois leia o README.md e me guie passo a passo, em linguagem simples.
+Antes de fazer qualquer alteracao, explique o que voce vai fazer e por que.
+Depois de cada alteracao, explique o que mudou, quais arquivos foram alterados e como eu confiro se funcionou.
 ```
 
 Se o instrutor pedir o link em HTTPS, use:
@@ -24,6 +26,8 @@ Clone a branch alunos deste repositorio:
 https://github.com/ASP-J/workshop-ai.git
 
 Depois leia o README.md e me guie passo a passo, em linguagem simples.
+Antes de fazer qualquer alteracao, explique o que voce vai fazer e por que.
+Depois de cada alteracao, explique o que mudou, quais arquivos foram alterados e como eu confiro se funcionou.
 ```
 
 Este repositorio e o ponto de partida do desafio.
@@ -36,6 +40,39 @@ O objetivo e aprender este fluxo:
 
 ```text
 prompt para IA -> IA altera o projeto -> voce confere no navegador -> voce pede ajustes
+```
+
+## Regra de ouro para usar a IA
+
+Sempre peca para Claude ou Codex explicar o que esta fazendo.
+
+Use esta regra em todos os prompts:
+
+```text
+Explique cada passo em linguagem simples.
+Antes de alterar arquivos, diga o que voce pretende fazer.
+Depois de alterar, diga:
+1. o que mudou
+2. por que mudou
+3. quais arquivos foram alterados
+4. como eu confiro se funcionou
+5. qual e o proximo passo
+Nao esconda a explicacao atras de termos tecnicos.
+```
+
+Se a IA responder de forma muito tecnica, mande:
+
+```text
+Explica de novo como se eu nunca tivesse programado.
+Use exemplos deste projeto.
+```
+
+Se a IA fizer muitas coisas de uma vez e voce se perder, mande:
+
+```text
+Para um pouco.
+Resume o que voce ja fez, em ordem.
+Depois me diga exatamente o que eu devo conferir agora.
 ```
 
 ## O que voce vai construir
@@ -98,6 +135,10 @@ Estou no desafio do Painel de Capacitacao com API Twygo + CSV.
 Leia os arquivos do projeto e me explique, em linguagem simples, o que ja existe.
 Depois me diga qual deve ser meu primeiro passo.
 Nao use explicacao tecnica demais.
+Para cada arquivo importante, explique:
+- para que ele serve
+- se o aluno precisa mexer nele ou so entender
+- como ele participa do desafio
 ```
 
 Confira se a IA mencionou:
@@ -123,6 +164,8 @@ Configure o arquivo .env com este token da Twygo:
 Salve esse valor na variavel TWYGO_API_TOKEN.
 Nao mostre, nao repita e nao imprima meu token na resposta.
 No final, apenas confirme que o .env foi configurado.
+Explique o que e dependencia, o que e .env e por que o token precisa ficar protegido.
+Depois diga quais arquivos voce alterou ou criou.
 ```
 
 Atencao:
@@ -143,6 +186,11 @@ Confira se o frontend abriu no navegador.
 Confira se o backend esta respondendo.
 Confira se a API da Twygo respondeu.
 Se der erro, explique em linguagem simples e corrija.
+Explique tambem:
+- o que e frontend
+- o que e backend
+- o que significa a API da Twygo responder
+- qual URL eu devo abrir no navegador
 ```
 
 O navegador deve abrir em algo parecido com:
@@ -162,6 +210,8 @@ Os usuarios da Twygo nao apareceram na tela.
 Verifique a chamada da API, o backend local e o token do .env.
 Explique o problema em linguagem simples e corrija.
 Nao mostre meu token na resposta.
+Antes de corrigir, me diga quais sao as 3 causas mais provaveis.
+Depois de corrigir, me diga como conferir se os usuarios carregaram.
 ```
 
 ## Passo 5 - Anexe o CSV
@@ -205,6 +255,9 @@ Se a tabela nao cruzar os dados, envie:
 O CSV foi anexado, mas os dados nao parecem cruzados com os usuarios.
 Confira se o cruzamento esta sendo feito pelo campo email.
 Mostre uma explicacao simples do problema e corrija.
+Explique o que significa cruzar dados.
+Mostre um exemplo simples usando um email ficticio.
+Depois diga onde no projeto essa regra ficou implementada.
 ```
 
 ## Passo 7 - Confira cards e graficos
@@ -223,6 +276,8 @@ Se faltar alguma coisa, envie:
 Confira se o painel tem cards, tabela e graficos.
 Se faltar algo, implemente de forma simples e visual.
 O foco e mostrar dados cruzados de capacitacao por area, categoria e status.
+Antes de implementar, explique quais indicadores fazem sentido para este desafio.
+Depois de implementar, explique o que cada card e cada grafico significa.
 ```
 
 ## Passo 8 - Valide a entrega final
@@ -243,6 +298,7 @@ Confira:
 
 Se algo estiver errado, corrija.
 Depois me explique o resultado em linguagem simples.
+No final, gere um resumo em 5 frases para eu conseguir apresentar o projeto para outra pessoa.
 ```
 
 ## Se der erro
@@ -263,6 +319,57 @@ Eu esperava que:
 [explique o que voce esperava]
 
 Me explique o motivo em linguagem simples e corrija.
+Antes de corrigir, me diga:
+1. qual parte provavelmente quebrou
+2. por que isso pode ter acontecido
+3. o que voce vai tentar primeiro
+
+Depois de corrigir, me diga como eu confiro que resolveu.
+```
+
+## Prompt para pedir explicacao de qualquer coisa
+
+Use este prompt sempre que alguma parte parecer confusa:
+
+```text
+Nao entendi essa parte.
+Explique com calma, em linguagem simples.
+Use o exemplo deste projeto.
+Me diga:
+1. o que isso e
+2. para que serve
+3. onde aparece no projeto
+4. o que acontece se estiver errado
+5. como eu confiro se esta funcionando
+```
+
+## Prompt para pedir resumo do que ja foi feito
+
+Use quando voce sentir que se perdeu:
+
+```text
+Resume o que ja foi feito ate agora no projeto.
+Organize em ordem:
+1. o que foi configurado
+2. o que foi criado
+3. quais arquivos mudaram
+4. o que ja esta funcionando
+5. o que ainda falta fazer
+Explique como se eu estivesse acompanhando uma aula.
+```
+
+## Prompt para pedir explicacao dos arquivos alterados
+
+Use depois que a IA mexer no projeto:
+
+```text
+Liste os arquivos que voce alterou.
+Para cada arquivo, explique:
+1. por que ele foi alterado
+2. o que ele faz no projeto
+3. qual parte do desafio depende dele
+4. como eu posso conferir se a alteracao funcionou
+Nao use linguagem tecnica demais.
 ```
 
 ## Checklist antes de chamar o instrutor

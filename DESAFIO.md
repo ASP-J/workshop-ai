@@ -45,6 +45,26 @@ Nao tenha vergonha de pedir explicacao.
 
 Um bom prompt e melhor do que tentar adivinhar.
 
+Neste desafio, a IA deve explicar o que esta fazendo.
+
+Sempre que pedir algo para Claude ou Codex, inclua esta instrucao:
+
+```text
+Explique cada passo em linguagem simples.
+Antes de alterar arquivos, diga o que voce vai fazer e por que.
+Depois de alterar, diga quais arquivos mudaram, por que mudaram e como eu confiro se funcionou.
+```
+
+O objetivo nao e apenas terminar o painel.
+
+O objetivo e voce conseguir explicar:
+
+1. de onde vieram os usuarios
+2. de onde veio o CSV
+3. como os dados foram cruzados
+4. por que o token fica protegido
+5. o que os cards e graficos mostram
+
 ## O que voce vai receber
 
 O instrutor vai entregar:
@@ -208,6 +228,7 @@ Quero construir o desafio do Painel de capacitacao com API Twygo + CSV.
 Leia os arquivos do projeto e me explique o que ja existe.
 Depois me diga, em linguagem simples, qual sera o primeiro passo.
 Nao escreva explicacao tecnica demais.
+Explique tambem quais arquivos parecem importantes e para que cada um serve.
 ```
 
 Depois use:
@@ -221,6 +242,7 @@ Configure o arquivo .env com este token da Twygo:
 Salve esse valor na variavel TWYGO_API_TOKEN.
 Nao mostre, nao repita e nao imprima meu token na resposta.
 No final, apenas confirme que o .env foi configurado.
+Explique por que o token deve ficar no .env e nao dentro da tela.
 ```
 
 Depois que a IA confirmar que configurou o token:
@@ -228,15 +250,41 @@ Depois que a IA confirmar que configurou o token:
 ```text
 Abra o projeto local e confira se a API da Twygo esta respondendo.
 Se der erro, explique em linguagem simples e corrija.
+Explique o que voce esta conferindo em cada parte: frontend, backend e API.
 ```
 
 ## Prompts permitidos durante o desafio
+
+Para pedir que a IA explique antes de mexer:
+
+```text
+Antes de alterar qualquer arquivo, me explique o plano.
+Diga:
+1. o que voce vai fazer
+2. por que isso e necessario
+3. quais arquivos provavelmente serao alterados
+4. como vamos conferir se deu certo
+Use linguagem simples.
+```
+
+Para pedir que a IA explique depois de mexer:
+
+```text
+Agora me explique o que voce acabou de fazer.
+Diga:
+1. quais arquivos foram alterados
+2. o que mudou em cada arquivo
+3. por que essa mudanca ajuda no desafio
+4. como eu confiro o resultado
+5. qual e o proximo passo
+```
 
 Para entender uma parte:
 
 ```text
 Explique o que esse arquivo faz usando o exemplo do nosso desafio.
 Fale como se eu nunca tivesse programado.
+Me diga se eu preciso mexer nele ou apenas entender.
 ```
 
 Para pedir uma melhoria:
@@ -244,6 +292,8 @@ Para pedir uma melhoria:
 ```text
 Melhore essa tela para ficar mais clara para uma pessoa de RH ou treinamento.
 Nao mude a regra de cruzamento por email.
+Antes de alterar, explique o que voce vai melhorar.
+Depois de alterar, explique como conferir na tela.
 ```
 
 Para corrigir erro:
@@ -252,6 +302,8 @@ Para corrigir erro:
 Deu este erro:
 [cole o erro aqui]
 Explique o motivo em linguagem simples e corrija.
+Antes de corrigir, diga qual e a causa mais provavel.
+Depois de corrigir, diga como eu testo novamente.
 ```
 
 Para validar:
@@ -266,6 +318,7 @@ Confira se o painel atende ao desafio:
 - mostra graficos
 - protege o token no .env
 Se faltar algo, corrija.
+Depois explique o que foi corrigido e como eu apresento isso para o instrutor.
 ```
 
 ## Entrega esperada
@@ -294,6 +347,7 @@ O desafio esta correto se:
 - O token nao aparece na tela.
 - O token nao aparece no GitHub.
 - A explicacao final do aluno faz sentido.
+- O aluno consegue explicar, com suas palavras, o que a IA fez no projeto.
 
 ## Apresentacao final
 
