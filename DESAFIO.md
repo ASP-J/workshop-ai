@@ -200,11 +200,15 @@ Depois use:
 ```text
 Prepare o projeto para rodar localmente.
 Crie o arquivo .env a partir do .env.example.
-Me diga onde devo colar o token da Twygo.
-Nao mostre meu token real na resposta.
+Configure o arquivo .env com este token da Twygo:
+[cole aqui o token recebido do instrutor]
+
+Salve esse valor na variavel TWYGO_API_TOKEN.
+Nao mostre, nao repita e nao imprima meu token na resposta.
+No final, apenas confirme que o .env foi configurado.
 ```
 
-Depois de colocar o token:
+Depois que a IA confirmar que configurou o token:
 
 ```text
 Abra o projeto local e confira se a API da Twygo esta respondendo.

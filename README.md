@@ -73,16 +73,12 @@ Envie:
 Prepare este projeto para rodar localmente.
 Instale as dependencias necessarias.
 Crie o arquivo .env a partir do .env.example.
-Me diga exatamente onde devo colar o token da Twygo.
-Nao mostre meu token real na resposta.
-```
+Configure o arquivo .env com este token da Twygo:
+[cole aqui o token recebido do instrutor]
 
-Depois disso, coloque o token real no arquivo `.env`.
-
-O token deve ficar nesta variavel:
-
-```text
-TWYGO_API_TOKEN=
+Salve esse valor na variavel TWYGO_API_TOKEN.
+Nao mostre, nao repita e nao imprima meu token na resposta.
+No final, apenas confirme que o .env foi configurado.
 ```
 
 Atencao:
@@ -91,10 +87,11 @@ Atencao:
 - nao cole o token no frontend
 - nao publique o token no GitHub
 - nao mande print com token aparecendo
+- cole o token apenas no prompt para a IA configurar o `.env`
 
 ## Passo 3 - Peca para abrir o projeto local
 
-Depois de colocar o token no `.env`, envie:
+Depois que a IA confirmar que configurou o `.env`, envie:
 
 ```text
 Abra o projeto local.
@@ -229,8 +226,8 @@ Me explique o motivo em linguagem simples e corrija.
 Confira:
 
 - pedi para a IA preparar o projeto
-- criei o `.env`
-- coloquei o token real no `.env`
+- passei o token para a IA configurar o `.env`
+- a IA confirmou que salvou o token em `TWYGO_API_TOKEN`
 - a tela abriu no navegador
 - a API da Twygo respondeu
 - anexei o CSV
