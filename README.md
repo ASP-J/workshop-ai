@@ -2,6 +2,11 @@
 
 Mini app para o workshop de consumo da API Twygo com cruzamento de planilha. A tela lista usuarios via API v2, recebe um CSV de capacitacao e gera tabela + graficos por area, categoria e status do cruzamento.
 
+## Materiais da aula
+
+- `APOSTILA_CONCEITOS.md`: explicacao simples dos conceitos principais, como frontend, backend, API, `.env`, token, CSV, Git e GitHub.
+- `GABARITO.md`: passo a passo completo para recriar o sistema com prompts.
+
 ## Rodar local
 
 1. Instale dependencias:
