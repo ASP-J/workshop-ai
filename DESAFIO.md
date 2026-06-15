@@ -14,6 +14,21 @@ A empresa quer um painel simples para responder perguntas como:
 
 O objetivo do desafio e criar um sisteminha local que conecte a API da Twygo com uma planilha CSV e mostre os resultados de forma visual.
 
+Quando este documento falar em **API da Twygo**, entenda assim:
+
+```text
+e o caminho que o sistema usa para buscar usuarios reais cadastrados na Twygo
+```
+
+Para acessar essa API, o instrutor vai entregar um token.
+
+Voce nao precisa decorar detalhes tecnicos da API. Voce precisa saber que:
+
+1. A API entrega os usuarios.
+2. O token autoriza o acesso.
+3. O backend local protege o token.
+4. A tela mostra os usuarios recebidos.
+
 ## Como voce vai trabalhar
 
 Neste desafio, voce vai usar Claude ou Codex.
@@ -200,11 +215,15 @@ Depois use:
 ```text
 Prepare o projeto para rodar localmente.
 Crie o arquivo .env a partir do .env.example.
-Me diga onde devo colar o token da Twygo.
-Nao mostre meu token real na resposta.
+Configure o arquivo .env com este token da Twygo:
+[cole aqui o token recebido do instrutor]
+
+Salve esse valor na variavel TWYGO_API_TOKEN.
+Nao mostre, nao repita e nao imprima meu token na resposta.
+No final, apenas confirme que o .env foi configurado.
 ```
 
-Depois de colocar o token:
+Depois que a IA confirmar que configurou o token:
 
 ```text
 Abra o projeto local e confira se a API da Twygo esta respondendo.

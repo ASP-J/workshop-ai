@@ -446,11 +446,14 @@ O aluno pode pedir:
 
 ```text
 Crie meu arquivo .env a partir do .env.example.
-Depois me diga onde eu devo colar o token real.
-Nao mostre meu token na resposta.
+Configure o arquivo .env com este token:
+[cole aqui o token recebido do instrutor]
+
+Salve esse valor na variavel TWYGO_API_TOKEN.
+Nao mostre, nao repita e nao imprima meu token na resposta.
 ```
 
-Depois ele coloca o token real no `.env`.
+Assim o aluno nao precisa abrir o `.env` manualmente.
 
 ## 16. O que e token
 
@@ -884,8 +887,8 @@ Confira se meu .env esta no formato correto, mas nao mostre nem repita meu token
 Antes de chamar o instrutor, conferir:
 
 1. Pedi para a IA instalar as dependencias?
-2. Pedi para a IA criar o arquivo `.env` a partir do `.env.example`?
-3. Coloquei o token real no `.env`?
+2. Passei o token para a IA configurar o `.env`?
+3. A IA confirmou que salvou o token em `TWYGO_API_TOKEN`?
 4. Pedi para a IA abrir o projeto local?
 5. Abri `http://localhost:5183`?
 6. O backend abriu em `http://localhost:5184/health`?

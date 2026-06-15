@@ -239,14 +239,12 @@ Agora peca para a IA criar seu `.env` a partir do `.env.example`:
 
 ```text
 Crie meu arquivo .env a partir do .env.example.
-Depois me diga onde colar o token real.
-Nao mostre meu token na resposta.
-```
+Configure o arquivo .env com este token:
+[cole aqui o token recebido do instrutor]
 
-Abra o `.env` e coloque o token real:
-
-```text
-TWYGO_API_TOKEN=seu_token_aqui
+Salve esse valor na variavel TWYGO_API_TOKEN.
+Nao mostre, nao repita e nao imprima meu token na resposta.
+No final, apenas confirme que o .env foi configurado.
 ```
 
 ## Se der erro
@@ -256,6 +254,7 @@ Mande para a IA:
 ```text
 Nao sei se meu .env esta certo.
 Confere a configuracao e garante que o token nao vai para o GitHub.
+Nao mostre nem repita meu token na resposta.
 ```
 
 ---
