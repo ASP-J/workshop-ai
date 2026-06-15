@@ -1,6 +1,6 @@
 # Twygo Users Lab
 
-Mini app para o workshop de consumo da API Twygo. A tela lista usuarios via API v2 usando um servidor local para proteger o Bearer token.
+Mini app para o workshop de consumo da API Twygo com cruzamento de planilha. A tela lista usuarios via API v2, recebe um CSV de capacitacao e gera tabela + graficos por area, categoria e status do cruzamento.
 
 ## Rodar local
 
@@ -30,24 +30,37 @@ npm run dev
 http://localhost:5183
 ```
 
+## CSV de exemplo
+
+Use o arquivo:
+
+```text
+public/sample-capacitacao.csv
+```
+
+Colunas esperadas:
+
+- `email`
+- `area`
+- `categoria`
+- `curso`
+- `horas_capacitacao`
+- `status_capacitacao`
+- `nota`
+- `concluido_em`
+
 ## Testes
 
 ```bash
 npm test
 ```
 
-## API usada
+## APIs e cruzamento
 
 O backend local chama:
 
 ```text
-GET https://api.twygo.com/api/v2/users
+GET https://api.twygo.com/api/v2/users?page=1&per_page=50
 ```
 
-Filtros enviados pela tela:
-
-- `page`
-- `per_page`
-- `user_id`
-- `name`
-- `email`
+O frontend cruza os usuarios da API com o CSV usando `email`.

@@ -1,35 +1,40 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { loadUsers } from "./api.js";
+import { buildTrainingDashboard } from "./trainingDashboard.js";
+import { parseTrainingCsv } from "./trainingCsv.js";
 import { presentUsers } from "./userPresenter.js";
 import "./styles.css";
 
-const initialFilters = {
+const platformQuery = {
   page: "1",
-  per_page: "10",
-  name: "",
-  email: "",
-  user_id: ""
+  per_page: "50"
 };
 
 export default function App() {
-  const [filters, setFilters] = useState(initialFilters);
   const [rawPayload, setRawPayload] = useState(null);
+  const [trainingRecords, setTrainingRecords] = useState([]);
+  const [csvName, setCsvName] = useState("");
   const [status, setStatus] = useState("idle");
+  const [csvStatus, setCsvStatus] = useState("empty");
   const [error, setError] = useState("");
 
   const presented = useMemo(() => presentUsers(rawPayload), [rawPayload]);
+  const dashboard = useMemo(
+    () => buildTrainingDashboard(presented.users, trainingRecords),
+    [presented.users, trainingRecords]
+  );
 
   useEffect(() => {
-    refresh(initialFilters);
+    refreshUsers();
   }, []);
 
-  async function refresh(nextFilters = filters) {
+  async function refreshUsers() {
     setStatus("loading");
     setError("");
 
     try {
-      const payload = await loadUsers(nextFilters);
+      const payload = await loadUsers(platformQuery);
       setRawPayload(payload);
       setStatus("ready");
     } catch (err) {
@@ -38,24 +43,24 @@ export default function App() {
     }
   }
 
-  function updateFilter(event) {
-    setFilters((current) => ({
-      ...current,
-      [event.target.name]: event.target.value
-    }));
+  async function uploadCsv(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const text = await file.text();
+    applyCsv(text, file.name);
   }
 
-  function submit(event) {
-    event.preventDefault();
-    refresh({ ...filters, page: "1" });
-    setFilters((current) => ({ ...current, page: "1" }));
+  async function loadSampleCsv() {
+    const response = await fetch("/sample-capacitacao.csv");
+    const text = await response.text();
+    applyCsv(text, "sample-capacitacao.csv");
   }
 
-  function goToPage(offset) {
-    const nextPage = Math.max(1, Number(filters.page || "1") + offset);
-    const nextFilters = { ...filters, page: String(nextPage) };
-    setFilters(nextFilters);
-    refresh(nextFilters);
+  function applyCsv(text, fileName) {
+    const records = parseTrainingCsv(text);
+    setTrainingRecords(records);
+    setCsvName(fileName);
+    setCsvStatus(records.length ? "ready" : "empty");
   }
 
   return (
@@ -63,73 +68,76 @@ export default function App() {
       <section className="workspace">
         <header className="topbar">
           <div>
-            <p className="eyebrow">Workshop Twygo API</p>
-            <h1>Twygo Users Lab</h1>
+            <p className="eyebrow">Workshop Twygo API + CSV</p>
+            <h1>Painel de capacitacao</h1>
           </div>
-          <StatusBadge status={status} />
+          <div className="top-actions">
+            <StatusBadge status={status} />
+            <button type="button" className="secondary-button" onClick={refreshUsers} disabled={status === "loading"}>
+              Recarregar usuarios
+            </button>
+          </div>
         </header>
-
-        <form className="filters" onSubmit={submit}>
-          <label>
-            Nome
-            <input name="name" value={filters.name} onChange={updateFilter} placeholder="Buscar por nome" />
-          </label>
-          <label>
-            Email
-            <input name="email" value={filters.email} onChange={updateFilter} placeholder="usuario@empresa.com" />
-          </label>
-          <label>
-            ID
-            <input name="user_id" value={filters.user_id} onChange={updateFilter} placeholder="123" />
-          </label>
-          <label>
-            Por pagina
-            <select name="per_page" value={filters.per_page} onChange={updateFilter}>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </select>
-          </label>
-          <button type="submit">Consultar</button>
-        </form>
 
         {error ? <div className="notice danger">{error}</div> : null}
 
-        <section className="table-panel" aria-label="Usuarios da API Twygo">
+        <section className="upload-panel" aria-label="Anexar CSV de capacitacao">
+          <div>
+            <p className="eyebrow">Entrada da planilha</p>
+            <h2>Anexe o CSV de capacitacao</h2>
+            <p>
+              O cruzamento usa o email como chave entre os usuarios da plataforma e a planilha.
+            </p>
+          </div>
+          <div className="upload-actions">
+            <label className="file-button">
+              Anexar CSV
+              <input type="file" accept=".csv,text/csv" onChange={uploadCsv} />
+            </label>
+            <button type="button" className="secondary-button" onClick={loadSampleCsv}>
+              Usar CSV exemplo
+            </button>
+          </div>
+          <div className={`csv-state ${csvStatus}`}>
+            {csvName ? `${csvName} · ${trainingRecords.length} linhas positivas` : "Nenhum CSV anexado ainda"}
+          </div>
+        </section>
+
+        <SummaryCards summary={dashboard.summary} />
+
+        <section className="charts-grid" aria-label="Graficos de capacitacao">
+          <BarChart title="Horas por area" data={dashboard.charts.hoursByArea} suffix="h" />
+          <BarChart title="Usuarios por categoria" data={dashboard.charts.usersByCategory} />
+          <BarChart title="Situacao do cruzamento" data={dashboard.charts.statusCount} />
+          <BarChart title="Top cursos por horas" data={dashboard.charts.topCourses} suffix="h" />
+        </section>
+
+        <section className="table-panel" aria-label="Usuarios cruzados com CSV">
           <div className="table-header">
             <div>
-              <h2>Usuarios</h2>
+              <h2>Usuarios + capacitacao</h2>
               <p>
-                Pagina {presented.pagination.page} · {presented.pagination.total} registros encontrados
+                {presented.users.length} usuarios da plataforma · {dashboard.summary.totalHours} horas cruzadas
               </p>
-            </div>
-            <div className="pager">
-              <button type="button" onClick={() => goToPage(-1)} disabled={status === "loading" || filters.page === "1"}>
-                Anterior
-              </button>
-              <button type="button" onClick={() => goToPage(1)} disabled={status === "loading"}>
-                Proxima
-              </button>
             </div>
           </div>
 
-          <UserTable users={presented.users} status={status} />
+          <TrainingTable rows={dashboard.rows} status={status} />
         </section>
       </section>
 
       <aside className="explain-panel">
         <p className="eyebrow">O que esta tela ensina</p>
-        <h2>Da collection para o app</h2>
+        <h2>API + planilha = painel</h2>
         <ol>
-          <li>O front chama apenas o servidor local.</li>
-          <li>O servidor adiciona o Bearer token.</li>
-          <li>A API v2 retorna usuarios e paginacao.</li>
-          <li>A tela transforma o JSON em uma tabela legivel.</li>
+          <li>O app busca usuarios na API Twygo.</li>
+          <li>O aluno anexa um CSV de capacitacao.</li>
+          <li>O sistema cruza tudo pelo email.</li>
+          <li>Cards, tabela e graficos nascem do cruzamento.</li>
         </ol>
         <div className="endpoint">
           <span>GET</span>
-          <code>/api/v2/users</code>
+          <code>/api/v2/users + sample-capacitacao.csv</code>
         </div>
       </aside>
     </main>
@@ -147,13 +155,61 @@ function StatusBadge({ status }) {
   return <span className={`status ${status}`}>{labels[status]}</span>;
 }
 
-function UserTable({ users, status }) {
+function SummaryCards({ summary }) {
+  return (
+    <section className="summary-grid" aria-label="Resumo de capacitacao">
+      <MetricCard label="Usuarios na tela" value={summary.totalUsers} />
+      <MetricCard label="Com capacitacao" value={summary.usersWithTraining} />
+      <MetricCard label="Horas totais" value={`${summary.totalHours}h`} />
+      <MetricCard label="Cobertura" value={`${summary.coveragePercent}%`} />
+    </section>
+  );
+}
+
+function MetricCard({ label, value }) {
+  return (
+    <article className="metric-card">
+      <p>{label}</p>
+      <strong>{value}</strong>
+    </article>
+  );
+}
+
+function BarChart({ title, data, suffix = "" }) {
+  const max = Math.max(...data.map((item) => item.value), 1);
+
+  return (
+    <article className="chart-card">
+      <h2>{title}</h2>
+      {data.length ? (
+        <div className="bars">
+          {data.map((item) => (
+            <div className="bar-row" key={item.label}>
+              <span>{item.label}</span>
+              <div className="bar-track">
+                <div className="bar-fill" style={{ width: `${Math.max(8, (item.value / max) * 100)}%` }} />
+              </div>
+              <strong>
+                {item.value}
+                {suffix}
+              </strong>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="empty small">Anexe o CSV para gerar este grafico.</div>
+      )}
+    </article>
+  );
+}
+
+function TrainingTable({ rows, status }) {
   if (status === "loading") {
-    return <div className="empty">Carregando usuarios da API...</div>;
+    return <div className="empty">Carregando usuarios da plataforma...</div>;
   }
 
-  if (!users.length) {
-    return <div className="empty">Nenhum usuario retornou para estes filtros.</div>;
+  if (!rows.length) {
+    return <div className="empty">Nenhum usuario retornou da plataforma.</div>;
   }
 
   return (
@@ -161,21 +217,29 @@ function UserTable({ users, status }) {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
-            <th>CPF</th>
-            <th>Status</th>
+            <th>Area</th>
+            <th>Categorias</th>
+            <th>Horas</th>
+            <th>Nota media</th>
+            <th>Cursos</th>
+            <th>Cruzamento</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={`${user.id}-${user.email}`}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.cpf}</td>
-              <td>{user.status}</td>
+          {rows.map((row) => (
+            <tr key={`${row.id}-${row.email}`}>
+              <td>{row.name}</td>
+              <td>{row.email}</td>
+              <td>{row.area}</td>
+              <td>{row.categories}</td>
+              <td>{row.hours}h</td>
+              <td>{row.averageScore || "-"}</td>
+              <td>{row.courses}</td>
+              <td>
+                <span className={`match-pill ${row.hours ? "matched" : "missing"}`}>{row.trainingStatus}</span>
+              </td>
             </tr>
           ))}
         </tbody>
