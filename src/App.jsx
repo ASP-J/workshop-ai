@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { loadUsers } from "./api.js";
+import { buildPieSlices } from "./chartSlices.js";
 import { buildTrainingDashboard } from "./trainingDashboard.js";
 import { parseTrainingCsv } from "./trainingCsv.js";
 import { presentUsers } from "./userPresenter.js";
@@ -106,9 +107,9 @@ export default function App() {
         <SummaryCards summary={dashboard.summary} />
 
         <section className="charts-grid" aria-label="Graficos de capacitacao">
-          <BarChart title="Horas por area" data={dashboard.charts.hoursByArea} suffix="h" />
-          <BarChart title="Usuarios por categoria" data={dashboard.charts.usersByCategory} />
-          <BarChart title="Situacao do cruzamento" data={dashboard.charts.statusCount} />
+          <PieChart title="Horas por area" data={dashboard.charts.hoursByArea} suffix="h" />
+          <PieChart title="Usuarios por categoria" data={dashboard.charts.usersByCategory} />
+          <PieChart title="Situacao do cruzamento" data={dashboard.charts.statusCount} />
           <BarChart title="Top cursos por horas" data={dashboard.charts.topCourses} suffix="h" />
         </section>
 
@@ -195,6 +196,42 @@ function BarChart({ title, data, suffix = "" }) {
               </strong>
             </div>
           ))}
+        </div>
+      ) : (
+        <div className="empty small">Anexe o CSV para gerar este grafico.</div>
+      )}
+    </article>
+  );
+}
+
+function PieChart({ title, data, suffix = "" }) {
+  const slices = buildPieSlices(data);
+  const background = slices.length ? `conic-gradient(${slices.map((slice) => slice.stop).join(", ")})` : "#edf4f0";
+
+  return (
+    <article className="chart-card pie-card">
+      <h2>{title}</h2>
+      {slices.length ? (
+        <div className="pie-layout">
+          <div className="donut" style={{ background }} aria-hidden="true">
+            <div>
+              <strong>{data.reduce((total, item) => total + Number(item.value ?? 0), 0)}</strong>
+              <span>Total</span>
+            </div>
+          </div>
+          <div className="legend">
+            {slices.map((slice) => (
+              <div className="legend-row" key={slice.label}>
+                <i style={{ backgroundColor: slice.color }} />
+                <span>{slice.label}</span>
+                <strong>
+                  {slice.value}
+                  {suffix}
+                </strong>
+                <em>{slice.percent}%</em>
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <div className="empty small">Anexe o CSV para gerar este grafico.</div>
