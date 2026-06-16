@@ -115,19 +115,23 @@ O que voce precisa entender e:
 
 Leia nesta ordem:
 
-1. `DESAFIO.md`
+1. `PASSO_A_PASSO_COMPLETO.md`
+   - Roteiro completo do projeto, do inicio ate a apresentacao final.
+   - Siga este documento como trilha principal da aula.
+
+2. `DESAFIO.md`
    - Enunciado do desafio.
    - Explica o que voce precisa entregar.
 
-2. `APOSTILA_CONCEITOS.md`
+3. `APOSTILA_CONCEITOS.md`
    - Explica conceitos como API, frontend, backend, CSV, token e `.env`.
    - Leia se alguma palavra parecer confusa.
 
-3. `PASSO_A_PASSO_SE_TRAVAR.md`
+4. `PASSO_A_PASSO_SE_TRAVAR.md`
    - Roteiro de emergencia.
    - Use se voce nao conseguir continuar ou nao entender um erro.
 
-4. `public/sample-capacitacao.csv`
+5. `public/sample-capacitacao.csv`
    - CSV de exemplo para anexar no painel.
 
 ## Passo 1 - Peca para a IA entender o projeto
