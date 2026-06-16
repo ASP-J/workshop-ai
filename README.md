@@ -123,7 +123,11 @@ Leia nesta ordem:
    - Explica conceitos como API, frontend, backend, CSV, token e `.env`.
    - Leia se alguma palavra parecer confusa.
 
-3. `public/sample-capacitacao.csv`
+3. `PASSO_A_PASSO_SE_TRAVAR.md`
+   - Roteiro de emergencia.
+   - Use se voce nao conseguir continuar ou nao entender um erro.
+
+4. `public/sample-capacitacao.csv`
    - CSV de exemplo para anexar no painel.
 
 ## Passo 1 - Peca para a IA entender o projeto
