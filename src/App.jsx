@@ -45,10 +45,13 @@ export default function App() {
   }
 
   async function uploadCsv(event) {
-    const file = event.target.files?.[0];
+    const input = event.target;
+    const file = input.files?.[0];
     if (!file) return;
     const text = await file.text();
     applyCsv(text, file.name);
+    // reseta o input para reanexar o mesmo arquivo disparar o onChange de novo
+    input.value = "";
   }
 
   async function loadSampleCsv() {
