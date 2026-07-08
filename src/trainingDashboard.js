@@ -12,17 +12,24 @@ export function buildTrainingDashboard(users, trainingRecords) {
     const courses = uniqueSorted(records.map((record) => record.curso));
     const areas = uniqueSorted(records.map((record) => record.area));
 
+    const totalCourses = records.length;
+    const completedCourses = records.filter((record) => isConcluded(record.status)).length;
+
     return {
       id: user.id,
       name: user.name,
       email: user.email,
       platformStatus: user.status,
+      sector: user.sector || "Sem setor",
       area: areas.join(", ") || "-",
       categories: categories.join(", ") || "-",
       courses: courses.join(", ") || "-",
       hours,
       averageScore: average(records.map((record) => record.nota)),
-      trainingStatus: records.length ? "Com dados" : "Sem dados no CSV"
+      trainingStatus: records.length ? "Com dados" : "Sem dados no CSV",
+      completedCourses,
+      totalCourses,
+      completionStatus: completionStatusFor(totalCourses, completedCourses)
     };
   });
 
@@ -31,7 +38,12 @@ export function buildTrainingDashboard(users, trainingRecords) {
   );
   const matchedRecords = trainingRecords.filter((record) => matchedEmails.has(normalizeEmail(record.email)));
   const trainedRows = rows.filter((row) => row.hours > 0);
+  const rowsWithData = rows.filter((row) => row.totalCourses > 0);
+  const completedUsers = rows.filter((row) => row.completionStatus === "Concluiu");
+  const partialUsers = rows.filter((row) => row.completionStatus === "Parcial");
+  const notCompletedUsers = rows.filter((row) => row.completionStatus === "Nao concluiu");
   const totalHours = sum(rows.map((row) => row.hours));
+  const scoredRows = rows.filter((row) => row.averageScore > 0);
 
   return {
     rows,
@@ -39,9 +51,15 @@ export function buildTrainingDashboard(users, trainingRecords) {
     summary: {
       totalUsers: users.length,
       usersWithTraining: trainedRows.length,
+      usersCompleted: completedUsers.length,
+      usersNotCompleted: rowsWithData.length - completedUsers.length,
       totalHours,
       averageHours: trainedRows.length ? round(totalHours / trainedRows.length) : 0,
-      coveragePercent: users.length ? Math.round((trainedRows.length / users.length) * 100) : 0
+      coveragePercent: users.length ? Math.round((trainedRows.length / users.length) * 100) : 0,
+      completionRate: rowsWithData.length ? Math.round((completedUsers.length / rowsWithData.length) * 100) : 0,
+      hoursPerUser: rowsWithData.length ? round(totalHours / rowsWithData.length) : 0,
+      averageScore: scoredRows.length ? round(sum(scoredRows.map((row) => row.averageScore)) / scoredRows.length) : 0,
+      sectorsCount: new Set(rows.map((row) => row.sector)).size
     },
     charts: {
       hoursByArea: sortChart(groupSum(matchedRecords, "area", "horas")),
@@ -50,9 +68,65 @@ export function buildTrainingDashboard(users, trainingRecords) {
         { label: "Com dados", value: trainedRows.length },
         { label: "Sem dados no CSV", value: rows.length - trainedRows.length }
       ].filter((item) => item.value > 0),
+      completionCount: [
+        { label: "Concluiu", value: completedUsers.length },
+        { label: "Parcial", value: partialUsers.length },
+        { label: "Nao concluiu", value: notCompletedUsers.length }
+      ].filter((item) => item.value > 0),
+      usersBySector: sortChart(countBy(rows, "sector")),
+      hoursBySector: sortChart(sumBy(rows, "sector", "hours")),
+      completionRateBySector: sectorCompletionRates(rows),
       topCourses: sortChart(groupSum(matchedRecords, "curso", "horas")).slice(0, 5)
     }
   };
+}
+
+function countBy(rows, key) {
+  const map = new Map();
+  for (const row of rows) {
+    const label = row[key] || "-";
+    map.set(label, (map.get(label) ?? 0) + 1);
+  }
+  return [...map.entries()].map(([label, value]) => ({ label, value }));
+}
+
+function sumBy(rows, key, valueKey) {
+  const map = new Map();
+  for (const row of rows) {
+    const label = row[key] || "-";
+    map.set(label, (map.get(label) ?? 0) + Number(row[valueKey] ?? 0));
+  }
+  return [...map.entries()].map(([label, value]) => ({ label, value: round(value) }));
+}
+
+function sectorCompletionRates(rows) {
+  const map = new Map();
+  for (const row of rows) {
+    if (row.totalCourses === 0) continue;
+    const sector = row.sector || "-";
+    const bucket = map.get(sector) ?? { withData: 0, completed: 0 };
+    bucket.withData += 1;
+    if (row.completionStatus === "Concluiu") bucket.completed += 1;
+    map.set(sector, bucket);
+  }
+  return [...map.entries()]
+    .map(([label, bucket]) => ({ label, value: Math.round((bucket.completed / bucket.withData) * 100) }))
+    .sort((a, b) => b.value - a.value || a.label.localeCompare(b.label));
+}
+
+function isConcluded(status) {
+  return String(status ?? "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "") === "concluido";
+}
+
+function completionStatusFor(totalCourses, completedCourses) {
+  if (totalCourses === 0) return "Sem dados no CSV";
+  if (completedCourses === totalCourses) return "Concluiu";
+  if (completedCourses > 0) return "Parcial";
+  return "Nao concluiu";
 }
 
 function groupByEmail(records) {

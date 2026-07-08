@@ -8,7 +8,8 @@ export function presentUsers(payload) {
       name: joinName(user.name, user.first_name, user.last_name),
       email: value(user.email),
       cpf: value(user.cpf),
-      status: value(user.status ?? user.situation ?? user.active)
+      status: value(user.status ?? user.situation ?? user.active),
+      sector: sectorOf(user.department ?? user.sector)
     })),
     pagination: {
       page: Number(pagination.page ?? pagination.current_page ?? 1),
@@ -23,6 +24,11 @@ function joinName(name, firstName, lastName) {
   const readyName = value(name);
   if (readyName !== "-") return readyName;
   return [firstName, lastName].map(value).filter((part) => part !== "-").join(" ") || "-";
+}
+
+function sectorOf(input) {
+  const text = String(input ?? "").trim();
+  return text || "Sem setor";
 }
 
 function value(input) {

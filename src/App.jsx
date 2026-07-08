@@ -106,10 +106,19 @@ export default function App() {
 
         <SummaryCards summary={dashboard.summary} />
 
+        <HrSummaryCards summary={dashboard.summary} />
+
+        <section className="charts-grid" aria-label="Graficos por setor">
+          <p className="section-title">Visao por setor (RH)</p>
+          <PieChart title="Pessoas por setor" data={dashboard.charts.usersBySector} />
+          <BarChart title="Horas por setor" data={dashboard.charts.hoursBySector} suffix="h" />
+          <BarChart title="Taxa de conclusao por setor" data={dashboard.charts.completionRateBySector} suffix="%" />
+        </section>
+
         <section className="charts-grid" aria-label="Graficos de capacitacao">
+          <PieChart title="Concluiu x nao concluiu" data={dashboard.charts.completionCount} />
           <PieChart title="Horas por area" data={dashboard.charts.hoursByArea} suffix="h" />
           <PieChart title="Usuarios por categoria" data={dashboard.charts.usersByCategory} />
-          <PieChart title="Situacao do cruzamento" data={dashboard.charts.statusCount} />
           <BarChart title="Top cursos por horas" data={dashboard.charts.topCourses} suffix="h" />
         </section>
 
@@ -160,9 +169,21 @@ function SummaryCards({ summary }) {
   return (
     <section className="summary-grid" aria-label="Resumo de capacitacao">
       <MetricCard label="Usuarios na tela" value={summary.totalUsers} />
-      <MetricCard label="Com capacitacao" value={summary.usersWithTraining} />
+      <MetricCard label="Concluiram" value={summary.usersCompleted} />
+      <MetricCard label="Nao concluiram" value={summary.usersNotCompleted} />
       <MetricCard label="Horas totais" value={`${summary.totalHours}h`} />
       <MetricCard label="Cobertura" value={`${summary.coveragePercent}%`} />
+    </section>
+  );
+}
+
+function HrSummaryCards({ summary }) {
+  return (
+    <section className="summary-grid" aria-label="Indicadores de RH">
+      <MetricCard label="Taxa de conclusao" value={`${summary.completionRate}%`} />
+      <MetricCard label="Horas por pessoa" value={`${summary.hoursPerUser}h`} />
+      <MetricCard label="Nota media" value={summary.averageScore || "-"} />
+      <MetricCard label="Setores" value={summary.sectorsCount} />
     </section>
   );
 }
@@ -240,6 +261,12 @@ function PieChart({ title, data, suffix = "" }) {
   );
 }
 
+function completionClass(completionStatus) {
+  if (completionStatus === "Concluiu") return "matched";
+  if (completionStatus === "Parcial") return "partial";
+  return "missing";
+}
+
 function TrainingTable({ rows, status }) {
   if (status === "loading") {
     return <div className="empty">Carregando usuarios da plataforma...</div>;
@@ -256,12 +283,13 @@ function TrainingTable({ rows, status }) {
           <tr>
             <th>Nome</th>
             <th>Email</th>
+            <th>Setor</th>
             <th>Area</th>
             <th>Categorias</th>
             <th>Horas</th>
             <th>Nota media</th>
             <th>Cursos</th>
-            <th>Cruzamento</th>
+            <th>Conclusao</th>
           </tr>
         </thead>
         <tbody>
@@ -269,13 +297,21 @@ function TrainingTable({ rows, status }) {
             <tr key={`${row.id}-${row.email}`}>
               <td>{row.name}</td>
               <td>{row.email}</td>
+              <td>{row.sector}</td>
               <td>{row.area}</td>
               <td>{row.categories}</td>
               <td>{row.hours}h</td>
               <td>{row.averageScore || "-"}</td>
               <td>{row.courses}</td>
               <td>
-                <span className={`match-pill ${row.hours ? "matched" : "missing"}`}>{row.trainingStatus}</span>
+                <span className={`match-pill ${completionClass(row.completionStatus)}`}>
+                  {row.completionStatus}
+                </span>
+                {row.totalCourses ? (
+                  <small className="completion-count">
+                    {row.completedCourses}/{row.totalCourses} cursos
+                  </small>
+                ) : null}
               </td>
             </tr>
           ))}

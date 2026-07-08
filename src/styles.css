@@ -423,9 +423,31 @@ td {
   color: #1d5c4a;
 }
 
+.match-pill.partial {
+  background: #e5edff;
+  color: #274690;
+}
+
 .match-pill.missing {
   background: #fff4cf;
   color: #80621d;
+}
+
+.completion-count {
+  color: #607168;
+  display: block;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.section-title {
+  color: #274690;
+  font-size: 0.82rem;
+  font-weight: 900;
+  grid-column: 1 / -1;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .empty {

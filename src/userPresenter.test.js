@@ -25,7 +25,8 @@ describe("presentUsers", () => {
         name: "Maria Silva",
         email: "maria@example.com",
         cpf: "-",
-        status: "Ativo"
+        status: "Ativo",
+        sector: "Sem setor"
       }
     ]);
     expect(result.pagination.total).toBe(42);
