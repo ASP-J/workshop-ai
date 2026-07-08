@@ -15,6 +15,7 @@ const platformQuery = {
 export default function App() {
   const [rawPayload, setRawPayload] = useState(null);
   const [trainingRecords, setTrainingRecords] = useState([]);
+  const [csvText, setCsvText] = useState("");
   const [csvName, setCsvName] = useState("");
   const [status, setStatus] = useState("idle");
   const [csvStatus, setCsvStatus] = useState("empty");
@@ -63,8 +64,14 @@ export default function App() {
   function applyCsv(text, fileName) {
     const records = parseTrainingCsv(text);
     setTrainingRecords(records);
+    setCsvText(text);
     setCsvName(fileName);
     setCsvStatus(records.length ? "ready" : "empty");
+  }
+
+  function reprocessCsv() {
+    if (!csvText) return;
+    applyCsv(csvText, csvName);
   }
 
   return (
@@ -100,6 +107,9 @@ export default function App() {
             </label>
             <button type="button" className="secondary-button" onClick={loadSampleCsv}>
               Usar CSV exemplo
+            </button>
+            <button type="button" className="secondary-button" onClick={reprocessCsv} disabled={!csvText}>
+              Atualizar painel
             </button>
           </div>
           <div className={`csv-state ${csvStatus}`}>
