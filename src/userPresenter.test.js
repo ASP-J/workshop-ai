@@ -32,6 +32,24 @@ describe("presentUsers", () => {
     expect(result.pagination.total).toBe(42);
   });
 
+  it("reads total_entries, the field the Twygo API actually sends", () => {
+    const result = presentUsers({
+      data: {
+        users: [{ user_id: 1, name: "Ana", email: "ana@example.com" }],
+        pagination: { current_page: 1, total_pages: 2, total_entries: 186 }
+      }
+    });
+
+    expect(result.pagination.total).toBe(186);
+    expect(result.pagination.page).toBe(1);
+  });
+
+  it("falls back to total_count when total_entries is missing", () => {
+    const result = presentUsers({ data: { users: [], pagination: { total_count: 9 } } });
+
+    expect(result.pagination.total).toBe(9);
+  });
+
   it("returns a stable empty state for missing data", () => {
     const result = presentUsers({});
 

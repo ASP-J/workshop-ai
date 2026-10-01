@@ -14,7 +14,7 @@ export function presentUsers(payload) {
     pagination: {
       page: Number(pagination.page ?? pagination.current_page ?? 1),
       perPage: Number(pagination.per_page ?? pagination.perPage ?? users.length),
-      total: Number(pagination.total ?? pagination.total_count ?? users.length)
+      total: Number(pagination.total_entries ?? pagination.total ?? pagination.total_count ?? users.length)
     },
     message: payload?.message ?? ""
   };
