@@ -48,6 +48,28 @@ Use esta frase sempre que precisar:
 Explique em linguagem simples, como se eu nunca tivesse programado.
 ```
 
+## Etapa 0 - Antes do projeto: a rodada "pergunte ao Claude"
+
+Antes de abrir o projeto, cada pessoa faz uma rodada rapida com o Claude para descobrir como ele pode ajudar no proprio trabalho.
+
+1. Abra o Claude (claude.ai ou o Claude Code, tanto faz nesta etapa).
+2. Cole o pedido abaixo e complete com o seu setor e as suas tarefas.
+3. Escolha os 2 usos que mais economizariam tempo para voce.
+4. Apresente para a turma em 1 minuto: a tarefa de hoje, como o Claude ajuda e qual e o ganho.
+
+```text
+Eu trabalho em [setor] e no dia a dia eu [3 tarefas].
+Me de 5 ideias de como voce pode facilitar o meu trabalho.
+Para cada uma: o que eu te pediria, um exemplo de pedido pronto e quanto tempo eu economizaria.
+Use linguagem simples.
+```
+
+Regra da rodada: **sem dado real no pedido.** Nao coloque nome, e-mail ou informacao real de colaborador ou cliente. Use exemplos inventados.
+
+Os usos que aparecerem na rodada viram ideias para evoluir o painel do seu setor no final.
+
+Mais detalhes na secao 3 da `APOSTILA_CONCEITOS.md`.
+
 ## Etapa 1 - Pegar a versao correta do projeto
 
 O projeto tem uma branch propria para alunos:
