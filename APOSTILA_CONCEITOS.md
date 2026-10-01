@@ -1127,7 +1127,27 @@ Tudo roda local, e nada sobe sem auditoria.
 
 ## 45. Desafio do seu setor (bônus)
 
-Escolha uma tarefa repetitiva ou manual da sua área e faça uma demonstração simples com o Claude Code. O ideal é usar o `kpi-boilerplate` como base.
+Escolha uma tarefa repetitiva ou manual da sua área e faça uma demonstração simples com o Claude Code.
+
+### Comece pelo boilerplate-workshop
+
+O `boilerplate-workshop` é um painel pronto feito para este desafio. Ele roda só com Node, sem Docker e sem banco de dados, e só no seu computador.
+
+- **Minha planilha:** carregue um CSV ou Excel e veja cards, gráfico e tabela.
+- **Usuários Twygo:** lista os usuários da API, com o token protegido no backend.
+- **Cruzar planilha × Twygo:** junta qualquer planilha com os usuários pelo e-mail.
+- **Minha automação:** página modelo para o seu desafio.
+- O `CLAUDE.md` e as skills já explicam as regras para o agente, e o `PROMPTS.md` traz pedidos prontos por área.
+
+Primeiro pedido no Claude Code, dentro da pasta `boilerplate-workshop`:
+
+```text
+Leia o CLAUDE.md e o README, instale o que precisar, rode o sistema e me diga qual endereço abrir.
+```
+
+O sistema abre em `http://localhost:5193`. Ele precisa do Node 22 ou mais novo.
+
+Se depois o projeto crescer e precisar de banco de dados, use o `kpi-boilerplate` (seção 44).
 
 ### O que apresentar
 
