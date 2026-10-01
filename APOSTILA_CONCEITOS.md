@@ -169,7 +169,7 @@ Uma skill é uma receita que o agente segue quando aparece uma tarefa específic
 Exemplos de skills:
 
 - `rodar-sistema`: como instalar, ligar e conferir o sistema local.
-- `nova-pagina-kpi`: como criar uma página nova de indicador no painel.
+- `nova-pagina`: como criar uma página nova no painel.
 - `importar-planilha`: como ler um CSV novo e cruzar com os dados existentes.
 
 ### Resumo em uma linha
@@ -575,6 +575,11 @@ Com o CSV do workshop, a tela deve mostrar mais ou menos isto:
 **Pessoas e linhas são coisas diferentes:** uma pessoa pode ter vários cursos, então aparece em várias linhas do CSV. São 150 **pessoas** cruzadas, mas 271 **linhas** cruzadas.
 
 Os 10 e-mails de teste (`pessoa01` a `pessoa10@anonimizado.com`) estão no CSV de propósito, para você ver como o sistema mostra quem **não** foi encontrado na Twygo.
+
+Outros números que podem parecer estranhos:
+
+- **"Sem setor" e "Sem area no perfil"** aparecem bastante porque muitos usuários não têm o setor preenchido na Twygo. Isso é dado real, não erro do sistema.
+- **Horas totais:** o painel do exercício mostra 2020h, que são só as horas das linhas cruzadas. A planilha inteira tem 2.134h; a diferença são as 16 linhas que não cruzam.
 
 ## 19. O que é .env
 
@@ -1175,7 +1180,7 @@ O `boilerplate-workshop` é um painel pronto feito para este desafio. Ele roda s
 - **Minha automação:** página modelo para o seu desafio.
 - O `CLAUDE.md` e as skills já explicam as regras para o agente, e o `PROMPTS.md` traz pedidos prontos por área.
 
-Primeiro pedido no Claude Code, dentro da pasta `boilerplate-workshop`:
+Primeiro pedido no Claude Code, dentro da pasta `06-boilerplate-workshop` do kit:
 
 ```text
 Leia o CLAUDE.md e o README, instale o que precisar, rode o sistema e me diga qual endereço abrir.
