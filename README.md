@@ -145,6 +145,10 @@ Leia nesta ordem:
 5. `public/sample-capacitacao.csv`
    - CSV de exemplo para anexar no painel.
 
+6. `docs/APOSTILA_CONCEITOS.pdf` e `docs/APOSTILA_RESUMO.png`
+   - Versao em PDF da apostila e um resumo visual de uma pagina.
+   - Veja: [Apostila em PDF](docs/APOSTILA_CONCEITOS.pdf) · [Resumo visual](docs/APOSTILA_RESUMO.png)
+
 ## Passo 1 - Peca para a IA entender o projeto
 
 Abra Claude ou Codex e envie:

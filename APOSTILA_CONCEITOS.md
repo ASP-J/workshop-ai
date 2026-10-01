@@ -2,25 +2,32 @@
 
 Esta apostila existe para explicar, em linguagem simples, o que cada coisa do projeto significa.
 
-Ela nao foi escrita para formar programadores em um dia. Ela foi escrita para a pessoa conseguir acompanhar o desafio sem travar em palavras como `API`, `.env`, `frontend`, `backend`, `token`, `CSV` e `localhost`.
+Ela não foi escrita para formar programadores em um dia. Ela foi escrita para a pessoa conseguir acompanhar o desafio sem travar em palavras como `API`, `.env`, `frontend`, `backend`, `token`, `CSV` e `localhost`.
 
-## Como vamos usar Claude ou Codex
+## Sumário
 
-Neste workshop, a pessoa nao precisa decorar comandos nem saber programar sozinha.
+- **Parte 1 - Trabalhando com a IA** (seções 1 a 5): como usar Claude ou Codex, como pedir explicações melhores, a rodada "pergunte ao Claude", Skills e Rules, e o mapa mental do projeto.
+- **Parte 2 - Conceitos do sistema** (seções 6 a 40): sistema local, frontend, backend, API, JSON, CSV, `.env`, token, portas, Git, erros comuns, testes, build e como os dados andam dentro do app.
+- **Parte 3 - Na prática** (seções 41 a 45): o que cada arquivo faz, frases para pedir ajuda, regras de ouro, o kpi-boilerplate e o desafio do seu setor.
+- **Parte 4 - Fechamento** (seções 46 a 48): checklist antes de pedir socorro, resumo ultra rápido e mensagem final.
 
-A regra da aula e:
+## 1. Como vamos usar Claude ou Codex
+
+Neste workshop, a pessoa não precisa decorar comandos nem saber programar sozinha.
+
+A regra da aula é:
 
 ```text
-voce da prompts para o Claude/Codex -> a IA altera o projeto -> voce confere o resultado
+você dá prompts para o Claude/Codex -> a IA altera o projeto -> você confere o resultado
 ```
 
-Quando aparecer um comando nesta apostila, ele serve para entender o que acontece por baixo. Na pratica, o aluno pode pedir para a IA executar.
+Quando aparecer um comando nesta apostila, ele serve para entender o que acontece por baixo. Na prática, o aluno pode pedir para a IA executar.
 
 Exemplo:
 
 ```text
-Execute as acoes necessarias para instalar as dependencias e abrir o projeto local.
-Depois me diga qual endereco eu devo abrir no navegador.
+Execute as ações necessárias para instalar as dependências e abrir o projeto local.
+Depois me diga qual endereço eu devo abrir no navegador.
 ```
 
 Outro exemplo:
@@ -29,86 +36,176 @@ Outro exemplo:
 Rode os testes do projeto e me explique o resultado em linguagem simples.
 ```
 
-O aluno nao precisa saber de memoria o que e `npm install`, `npm run dev` ou `npx vite build`. Ele precisa saber pedir, conferir e explicar o que aconteceu.
+O aluno não precisa saber de memória o que é `npm install`, `npm run dev` ou `npx vite build`. Ele precisa saber pedir, conferir e explicar o que aconteceu.
 
-## Como pedir explicacoes melhores para a IA
+## 2. Como pedir explicações melhores para a IA
 
-Nao use a IA apenas para fazer.
+Não use a IA apenas para fazer.
 
 Use a IA para explicar.
 
 Um bom pedido tem 5 partes:
 
-1. O que voce quer fazer.
+1. O que você quer fazer.
 2. O contexto do projeto.
-3. O nivel de explicacao esperado.
+3. O nível de explicação esperado.
 4. O que a IA deve alterar.
 5. Como a IA deve mostrar que funcionou.
 
 Exemplo:
 
 ```text
-Quero entender como o projeto busca usuarios na Twygo.
+Quero entender como o projeto busca usuários na Twygo.
 Explique em linguagem simples.
 Mostre quais arquivos participam disso.
-Nao altere nada ainda.
-No final, me diga como eu confiro se essa busca esta funcionando.
+Não altere nada ainda.
+No final, me diga como eu confiro se essa busca está funcionando.
 ```
 
-Antes de deixar a IA alterar arquivos, voce pode pedir:
+Antes de deixar a IA alterar arquivos, você pode pedir:
 
 ```text
 Antes de alterar qualquer arquivo, explique seu plano.
-Diga o que voce pretende fazer, por que isso e necessario e quais arquivos podem mudar.
+Diga o que você pretende fazer, por que isso é necessário e quais arquivos podem mudar.
 Use linguagem simples.
 ```
 
-Depois que a IA alterar arquivos, peca:
+Depois que a IA alterar arquivos, peça:
 
 ```text
-Agora explique o que voce mudou.
+Agora explique o que você mudou.
 Liste os arquivos alterados.
 Para cada arquivo, diga o que mudou, por que mudou e como eu confiro se funcionou.
 ```
 
-Se a resposta vier tecnica demais, peca:
+Se a resposta vier técnica demais, peça:
 
 ```text
 Explica de novo como se eu nunca tivesse programado.
-Use uma comparacao simples e um exemplo deste projeto.
+Use uma comparação simples e um exemplo deste projeto.
 ```
 
-Se voce se perder no meio da aula, peca:
+Se você se perder no meio da aula, peça:
 
 ```text
-Resume tudo que ja fizemos ate agora.
+Resume tudo que já fizemos até agora.
 Separe em:
-1. o que ja esta funcionando
+1. o que já está funcionando
 2. o que ainda falta
-3. qual deve ser o proximo passo
+3. qual deve ser o próximo passo
 ```
 
-## Mapa mental do projeto
+## 3. Antes do projeto: a rodada "pergunte ao Claude"
+
+Antes de abrir o projeto, cada pessoa faz uma rodada rápida com o Claude para descobrir como ele pode ajudar no próprio trabalho.
+
+### Como funciona
+
+1. Abra o Claude (claude.ai ou o Claude Code, tanto faz nesta etapa).
+2. Cole o pedido abaixo e complete com o seu setor e as suas tarefas.
+3. Escolha os 2 usos que mais economizariam tempo para você.
+4. Apresente para a turma em 1 minuto: a tarefa de hoje, como o Claude ajuda e qual é o ganho.
+
+### O pedido
+
+```text
+Eu trabalho em [seu setor] e no dia a dia eu [suas 3 tarefas que mais tomam tempo].
+Me dê 5 ideias de como você pode facilitar o meu trabalho.
+Para cada uma: o que eu te pediria, um exemplo de pedido pronto e quanto tempo eu economizaria.
+Use linguagem simples.
+```
+
+### Exemplos de usos
+
+- RH: resumir currículos, montar roteiro de onboarding.
+- Financeiro: conferir notas e planilhas.
+- Vendas: escrever o e-mail de proposta.
+- Atendimento: rascunhar respostas de chamados.
+- Gestão: transformar anotações de reunião em ata com próximos passos.
+
+### Regra da rodada
+
+Não coloque dado real de colaborador ou de cliente no pedido. Use exemplos inventados.
+
+Os usos que aparecerem na rodada viram ideias para o desafio do seu setor no final.
+
+## 4. Skills e Rules: ensinando o seu agente
+
+Você não precisa repetir as mesmas instruções em todo prompt. Dá para deixar o agente (Claude Code) "treinado" para o seu projeto com dois tipos de arquivo: Rules e Skills.
+
+### Rules (regras): o arquivo CLAUDE.md
+
+Rules ficam em um arquivo de texto chamado `CLAUDE.md`, na pasta do projeto.
+
+O agente lê esse arquivo toda vez que começa a trabalhar. É como um combinado fixo com ele.
+
+Exemplos de regras:
+
+- Responda sempre em português, sem jargão.
+- Nunca mostre nem commite o token.
+- Explique o plano antes de alterar arquivos.
+
+Exemplo de um `CLAUDE.md` bem pequeno:
+
+```markdown
+# Regras do projeto
+
+- Responda sempre em português, sem jargão.
+- Nunca mostre nem commite o token (TWYGO_API_TOKEN).
+- Explique o plano antes de alterar arquivos.
+- Depois de alterar, diga como eu confiro se funcionou.
+```
+
+### Skills (receitas): a pasta .claude/skills
+
+Skills ficam em arquivos `SKILL.md`, um por pasta:
+
+```text
+.claude/skills/<nome>/SKILL.md
+```
+
+Uma skill é uma receita que o agente segue quando aparece uma tarefa específica.
+
+Exemplos de skills:
+
+- `rodar-sistema`: como instalar, ligar e conferir o sistema local.
+- `nova-pagina-kpi`: como criar uma página nova de indicador no painel.
+- `importar-planilha`: como ler um CSV novo e cruzar com os dados existentes.
+
+### Resumo em uma linha
+
+```text
+Rule = o que ele SEMPRE respeita. Skill = COMO fazer uma tarefa específica.
+```
+
+### Como pedir
+
+```text
+Crie um arquivo CLAUDE.md neste projeto com regras para responder em português,
+sem jargão, nunca mostrar o token e explicar o plano antes de alterar arquivos.
+```
+
+## 5. Mapa mental do projeto
 
 O sistema do workshop faz isto:
 
 ```text
-API da Twygo -> backend local -> frontend -> upload do CSV -> cruzamento dos dados -> graficos
+API da Twygo -> backend local -> frontend -> upload do CSV -> cruzamento dos dados -> gráficos
 ```
 
-Em portugues bem direto:
+Em português bem direto:
 
-1. A Twygo tem usuarios cadastrados.
-2. A API da Twygo entrega esses usuarios.
-3. Nosso backend local busca esses usuarios com seguranca.
-4. Nosso frontend mostra os usuarios na tela.
-5. O aluno anexa um CSV de capacitacao.
+1. A Twygo tem usuários cadastrados.
+2. A API da Twygo entrega esses usuários.
+3. Nosso backend local busca esses usuários com segurança.
+4. Nosso frontend mostra os usuários na tela.
+5. O aluno anexa um CSV de capacitação.
 6. O sistema cruza API + CSV pelo email.
-7. A tela mostra tabela, resumo e graficos.
+7. A tela mostra tabela, resumo e gráficos.
 
-## 1. O que e um sistema local
+## 6. O que é um sistema local
 
-Um sistema local e um sistema que roda no seu proprio computador.
+Um sistema local é um sistema que roda no seu próprio computador.
 
 Neste projeto, ele abre no navegador em:
 
@@ -122,27 +219,27 @@ http://localhost:5183
 este computador aqui
 ```
 
-Ou seja, nao e um site publico na internet. E uma tela rodando na maquina da pessoa.
+Ou seja, não é um site público na internet. É uma tela rodando na máquina da pessoa.
 
 ### Exemplo no workshop
 
-Quando voce pede para o Claude/Codex abrir o projeto local, a IA liga duas partes no computador:
+Quando você pede para o Claude/Codex abrir o projeto local, a IA liga duas partes no computador:
 
 - a tela do sistema
 - o servidor local
 
-## 2. O que e frontend
+## 7. O que é frontend
 
-Frontend e a parte visual do sistema.
+Frontend é a parte visual do sistema.
 
-E tudo aquilo que a pessoa ve e usa no navegador:
+É tudo aquilo que a pessoa vê e usa no navegador:
 
-- botoes
+- botões
 - textos
 - tabelas
 - campos de upload
 - cards
-- graficos
+- gráficos
 - mensagens de erro
 
 ### Exemplo no workshop
@@ -153,7 +250,7 @@ Quando o aluno abre:
 http://localhost:5183
 ```
 
-ele esta vendo o frontend.
+ele está vendo o frontend.
 
 Neste projeto, o frontend foi feito com:
 
@@ -161,44 +258,44 @@ Neste projeto, o frontend foi feito com:
 React + Vite
 ```
 
-### Traducao simples
+### Tradução simples
 
-Frontend e a vitrine do sistema.
+Frontend é a vitrine do sistema.
 
-Ele mostra as informacoes e recebe as acoes da pessoa.
+Ele mostra as informações e recebe as ações da pessoa.
 
-## 3. O que e React
+## 8. O que é React
 
-React e uma ferramenta para criar telas.
+React é uma ferramenta para criar telas.
 
-Em vez de montar uma pagina inteira manualmente, usamos componentes.
+Em vez de montar uma página inteira manualmente, usamos componentes.
 
-Um componente e um pedaco reutilizavel da tela.
+Um componente é um pedaço reutilizável da tela.
 
 Exemplos de componentes:
 
 - um card de resumo
 - uma tabela
-- um grafico
+- um gráfico
 - uma mensagem de erro
-- um botao
+- um botão
 
 ### Exemplo no workshop
 
-O painel de capacitacao e uma tela React.
+O painel de capacitação é uma tela React.
 
 Ele mostra:
 
-- usuarios vindos da Twygo
+- usuários vindos da Twygo
 - dados vindos do CSV
-- cruzamento entre usuarios e capacitacoes
-- graficos por area, categoria e status
+- cruzamento entre usuários e capacitações
+- gráficos por área, categoria e status
 
-## 4. O que e Vite
+## 9. O que é Vite
 
-Vite e uma ferramenta que ajuda a rodar o frontend.
+Vite é uma ferramenta que ajuda a rodar o frontend.
 
-Ele faz o React abrir rapido no navegador durante o desenvolvimento.
+Ele faz o React abrir rápido no navegador durante o desenvolvimento.
 
 ### Exemplo no workshop
 
@@ -208,20 +305,20 @@ Quando a IA liga o frontend, o Vite abre a tela em:
 http://localhost:5183
 ```
 
-### Traducao simples
+### Tradução simples
 
-Vite e o motor que liga a tela durante a aula.
+Vite é o motor que liga a tela durante a aula.
 
-## 5. O que e backend
+## 10. O que é backend
 
-Backend e a parte do sistema que fica por tras da tela.
+Backend é a parte do sistema que fica por trás da tela.
 
-Ele nao e feito para o usuario final clicar. Ele e feito para processar dados, proteger informacoes e conversar com outros sistemas.
+Ele não é feito para o usuário final clicar. Ele é feito para processar dados, proteger informações e conversar com outros sistemas.
 
 Neste projeto, o backend faz uma coisa muito importante:
 
 ```text
-buscar usuarios na API da Twygo sem colocar o token dentro da tela
+buscar usuários na API da Twygo sem colocar o token dentro da tela
 ```
 
 ### Exemplo no workshop
@@ -238,19 +335,19 @@ Ele tem uma rota:
 GET /api/users
 ```
 
-Quando o frontend chama essa rota, o backend busca os usuarios na Twygo.
+Quando o frontend chama essa rota, o backend busca os usuários na Twygo.
 
-### Traducao simples
+### Tradução simples
 
-Backend e a cozinha do restaurante.
+Backend é a cozinha do restaurante.
 
-O usuario ve o prato na mesa, mas nao ve a cozinha trabalhando.
+O usuário vê o prato na mesa, mas não vê a cozinha trabalhando.
 
-## 6. O que e Node.js
+## 11. O que é Node.js
 
 Node.js permite rodar JavaScript fora do navegador.
 
-Normalmente, JavaScript roda dentro da pagina. Com Node.js, conseguimos usar JavaScript tambem no servidor.
+Normalmente, JavaScript roda dentro da página. Com Node.js, conseguimos usar JavaScript também no servidor.
 
 ### Exemplo no workshop
 
@@ -267,17 +364,17 @@ Isso permite criar rotas como:
 /api/users
 ```
 
-## 7. O que e Express
+## 12. O que é Express
 
-Express e uma ferramenta para criar backend com Node.js.
+Express é uma ferramenta para criar backend com Node.js.
 
 Ele ajuda a criar rotas.
 
-Uma rota e um endereco que responde alguma coisa.
+Uma rota é um endereço que responde alguma coisa.
 
 ### Exemplo no workshop
 
-Rota para testar se o servidor esta vivo:
+Rota para testar se o servidor está vivo:
 
 ```text
 GET /health
@@ -289,7 +386,7 @@ Resposta esperada:
 {"ok":true}
 ```
 
-Rota para buscar usuarios:
+Rota para buscar usuários:
 
 ```text
 GET /api/users
@@ -298,12 +395,12 @@ GET /api/users
 Resposta esperada:
 
 ```text
-lista de usuarios da Twygo
+lista de usuários da Twygo
 ```
 
-## 8. O que e API
+## 13. O que é API
 
-API e uma forma de um sistema conversar com outro sistema.
+API é uma forma de um sistema conversar com outro sistema.
 
 Uma pessoa usa tela.
 
@@ -311,9 +408,9 @@ Um sistema usa API.
 
 ### Exemplo simples
 
-Quando voce entra em um aplicativo de clima, ele provavelmente conversa com uma API para buscar a temperatura.
+Quando você entra em um aplicativo de clima, ele provavelmente conversa com uma API para buscar a temperatura.
 
-No nosso caso, o sistema conversa com a API da Twygo para buscar usuarios.
+No nosso caso, o sistema conversa com a API da Twygo para buscar usuários.
 
 ### Exemplo no workshop
 
@@ -323,15 +420,15 @@ O backend local chama:
 https://api.twygo.com/api/v2/users
 ```
 
-Essa API devolve usuarios cadastrados na plataforma.
+Essa API devolve usuários cadastrados na plataforma.
 
-## 9. O que e endpoint
+## 14. O que é endpoint
 
-Endpoint e um endereco especifico dentro de uma API.
+Endpoint é um endereço específico dentro de uma API.
 
-Pense na API como um predio.
+Pense na API como um prédio.
 
-O endpoint e uma sala dentro desse predio.
+O endpoint é uma sala dentro desse prédio.
 
 ### Exemplo no workshop
 
@@ -341,23 +438,23 @@ API base:
 https://api.twygo.com
 ```
 
-Endpoint de usuarios:
+Endpoint de usuários:
 
 ```text
 /api/v2/users
 ```
 
-Endereco completo:
+Endereço completo:
 
 ```text
 https://api.twygo.com/api/v2/users
 ```
 
-## 10. O que e metodo HTTP
+## 15. O que é método HTTP
 
-Metodo HTTP e o tipo de acao que voce quer fazer em uma API.
+Método HTTP é o tipo de ação que você quer fazer em uma API.
 
-Os mais comuns sao:
+Os mais comuns são:
 
 - `GET`: buscar dados
 - `POST`: criar dados
@@ -372,13 +469,13 @@ Usamos principalmente:
 GET
 ```
 
-Porque queremos buscar usuarios.
+Porque queremos buscar usuários.
 
-Nao queremos criar, editar ou apagar usuarios da Twygo durante a aula.
+Não queremos criar, editar ou apagar usuários da Twygo durante a aula.
 
-## 11. O que e JSON
+## 16. O que é JSON
 
-JSON e um formato de dados muito usado em APIs.
+JSON é um formato de dados muito usado em APIs.
 
 Ele parece um objeto com chaves e valores.
 
@@ -392,17 +489,17 @@ Ele parece um objeto com chaves e valores.
 }
 ```
 
-### Traducao simples
+### Tradução simples
 
-JSON e uma forma organizada de enviar informacoes entre sistemas.
+JSON é uma forma organizada de enviar informações entre sistemas.
 
-## 12. O que e CSV
+## 17. O que é CSV
 
-CSV e uma planilha em formato simples.
+CSV é uma planilha em formato simples.
 
 Cada linha representa um registro.
 
-Cada coluna e separada por virgula.
+Cada coluna é separada por vírgula.
 
 ### Exemplo
 
@@ -413,15 +510,15 @@ ana@empresa.com,Marketing,Produto,Curso de onboarding,6,Concluido,9.1,2026-05-10
 
 ### No workshop
 
-O CSV contem dados de capacitacao.
+O CSV contém dados de capacitação.
 
-Ele e cruzado com os usuarios da Twygo usando o email.
+Ele é cruzado com os usuários da Twygo usando o email.
 
-## 13. O que e cruzamento de dados
+## 18. O que é cruzamento de dados
 
-Cruzamento de dados e juntar duas listas usando uma informacao em comum.
+Cruzamento de dados é juntar duas listas usando uma informação em comum.
 
-Neste projeto, a informacao em comum e:
+Neste projeto, a informação em comum é:
 
 ```text
 email
@@ -438,25 +535,25 @@ ana@empresa.com - Ana Silva
 CSV:
 
 ```text
-ana@empresa.com - 6 horas de capacitacao
+ana@empresa.com - 6 horas de capacitação
 ```
 
 Resultado cruzado:
 
 ```text
-Ana Silva - Marketing - 6 horas de capacitacao
+Ana Silva - Marketing - 6 horas de capacitação
 ```
 
-## 14. O que e .env
+## 19. O que é .env
 
-`.env` e um arquivo de configuracao local.
+`.env` é um arquivo de configuração local.
 
-Ele guarda informacoes que mudam de pessoa para pessoa ou que nao devem ficar publicas.
+Ele guarda informações que mudam de pessoa para pessoa ou que não devem ficar públicas.
 
 Exemplos:
 
 - token da API
-- endereco base da API
+- endereço base da API
 - porta do servidor
 
 ### Exemplo no projeto
@@ -467,7 +564,7 @@ Arquivo:
 .env
 ```
 
-Conteudo:
+Conteúdo:
 
 ```text
 TWYGO_API_TOKEN=cole_o_bearer_token_aqui
@@ -475,19 +572,19 @@ TWYGO_API_BASE_URL=https://api.twygo.com
 PORT=5184
 ```
 
-### Por que isso e importante
+### Por que isso é importante
 
-O token e uma chave de acesso.
+O token é uma chave de acesso.
 
-Ele nao deve ficar escrito dentro do codigo da tela.
+Ele não deve ficar escrito dentro do código da tela.
 
-Ele tambem nao deve ser publicado no GitHub.
+Ele também não deve ser publicado no GitHub.
 
-## 15. O que e .env.example
+## 20. O que é .env.example
 
-`.env.example` e um modelo do arquivo `.env`.
+`.env.example` é um modelo do arquivo `.env`.
 
-Ele mostra quais variaveis precisam existir, mas sem colocar o token real.
+Ele mostra quais variáveis precisam existir, mas sem colocar o token real.
 
 ### Exemplo
 
@@ -506,29 +603,29 @@ Crie meu arquivo .env a partir do .env.example.
 Configure o arquivo .env com este token:
 [cole aqui o token recebido do instrutor]
 
-Salve esse valor na variavel TWYGO_API_TOKEN.
-Nao mostre, nao repita e nao imprima meu token na resposta.
+Salve esse valor na variável TWYGO_API_TOKEN.
+Não mostre, não repita e não imprima meu token na resposta.
 ```
 
-Assim o aluno nao precisa abrir o `.env` manualmente.
+Assim o aluno não precisa abrir o `.env` manualmente.
 
-## 16. O que e token
+## 21. O que é token
 
-Token e uma chave de acesso.
+Token é uma chave de acesso.
 
-Ele serve para provar para a API que voce tem permissao para buscar dados.
+Ele serve para provar para a API que você tem permissão para buscar dados.
 
 ### Exemplo simples
 
-Pense no token como um cracha.
+Pense no token como um crachá.
 
-Sem cracha, voce nao entra.
+Sem crachá, você não entra.
 
-Sem token, a API nao entrega os dados.
+Sem token, a API não entrega os dados.
 
-## 17. O que e Bearer token
+## 22. O que é Bearer token
 
-Bearer token e um tipo comum de token usado em APIs.
+Bearer token é um tipo comum de token usado em APIs.
 
 Quando uma API pede Bearer token, normalmente o pedido vai assim:
 
@@ -538,20 +635,20 @@ Authorization: Bearer seu_token_aqui
 
 ### No workshop
 
-O aluno nao precisa escrever essa linha manualmente.
+O aluno não precisa escrever essa linha manualmente.
 
 O backend monta isso usando o valor do `.env`.
 
-## 18. O que e seguranca do token
+## 23. O que é segurança do token
 
 O token deve ficar protegido.
 
-Nao coloque token real em:
+Não coloque token real em:
 
 - print de tela
 - WhatsApp aberto
-- README publico
-- codigo do frontend
+- README público
+- código do frontend
 - GitHub
 - slide compartilhado publicamente
 
@@ -561,11 +658,11 @@ Token real fica no `.env`.
 
 Token de exemplo fica no `.env.example`.
 
-## 19. O que e porta
+## 24. O que é porta
 
-Porta e como se fosse uma entrada especifica do computador.
+Porta é como se fosse uma entrada específica do computador.
 
-O mesmo computador pode rodar varios sistemas ao mesmo tempo, cada um em uma porta diferente.
+O mesmo computador pode rodar vários sistemas ao mesmo tempo, cada um em uma porta diferente.
 
 ### No workshop
 
@@ -581,11 +678,11 @@ Backend:
 http://localhost:5184
 ```
 
-## 20. O que e CORS
+## 25. O que é CORS
 
-CORS e uma regra de seguranca do navegador.
+CORS é uma regra de segurança do navegador.
 
-Ela controla se uma tela pode conversar com outro endereco.
+Ela controla se uma tela pode conversar com outro endereço.
 
 ### Por que aparece no workshop
 
@@ -601,22 +698,22 @@ O backend roda em:
 localhost:5184
 ```
 
-Mesmo estando no mesmo computador, para o navegador sao enderecos diferentes.
+Mesmo estando no mesmo computador, para o navegador são endereços diferentes.
 
 Por isso o backend precisa permitir essa conversa.
 
-## 21. O que e npm
+## 26. O que é npm
 
-`npm` e o gerenciador de pacotes do Node.js.
+`npm` é o gerenciador de pacotes do Node.js.
 
 Ele instala ferramentas e bibliotecas usadas no projeto.
 
 ### Como pedir para a IA usar npm
 
-Para instalar dependencias:
+Para instalar dependências:
 
 ```text
-Instale as dependencias do projeto.
+Instale as dependências do projeto.
 ```
 
 Para abrir o projeto:
@@ -631,16 +728,16 @@ Para rodar testes:
 Rode os testes e me explique se passou ou se falhou.
 ```
 
-## 22. O que e package.json
+## 27. O que é package.json
 
-`package.json` e a ficha tecnica do projeto.
+`package.json` é a ficha técnica do projeto.
 
 Ele diz:
 
 - nome do projeto
-- scripts disponiveis
+- scripts disponíveis
 - bibliotecas usadas
-- versao das dependencias
+- versão das dependências
 
 ### Exemplo no workshop
 
@@ -655,62 +752,62 @@ Scripts importantes:
 }
 ```
 
-## 23. O que e node_modules
+## 28. O que é node_modules
 
-`node_modules` e a pasta onde ficam as dependencias instaladas pelo `npm install`.
+`node_modules` é a pasta onde ficam as dependências instaladas pelo `npm install`.
 
 Ela costuma ser grande.
 
-Ela nao deve ser editada manualmente.
+Ela não deve ser editada manualmente.
 
-Ela tambem nao deve ser enviada para o GitHub.
+Ela também não deve ser enviada para o GitHub.
 
 ### Regra simples
 
-Se a pasta `node_modules` sumiu ou o projeto reclamar de dependencia, peca para a IA:
+Se a pasta `node_modules` sumiu ou o projeto reclamar de dependência, peça para a IA:
 
 ```text
-Reinstale as dependencias do projeto e explique o que foi feito.
+Reinstale as dependências do projeto e explique o que foi feito.
 ```
 
-## 24. O que e Git
+## 29. O que é Git
 
-Git e uma ferramenta para guardar historico do projeto.
+Git é uma ferramenta para guardar o histórico do projeto.
 
-Ele registra mudancas em commits.
+Ele registra mudanças em commits.
 
 ### Exemplo
 
-Um commit e como uma foto do projeto naquele momento.
+Um commit é como uma foto do projeto naquele momento.
 
-Voce pode ver:
+Você pode ver:
 
 - o que mudou
 - quando mudou
 - quem mudou
-- qual mensagem explica a mudanca
+- qual mensagem explica a mudança
 
-## 25. O que e GitHub
+## 30. O que é GitHub
 
-GitHub e um lugar online para guardar repositorios Git.
+GitHub é um lugar online para guardar repositórios Git.
 
-Git e a ferramenta.
+Git é a ferramenta.
 
-GitHub e o site onde o projeto fica hospedado.
+GitHub é o site onde o projeto fica hospedado.
 
 ### No workshop
 
-O repositorio guarda:
+O repositório guarda:
 
-- codigo do app
+- código do app
 - desafio
 - apostila
 - CSV de exemplo
-- instrucoes de uso
+- instruções de uso
 
-## 26. O que e branch
+## 31. O que é branch
 
-Branch e uma linha separada de trabalho dentro do Git.
+Branch é uma linha separada de trabalho dentro do Git.
 
 ### No workshop
 
@@ -720,11 +817,11 @@ Temos uma branch para os alunos:
 alunos
 ```
 
-A ideia e deixar essa branch pronta para a turma usar sem baguncar a branch principal.
+A ideia é deixar essa branch pronta para a turma usar sem bagunçar a branch principal.
 
-## 27. O que e commit
+## 32. O que é commit
 
-Commit e um pacote de alteracoes salvo no historico do Git.
+Commit é um pacote de alterações salvo no histórico do Git.
 
 ### Exemplo de mensagem
 
@@ -735,12 +832,12 @@ docs: add concepts booklet
 Essa mensagem quer dizer:
 
 ```text
-adicionei uma documentacao/apostila de conceitos
+adicionei uma documentação/apostila de conceitos
 ```
 
-## 28. O que e erro 401
+## 33. O que é erro 401
 
-Erro `401` normalmente significa falta de autorizacao.
+Erro `401` normalmente significa falta de autorização.
 
 ### No workshop
 
@@ -748,22 +845,22 @@ Se aparecer `401`, pode ser:
 
 - token errado
 - token vencido
-- token nao foi colocado no `.env`
-- backend nao conseguiu ler o `.env`
+- token não foi colocado no `.env`
+- backend não conseguiu ler o `.env`
 
-## 29. O que e erro 404
+## 34. O que é erro 404
 
-Erro `404` significa que o endereco nao foi encontrado.
+Erro `404` significa que o endereço não foi encontrado.
 
 ### Exemplo
 
-Se voce abrir:
+Se você abrir:
 
 ```text
 http://localhost:5184/usuarios
 ```
 
-mas o projeto so tem:
+mas o projeto só tem:
 
 ```text
 /api/users
@@ -771,7 +868,7 @@ mas o projeto so tem:
 
 pode dar `404`.
 
-## 30. O que e erro 500
+## 35. O que é erro 500
 
 Erro `500` significa erro no servidor.
 
@@ -779,46 +876,46 @@ No workshop, pode acontecer se:
 
 - a API externa falhar
 - o backend quebrar
-- alguma configuracao estiver errada
+- alguma configuração estiver errada
 
-## 31. O que e loading
+## 36. O que é loading
 
-Loading e o estado de carregamento.
+Loading é o estado de carregamento.
 
-Ele aparece quando o sistema ainda esta buscando dados.
+Ele aparece quando o sistema ainda está buscando dados.
 
 ### Exemplo
 
 Quando a tela abre, ela pode mostrar algo como:
 
 ```text
-Carregando usuarios...
+Carregando usuários...
 ```
 
 Isso evita que a pessoa ache que o sistema travou.
 
-## 32. O que e estado vazio
+## 37. O que é estado vazio
 
-Estado vazio e quando nao tem dados para mostrar.
+Estado vazio é quando não tem dados para mostrar.
 
 ### Exemplo
 
-Se o aluno ainda nao anexou o CSV, a tela pode mostrar uma mensagem dizendo que precisa anexar a planilha.
+Se o aluno ainda não anexou o CSV, a tela pode mostrar uma mensagem dizendo que precisa anexar a planilha.
 
-Isso e melhor do que deixar a tela em branco.
+Isso é melhor do que deixar a tela em branco.
 
-## 33. O que e teste automatizado
+## 38. O que é teste automatizado
 
-Teste automatizado e um codigo que verifica se outra parte do sistema continua funcionando.
+Teste automatizado é um código que verifica se outra parte do sistema continua funcionando.
 
 ### Exemplo no workshop
 
 Os testes podem conferir:
 
-- se o CSV e lido corretamente
-- se os usuarios sao cruzados pelo email
-- se os calculos de horas estao certos
-- se os dados dos graficos estao corretos
+- se o CSV é lido corretamente
+- se os usuários são cruzados pelo email
+- se os cálculos de horas estão certos
+- se os dados dos gráficos estão corretos
 
 ### Como pedir
 
@@ -826,11 +923,11 @@ Os testes podem conferir:
 Rode os testes automatizados do projeto e me diga quantos passaram.
 ```
 
-## 34. O que e build
+## 39. O que é build
 
-Build e gerar a versao final do frontend.
+Build é gerar a versão final do frontend.
 
-Durante a aula usamos modo de desenvolvimento.
+Durante a aula usamos o modo de desenvolvimento.
 
 No build, o Vite prepara arquivos otimizados.
 
@@ -840,9 +937,9 @@ No build, o Vite prepara arquivos otimizados.
 Gere o build do projeto e me diga se apareceu algum erro.
 ```
 
-Se o build falha, pode existir algum erro que impediria o sistema de ir para producao.
+Se o build falha, pode existir algum erro que impediria o sistema de ir para produção.
 
-## 35. Como os dados andam dentro do app
+## 40. Como os dados andam dentro do app
 
 Fluxo completo:
 
@@ -851,17 +948,17 @@ Fluxo completo:
 2. Frontend carrega a tela
 3. Frontend chama /api/users
 4. Backend recebe esse pedido
-5. Backend le o token do .env
+5. Backend lê o token do .env
 6. Backend chama a API da Twygo
-7. API da Twygo devolve usuarios
-8. Backend devolve usuarios para o frontend
+7. API da Twygo devolve usuários
+8. Backend devolve usuários para o frontend
 9. Aluno anexa o CSV
-10. Frontend le o CSV
-11. Frontend cruza CSV + usuarios pelo email
-12. Frontend mostra tabela, cards e graficos
+10. Frontend lê o CSV
+11. Frontend cruza CSV + usuários pelo email
+12. Frontend mostra tabela, cards e gráficos
 ```
 
-## 36. O que cada arquivo principal faz
+## 41. O que cada arquivo principal faz
 
 `README.md`
 
@@ -873,11 +970,11 @@ Explica os conceitos para quem nunca programou.
 
 `.env.example`
 
-Modelo das configuracoes necessarias.
+Modelo das configurações necessárias.
 
 `package.json`
 
-Lista as acoes que a IA pode executar e as dependencias do projeto.
+Lista as ações que a IA pode executar e as dependências do projeto.
 
 `server/index.js`
 
@@ -893,7 +990,7 @@ Tela principal do frontend.
 
 `src/trainingCsv.js`
 
-Le e interpreta o CSV.
+Lê e interpreta o CSV.
 
 `src/trainingDashboard.js`
 
@@ -903,12 +1000,12 @@ Cruza dados e calcula indicadores.
 
 CSV de exemplo usado na aula.
 
-## 37. Frases que ajudam a pedir ajuda para a IA
+## 42. Frases que ajudam a pedir ajuda para a IA
 
-Quando der erro, nao mande apenas:
+Quando der erro, não mande apenas:
 
 ```text
-nao funcionou
+não funcionou
 ```
 
 Mande assim:
@@ -922,24 +1019,142 @@ Mas apareceu este erro:
 Me explique em linguagem simples e corrija.
 ```
 
-Quando nao entender um conceito:
+Quando não entender um conceito:
 
 ```text
-Explique o que e backend usando o exemplo deste projeto.
+Explique o que é backend usando o exemplo deste projeto.
 Fale como se eu nunca tivesse programado.
 ```
 
-Quando quiser confirmar se esta certo:
+Quando quiser confirmar se está certo:
 
 ```text
-Confira se meu .env esta no formato correto, mas nao mostre nem repita meu token real.
+Confira se meu .env está no formato correto, mas não mostre nem repita meu token real.
 ```
 
-## 38. Checklist para o aluno antes de pedir socorro
+## 43. Regras de ouro: nada sai da sua máquina
+
+### As três regras de segurança
+
+1. **Roda só no seu PC.** Tudo o que fazemos no workshop roda em `localhost`. Nenhum sistema sobe para a internet, para um servidor ou para a nuvem.
+2. **Repositório privado.** Se for salvar o código, salve só no repositório privado do time. Nunca em um repositório público.
+3. **Auditoria antes de publicar.** Antes de qualquer coisa ir para o ar, João, Adriana ou um dev revisam os números, os acessos e a segurança.
+
+```text
+A IA escreve rápido, mas não responde por erro de número nem por dado exposto.
+```
+
+### Cuidado com os dados
+
+- Dados de colaboradores são dados pessoais (LGPD).
+- Não envie planilhas reais para sites públicos ou IAs públicas.
+- Não tire prints com token ou dados sensíveis.
+- Use um token só para o workshop.
+
+### As regras da turma
+
+1. **Errar é de graça.** Está tudo no seu computador. Se quebrar, a gente arruma.
+2. **Entenda o fluxo.** Mais importante que o código é saber o caminho que os dados fazem.
+3. **Pergunte antes de sofrer.** Travou por 5 minutos? Chama o instrutor.
+4. **Fale em português.** Pode pedir para a IA em português, do seu jeito.
+
+## 44. Depois do workshop: use o kpi-boilerplate como base
+
+O `kpi-boilerplate` é um esqueleto pronto para você criar seus próprios painéis de indicadores sem começar do zero.
+
+### O que já vem pronto
+
+- Frontend em React + TypeScript (Vite).
+- Backend em Python com FastAPI.
+- Banco de dados PostgreSQL.
+- Layout com menu lateral (sidebar).
+- Cards de KPI.
+- Gráficos.
+- Tabela com exportação para CSV.
+- API + banco já conectados.
+- `CLAUDE.md` com as regras do projeto e a skill `rodar-sistema`.
+- Tudo rodando via Docker.
+
+### Tradução simples: o restaurante
+
+- **PostgreSQL** é o estoque: onde os dados ficam guardados.
+- **Python/FastAPI** é a cozinha: busca os dados no estoque e prepara.
+- **React** é o salão: onde a pessoa vê e usa o painel.
+
+### Como começar
+
+Você precisa ter instalado:
+
+- Docker Desktop
+- Git
+- Claude Code
+
+Depois, os passos são:
+
+```bash
+git clone https://github.com/Twygo/kpi-boilerplate
+cd kpi-boilerplate
+cp .env.example .env
+make up
+```
+
+Com o sistema ligado, abra:
+
+- `http://localhost:5173` - o painel
+- `http://localhost:8000/docs` - a API
+
+Para desligar:
+
+```bash
+make down
+```
+
+Lembre: você também pode pedir para o Claude Code fazer esses passos por você.
+
+### Exemplo de primeiro prompt
+
+```text
+Crie uma página Turnover no menu, com cards e um gráfico mensal, lendo a planilha turnover.csv que vou te passar.
+```
+
+### Acesso ao repositório
+
+Para ter acesso ao repositório, fale com o João.
+
+### As regras de ouro continuam valendo
+
+Tudo roda local, e nada sobe sem auditoria.
+
+## 45. Desafio do seu setor (bônus)
+
+Escolha uma tarefa repetitiva ou manual da sua área e faça uma demonstração simples com o Claude Code. O ideal é usar o `kpi-boilerplate` como base.
+
+### O que apresentar
+
+1. Setor.
+2. Problema escolhido.
+3. Como é feito hoje.
+4. Como você imaginou a automação.
+5. O que você conseguiu criar com IA.
+6. Demonstração rápida.
+7. Ganho se virasse real.
+
+### Ideias por setor
+
+- **RH:** onboarding de novos colaboradores; cruzar treinamentos.
+- **Financeiro:** conferir planilhas; classificar despesas.
+- **Vendas:** resumir leads; montar proposta.
+- **Atendimento:** resumir chamados.
+- **Marketing:** calendário de campanhas.
+- **Produto:** organizar feedbacks.
+- **Engenharia:** checklist de testes.
+- **BI:** CSV virando dashboard.
+
+## 46. Checklist para o aluno antes de pedir socorro
 
 Antes de chamar o instrutor, conferir:
 
-1. Pedi para a IA instalar as dependencias?
+1. Pedi para a IA instalar as dependências?
 2. Passei o token para a IA configurar o `.env`?
 3. A IA confirmou que salvou o token em `TWYGO_API_TOKEN`?
 4. Pedi para a IA abrir o projeto local?
@@ -950,11 +1165,11 @@ Antes de chamar o instrutor, conferir:
 9. Copiei o erro inteiro?
 10. Tentei explicar o que eu esperava que acontecesse?
 
-## 39. Resumo ultra rapido
+## 47. Resumo ultra rápido
 
 `Frontend`
 
-A tela que o usuario ve.
+A tela que o usuário vê.
 
 `Backend`
 
@@ -966,7 +1181,7 @@ Forma de um sistema conversar com outro.
 
 `Endpoint`
 
-Endereco especifico dentro de uma API.
+Endereço específico dentro de uma API.
 
 `Token`
 
@@ -974,7 +1189,7 @@ Chave de acesso.
 
 `.env`
 
-Arquivo local onde ficam configuracoes sensiveis.
+Arquivo local onde ficam configurações sensíveis.
 
 `CSV`
 
@@ -986,28 +1201,36 @@ Formato comum de resposta de API.
 
 `localhost`
 
-O proprio computador.
+O próprio computador.
 
 `porta`
 
-Entrada especifica para acessar um sistema local.
+Entrada específica para acessar um sistema local.
 
 `Git`
 
-Historico do projeto.
+Histórico do projeto.
 
 `GitHub`
 
-Lugar online onde o repositorio fica salvo.
+Lugar online onde o repositório fica salvo.
 
-## 40. Mensagem final para a turma
+`Rule (CLAUDE.md)`
 
-Voce nao precisa decorar tudo.
+O que o agente sempre respeita.
 
-O objetivo e entender o caminho:
+`Skill`
+
+Receita de como o agente faz uma tarefa específica.
+
+## 48. Mensagem final para a turma
+
+Você não precisa decorar tudo.
+
+O objetivo é entender o caminho:
 
 ```text
-tela -> backend -> API -> dados -> CSV -> cruzamento -> graficos
+tela -> backend -> API -> dados -> CSV -> cruzamento -> gráficos
 ```
 
-Se voce entendeu esse caminho, ja entendeu a parte mais importante do workshop.
+Se você entendeu esse caminho, já entendeu a parte mais importante do workshop.
