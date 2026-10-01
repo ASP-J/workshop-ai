@@ -45,6 +45,17 @@ O repositório certo para alunos é a branch:
 alunos
 ```
 
+## Antes do Passo 0 - Se o computador ainda não está pronto
+
+Sintomas: `git`, `node`, `npm` ou `claude` "não é reconhecido" / "command not found".
+
+- Instale o **Node.js LTS** (22.12 ou mais novo) de <https://nodejs.org/pt>.
+- No Windows, instale também o **Git para Windows**: <https://git-scm.com/downloads/win>.
+- **Feche e abra o terminal de novo** depois de instalar.
+- No Windows, trabalhe numa pasta como `C:\workshop` (fora do OneDrive) e use o **Prompt de Comando** (`cmd`).
+
+O passo a passo completo está na seção "Preparar o computador" do `README.md`. Mais erros de Windows: seção [Se você usa Windows](#se-você-usa-windows).
+
 ## Passo 0 - Se você nem conseguiu pegar o projeto
 
 Cole este prompt no Claude ou Codex:
@@ -117,7 +128,7 @@ http://localhost:5183
 
 (A tela usa a porta 5183 e o backend local usa a porta 5184.)
 
-Se aparecer erro de versão do Node: o projeto precisa do Node.js 22.12 ou mais novo. Peça para a IA verificar e instalar uma versão compatível.
+Se aparecer erro de versão do Node: o projeto precisa do Node.js 22.12 ou mais novo. Instale a versão **LTS** de <https://nodejs.org/pt> (Mac e Windows), feche e abra o terminal de novo e peça para a IA conferir com `node -v`.
 
 ## Passo 3 - Se você recebeu o token mas não sabe onde colocar
 
@@ -130,8 +141,8 @@ O token vai **direto no arquivo `.env`**, nunca no chat.
    ```
 
 2. A IA abre o arquivo num editor de texto:
-   - no Mac: `open -e .env`
-   - no Windows: `notepad .env`
+   - no Mac: `cp .env.example .env` e `open -e .env`
+   - no Windows: `copy .env.example .env` e `notepad .env`
 3. Procure a linha `TWYGO_API_TOKEN=` e cole o token logo depois do `=` (substituindo o texto de exemplo), sem espaços.
 4. Salve (Cmd+S no Mac, Ctrl+S no Windows) e feche o editor.
 5. Volte para a IA e escreva `pronto`.
@@ -368,6 +379,27 @@ Confira:
 Não mostre o token, nomes nem e-mails; só contagens.
 Se algo estiver errado, explique e corrija.
 Depois gere um resumo simples para eu apresentar para o instrutor.
+```
+
+## Se você usa Windows
+
+Erros que só aparecem no Windows e como resolver:
+
+| O que apareceu | O que fazer |
+|---|---|
+| `'node' não é reconhecido como um comando interno` (ou `npm`, `git`, `claude`) | Instale o que falta (Node.js **LTS** de <https://nodejs.org/pt>, Git de <https://git-scm.com/downloads/win>). Depois **feche e abra o terminal de novo**. Se continuar, reinicie o computador |
+| PowerShell: `npm.ps1 não pode ser carregado porque a execução de scripts foi desabilitada neste sistema` | Use o **Prompt de Comando**: tecla Windows, digite `cmd`, Enter. Ou rode `npm.cmd` no lugar de `npm`. Para liberar de vez só para o seu usuário, no PowerShell: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` e responda `S` |
+| PowerShell: `O token '&&' não é um separador de instrução válido` | Digite os comandos um por linha, ou use o Prompt de Comando |
+| `Port 5183 is already in use` ou `EADDRINUSE` na 5184 | Já tem outro `npm run dev` aberto (outra janela de terminal?). Feche-o com Ctrl + C. Para descobrir quem usa a porta: `netstat -ano \| findstr :5183` (o último número é o PID) e `taskkill /PID <número> /F` |
+| `npm install` demora muito, ou dá `EPERM` / `EBUSY` | A pasta está no **OneDrive** ou o antivírus está vigiando. Mova o projeto para `C:\workshop` e rode `npm install` de novo |
+| `'cp' não é reconhecido` ou `'open' não é reconhecido` | São comandos do Mac. No Windows: `copy .env.example .env` e `notepad .env` |
+
+Se preferir, cole na IA:
+
+```text
+Estou no Windows e deu este erro:
+[cole o erro, sem o token]
+Use comandos do Windows (Prompt de Comando), explique em linguagem simples e corrija.
 ```
 
 ## Checklist visual

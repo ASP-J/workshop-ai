@@ -70,6 +70,39 @@ Os usos que aparecerem na rodada viram ideias para evoluir o painel do seu setor
 
 Mais detalhes na seção 3 da `APOSTILA_CONCEITOS.md`.
 
+## Antes da Etapa 1 - Preparar o computador
+
+Faça isto **uma vez só** (de preferência antes da aula). Você precisa de **Node.js 22.12 ou mais novo**, **Git** e **Claude Code** (ou Codex).
+
+**No Mac**
+
+1. Instale o Node.js **LTS** de <https://nodejs.org/pt>.
+2. No Terminal, digite `git --version` (se o Mac oferecer instalar as "ferramentas de linha de comando", aceite).
+3. Crie a pasta do workshop e abra o Claude nela:
+
+   ```bash
+   mkdir workshop && cd workshop && claude
+   ```
+
+**No Windows (10 ou 11)**
+
+1. Instale o Node.js **LTS** (arquivo `.msi`) de <https://nodejs.org/pt> com as opções padrão.
+2. Instale o **Git para Windows** de <https://git-scm.com/downloads/win> com as opções padrão.
+3. **Feche e abra de novo** o terminal (senão ele não enxerga o Node e o Git).
+4. Abra o **Prompt de Comando** (tecla Windows, digite `cmd`, Enter) e digite, uma linha de cada vez:
+
+   ```bat
+   mkdir C:\workshop
+   cd C:\workshop
+   claude
+   ```
+
+Use `C:\workshop` (ou outra pasta curta) e **não** uma pasta dentro do **OneDrive**: lá a instalação fica lenta e pode dar erro.
+
+> Está no **PowerShell**? Digite um comando por linha (o `&&` não funciona no PowerShell antigo). Se o `npm` der erro de "execução de scripts foi desabilitada", use o Prompt de Comando (`cmd`) — veja `PASSO_A_PASSO_SE_TRAVAR.md`, seção "Se você usa Windows".
+
+Confira: `node -v` mostra `v22.12` ou mais (ex.: `v24.x`) e `git --version` mostra uma versão.
+
 ## Etapa 1 - Pegar a versão correta do projeto
 
 O projeto tem uma branch própria para alunos:
@@ -181,8 +214,8 @@ Esse token é a chave para acessar os usuários da Twygo.
    ```
 
 2. A IA cria o arquivo e abre ele num editor de texto:
-   - no Mac: `open -e .env`
-   - no Windows: `notepad .env`
+   - no Mac: `cp .env.example .env` e `open -e .env`
+   - no Windows: `copy .env.example .env` e `notepad .env`
 3. No editor, procure a linha `TWYGO_API_TOKEN=` e cole o token logo depois do `=` (substituindo o texto de exemplo), sem espaços.
 4. Salve o arquivo (Cmd+S no Mac, Ctrl+S no Windows) e feche o editor.
 5. Volte para a IA e escreva:

@@ -1,0 +1,35 @@
+# Finais de linha: o repositório guarda tudo com LF e o Git entrega cada arquivo
+# do jeito certo em qualquer computador — inclusive no Windows com core.autocrlf=true.
+* text=auto eol=lf
+
+*.sh text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.svg text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.env.example text eol=lf
+
+# Scripts do Windows (se um dia existirem): sempre CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Planilha do workshop: dados, guardados exatamente como vieram (sem conversão).
+*.csv -text
+
+# Binários: nunca converter.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.xlsx binary
+*.xls binary

@@ -78,6 +78,12 @@ O objetivo é você conseguir explicar:
 4. por que o token fica protegido
 5. o que os cards e gráficos mostram
 
+## O que você precisa no computador
+
+- **Node.js 22.12 ou mais novo** (instalador **LTS** de <https://nodejs.org/pt>), **Git** e **Claude Code** (ou Codex).
+- Funciona no **Mac** e no **Windows 10/11**. No Windows: instale também o Git para Windows (<https://git-scm.com/downloads/win>), use o **Prompt de Comando** (`cmd`) e coloque o projeto numa pasta como `C:\workshop`, fora do OneDrive.
+- Passo a passo: seção "Preparar o computador" do `README.md`.
+
 ## O que você vai receber
 
 O instrutor vai entregar:
@@ -280,7 +286,7 @@ Para o token, use **sempre** este fluxo (o token nunca vai para o chat):
    Crie o .env a partir do .env.example e abra o arquivo para eu colar o token (não peça nem mostre o token no chat)
    ```
 
-2. A IA abre o arquivo no editor (`open -e .env` no Mac, `notepad .env` no Windows).
+2. A IA cria o arquivo (`cp .env.example .env` no Mac, `copy .env.example .env` no Windows) e abre no editor (`open -e .env` no Mac, `notepad .env` no Windows).
 3. Cole o token logo depois de `TWYGO_API_TOKEN=`, salve e feche o editor.
 4. Volte para a IA e escreva `pronto`.
 
