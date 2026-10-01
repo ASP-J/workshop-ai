@@ -48,8 +48,8 @@ alunos
 Cole este prompt no Claude ou Codex:
 
 ```text
-Clone a branch alunos deste repositorio:
-https://github.com/ASP-J/workshop-ai.git
+Clone a branch alunos deste repositorio (a branch principal NAO e a dos alunos):
+git clone -b alunos https://github.com/ASP-J/workshop-ai.git
 
 Depois leia o README.md.
 Me explique, em linguagem simples:
@@ -65,8 +65,8 @@ Depois de alterar, diga quais arquivos mudaram e como eu confiro se funcionou.
 Se o instrutor pediu para usar SSH, use este no lugar:
 
 ```text
-Clone a branch alunos deste repositorio:
-git@github.com:ASP-J/workshop-ai.git
+Clone a branch alunos deste repositorio (a branch principal NAO e a dos alunos):
+git clone -b alunos git@github.com:ASP-J/workshop-ai.git
 
 Depois leia o README.md.
 Me explique, em linguagem simples:
@@ -154,6 +154,7 @@ Explique em linguagem simples por que o token precisa ficar protegido.
 
 Importante:
 
+- use somente o token do workshop (ele sera revogado depois); nunca um token pessoal
 - nao tire print com o token aparecendo
 - nao mande o token em grupo
 - nao cole o token em arquivo publico
@@ -277,10 +278,10 @@ Confira se o painel mostra:
 3. total de horas de capacitacao
 4. media de horas
 5. grafico por area
-6. grafico por categoria ou status
+6. grafico por categoria ou "Concluiu x nao concluiu"
 
 Explique o que cada indicador significa.
-Se faltar algo, implemente de forma simples.
+O painel ja vem com esses itens: se algo nao aparecer, explique o motivo e corrija.
 Depois me diga como conferir na tela.
 ```
 
@@ -363,7 +364,7 @@ Antes de chamar o instrutor, confira:
 Use esta frase:
 
 ```text
-Eu usei Claude ou Codex para criar um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra os resultados em tabela, cards e graficos.
+Eu usei Claude ou Codex para rodar, entender e evoluir um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra os resultados em tabela, cards e graficos.
 ```
 
 Se perguntarem por que tem backend:

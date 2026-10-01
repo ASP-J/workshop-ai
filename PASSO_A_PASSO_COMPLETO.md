@@ -12,17 +12,19 @@ PASSO_A_PASSO_SE_TRAVAR.md
 
 ## O que voce vai fazer
 
-Voce vai usar Claude ou Codex para construir e entender um painel local.
+O painel local ja vem pronto na branch `alunos`.
 
-Esse painel vai:
+Voce vai usar Claude ou Codex para **rodar, entender, conferir e evoluir** esse painel.
 
-1. Buscar usuarios na API da Twygo.
-2. Receber um CSV de capacitacao.
-3. Cruzar usuarios + CSV pelo email.
-4. Mostrar uma tabela.
-5. Mostrar cards de resumo.
-6. Mostrar graficos.
-7. Proteger o token da API usando `.env`.
+Esse painel:
+
+1. Busca usuarios na API da Twygo.
+2. Recebe um CSV de capacitacao.
+3. Cruza usuarios + CSV pelo email.
+4. Mostra uma tabela.
+5. Mostra cards de resumo.
+6. Mostra graficos.
+7. Protege o token da API usando `.env`.
 
 ## Como a aula funciona
 
@@ -57,8 +59,8 @@ alunos
 Cole este prompt no Claude ou Codex:
 
 ```text
-Clone a branch alunos deste repositorio:
-https://github.com/ASP-J/workshop-ai.git
+Clone a branch alunos deste repositorio (a branch principal NAO e a dos alunos):
+git clone -b alunos https://github.com/ASP-J/workshop-ai.git
 
 Depois leia o README.md.
 Me explique em linguagem simples:
@@ -74,8 +76,8 @@ Depois de alterar, diga quais arquivos mudaram e como eu confiro se funcionou.
 Se o instrutor pedir SSH, use este:
 
 ```text
-Clone a branch alunos deste repositorio:
-git@github.com:ASP-J/workshop-ai.git
+Clone a branch alunos deste repositorio (a branch principal NAO e a dos alunos):
+git clone -b alunos git@github.com:ASP-J/workshop-ai.git
 
 Depois leia o README.md.
 Me explique em linguagem simples:
@@ -182,6 +184,8 @@ No final, apenas confirme:
 
 Explique em linguagem simples por que o token precisa ficar protegido.
 ```
+
+Atencao: use **somente o token do workshop** entregue pelo instrutor (ele sera revogado depois da aula). Nunca use um token pessoal.
 
 Voce pode continuar quando a IA confirmar:
 
@@ -358,7 +362,7 @@ A tabela deve ajudar a responder:
 - qual area aparece
 - quais cursos ou capacitacoes aparecem
 - quantas horas aparecem
-- qual status aparece
+- se a pessoa concluiu ou nao (coluna Conclusao)
 
 Cole este prompt:
 
@@ -398,8 +402,8 @@ Os cards devem mostrar indicadores como:
 6. areas com capacitacao
 
 Explique o que cada card significa.
-Se faltar algum indicador importante, implemente de forma simples.
 Depois diga como eu confiro na tela.
+(Opcional) Se eu quiser evoluir, sugira 1 card novo e explique antes de implementar.
 ```
 
 Voce pode continuar quando existirem cards preenchidos com numeros.
@@ -421,10 +425,10 @@ Confira se o painel tem graficos.
 Os graficos devem ajudar a entender:
 1. horas ou usuarios por area
 2. capacitacoes por categoria
-3. status das capacitacoes
+3. quem concluiu x quem nao concluiu
 
 Explique o que cada grafico mostra.
-Se algum grafico estiver vazio ou confuso, corrija.
+Se algum grafico estiver vazio ou confuso, explique o motivo antes de corrigir.
 Depois diga como eu confiro visualmente.
 ```
 
@@ -544,7 +548,7 @@ Eu criei um painel local que busca usuarios na API da Twygo, recebe um CSV de ca
 Voce pode responder:
 
 ```text
-Aprendi a usar Claude ou Codex para construir um sistema local, conectar em uma API, proteger um token, anexar um CSV e cruzar dados pelo email.
+Aprendi a usar Claude ou Codex para rodar, entender e evoluir um sistema local, conectar em uma API, proteger um token, anexar um CSV e cruzar dados pelo email.
 ```
 
 Ou:

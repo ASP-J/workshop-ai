@@ -11,8 +11,8 @@ alunos
 Se voce estiver usando Claude ou Codex, comece pedindo para a IA pegar a versao dos alunos:
 
 ```text
-Clone a branch alunos deste repositorio:
-git@github.com:ASP-J/workshop-ai.git
+Clone a branch alunos deste repositorio (a branch principal NAO e a dos alunos):
+git clone -b alunos git@github.com:ASP-J/workshop-ai.git
 
 Depois leia o README.md e me guie passo a passo, em linguagem simples.
 Antes de fazer qualquer alteracao, explique o que voce vai fazer e por que.
@@ -22,8 +22,8 @@ Depois de cada alteracao, explique o que mudou, quais arquivos foram alterados e
 Se o instrutor pedir o link em HTTPS, use:
 
 ```text
-Clone a branch alunos deste repositorio:
-https://github.com/ASP-J/workshop-ai.git
+Clone a branch alunos deste repositorio (a branch principal NAO e a dos alunos):
+git clone -b alunos https://github.com/ASP-J/workshop-ai.git
 
 Depois leia o README.md e me guie passo a passo, em linguagem simples.
 Antes de fazer qualquer alteracao, explique o que voce vai fazer e por que.
@@ -32,7 +32,9 @@ Depois de cada alteracao, explique o que mudou, quais arquivos foram alterados e
 
 Este repositorio e o ponto de partida do desafio.
 
-Voce vai usar Claude ou Codex para criar um painel que conecta a API da Twygo com uma planilha CSV de capacitacao.
+O painel que conecta a API da Twygo com uma planilha CSV de capacitacao **ja vem pronto** nesta branch.
+
+Seu desafio e usar Claude ou Codex para **rodar, entender, conferir e evoluir** esse painel.
 
 O objetivo nao e decorar codigo.
 
@@ -41,6 +43,15 @@ O objetivo e aprender este fluxo:
 ```text
 prompt para IA -> IA altera o projeto -> voce confere no navegador -> voce pede ajustes
 ```
+
+## Regras de ouro (seguranca e dados)
+
+- **Tudo roda local.** O painel abre so no seu computador (`localhost` / `127.0.0.1`). Ele nao fica visivel para outras pessoas da rede/Wi-Fi.
+- **Nada sobe para servidor ou nuvem.** Nao publique o painel em nenhum servidor, hospedagem ou servico online.
+- **Repositorio privado.** Se for guardar seu projeto no GitHub, use um repositorio **privado**.
+- **Auditoria antes de publicar.** Antes de publicar ou compartilhar qualquer coisa, peca uma revisao para o Joao, a Adriana ou um dev.
+- **Use so o token do workshop.** Use o token entregue pelo instrutor (ele sera revogado depois). Nunca use um token pessoal.
+- **Nada de token ou dados reais em print.** Nao cole token, nomes ou e-mails reais em prints, slides ou grupos.
 
 ## Regra de ouro para usar a IA
 
@@ -75,7 +86,7 @@ Resume o que voce ja fez, em ordem.
 Depois me diga exatamente o que eu devo conferir agora.
 ```
 
-## O que voce vai construir
+## O que o painel ja faz (e voce vai conferir e evoluir)
 
 Um painel local chamado:
 
@@ -83,14 +94,14 @@ Um painel local chamado:
 Painel de capacitacao
 ```
 
-Ele deve:
+Ele ja faz isto:
 
 1. Buscar usuarios na API da Twygo.
 2. Receber um CSV de capacitacao.
 3. Cruzar usuarios + CSV pelo `email`.
 4. Mostrar uma tabela com os dados cruzados.
 5. Mostrar cards de resumo.
-6. Mostrar graficos por area, categoria e status.
+6. Mostrar graficos por setor, area, categoria e "Concluiu x nao concluiu".
 7. Proteger o token da API usando `.env`.
 
 ## O que significa conectar na API da Twygo
@@ -175,6 +186,11 @@ No final, apenas confirme que o .env foi configurado.
 Explique o que e dependencia, o que e .env e por que o token precisa ficar protegido.
 Depois diga quais arquivos voce alterou ou criou.
 ```
+
+Sobre o token:
+
+- use **somente o token do workshop** entregue pelo instrutor (ele sera revogado depois da aula)
+- **nunca** use um token pessoal ou de producao seu
 
 Atencao:
 
@@ -270,7 +286,7 @@ Depois diga onde no projeto essa regra ficou implementada.
 
 ## Passo 7 - Confira cards e graficos
 
-O painel precisa mostrar pelo menos:
+O painel ja vem com:
 
 - cards de resumo
 - tabela de usuarios
@@ -278,14 +294,22 @@ O painel precisa mostrar pelo menos:
 - grafico de pizza ou donut
 - grafico de barras
 
-Se faltar alguma coisa, envie:
+Peca para a IA explicar o que voce esta vendo:
 
 ```text
 Confira se o painel tem cards, tabela e graficos.
-Se faltar algo, implemente de forma simples e visual.
-O foco e mostrar dados cruzados de capacitacao por area, categoria e status.
-Antes de implementar, explique quais indicadores fazem sentido para este desafio.
-Depois de implementar, explique o que cada card e cada grafico significa.
+Explique o que cada card e cada grafico significa, em linguagem simples.
+Use os dados cruzados de capacitacao (setor, area, categoria e "Concluiu x nao concluiu").
+Se algo estiver quebrado ou vazio, explique o motivo antes de corrigir.
+```
+
+Quer evoluir o painel? (opcional)
+
+```text
+Sugira 3 melhorias simples para este painel, pensando em uma pessoa de RH.
+Antes de implementar, explique cada uma e me deixe escolher.
+Nao mude a regra de cruzamento por email.
+Depois de implementar, explique como eu confiro na tela.
 ```
 
 ## Passo 8 - Valide a entrega final
@@ -401,7 +425,7 @@ Confira:
 Use esta frase:
 
 ```text
-Eu criei um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra indicadores em cards, tabela e graficos.
+Eu rodei, entendi e evolui um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra indicadores em cards, tabela e graficos.
 ```
 
 Se perguntarem por que existe backend:
