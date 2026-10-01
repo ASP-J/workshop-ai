@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { loadUsers } from "./api.js";
+import { barWidthPercent } from "./barWidth.js";
 import { buildPieSlices } from "./chartSlices.js";
 import { buildTrainingDashboard } from "./trainingDashboard.js";
 import { parseTrainingCsv } from "./trainingCsv.js";
@@ -223,7 +224,7 @@ function BarChart({ title, data, suffix = "" }) {
             <div className="bar-row" key={item.label}>
               <span>{item.label}</span>
               <div className="bar-track">
-                <div className="bar-fill" style={{ width: `${Math.max(8, (item.value / max) * 100)}%` }} />
+                <div className="bar-fill" style={{ width: `${barWidthPercent(item.value, max)}%` }} />
               </div>
               <strong>
                 {item.value}
