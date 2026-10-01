@@ -1,112 +1,123 @@
-# Desafio - Painel de Capacitacao com API Twygo + CSV
+# Desafio - Painel de Capacitação com API Twygo + CSV
 
 ## Contexto
 
-Voce trabalha em uma empresa que usa a Twygo para gerenciar usuarios e treinamentos.
+Você trabalha em uma empresa que usa a Twygo para gerenciar usuários e treinamentos.
 
 A empresa quer um painel simples para responder perguntas como:
 
 - Quantas pessoas aparecem na base da Twygo?
-- Quais pessoas tambem aparecem na planilha de capacitacao?
-- Quantas horas de capacitacao cada area tem?
+- Quais pessoas também aparecem na planilha de capacitação?
+- Quantas horas de capacitação cada área tem?
 - Quais categorias de curso aparecem mais?
-- Quais usuarios estao com dados cruzados corretamente?
+- Quais usuários estão com dados cruzados corretamente?
 
-O painel ja vem pronto na branch `alunos`: ele conecta a API da Twygo com uma planilha CSV e mostra os resultados de forma visual.
+O painel já vem pronto na branch `alunos`: ele conecta a API da Twygo com uma planilha CSV e mostra os resultados de forma visual.
 
-O objetivo do desafio e **rodar, entender, conferir e evoluir** esse painel com ajuda da IA.
+O objetivo do desafio é **rodar, entender, conferir e evoluir** esse painel com ajuda da IA.
 
 Quando este documento falar em **API da Twygo**, entenda assim:
 
 ```text
-e o caminho que o sistema usa para buscar usuarios reais cadastrados na Twygo
+é o caminho que o sistema usa para buscar usuários reais cadastrados na Twygo
 ```
 
 Para acessar essa API, o instrutor vai entregar um token.
 
-Voce nao precisa decorar detalhes tecnicos da API. Voce precisa saber que:
+Você não precisa decorar detalhes técnicos da API. Você precisa saber que:
 
-1. A API entrega os usuarios.
+1. A API entrega os usuários.
 2. O token autoriza o acesso.
 3. O backend local protege o token.
-4. A tela mostra os usuarios recebidos.
+4. A tela mostra os usuários recebidos.
 
-## Como voce vai trabalhar
+## A API entrega os usuários em páginas
 
-Neste desafio, voce vai usar Claude ou Codex.
+A API da Twygo é **paginada**: ela não devolve todo mundo de uma vez.
 
-Voce nao precisa escrever tudo sozinho.
+- Cada página traz no máximo 100 usuários (`per_page` vai até 100).
+- A resposta diz quantas páginas existem (`pagination.total_pages`) e quantos usuários existem no total (`pagination.total_entries`).
 
-O formato esperado e:
+Se alguém buscar só a primeira página com `page=1&per_page=50`, recebe **50 dos 186 usuários**, e o cruzamento com a planilha fica incompleto (só 50 e-mails cruzam em vez de 150).
+
+Por isso o projeto **busca todas as páginas** antes de cruzar com o CSV: a tela chama `/api/users?all=true` e o backend local pede página por página até a última.
+
+## Como você vai trabalhar
+
+Neste desafio, você vai usar Claude ou Codex.
+
+Você não precisa escrever tudo sozinho.
+
+O formato esperado é:
 
 ```text
-voce da prompts -> a IA altera o projeto -> voce confere o resultado -> voce pede ajustes
+você dá prompts -> a IA roda/explica/ajusta o projeto -> você confere o resultado -> você pede ajustes
 ```
 
-Nao tenha vergonha de pedir explicacao.
+Não tenha vergonha de pedir explicação.
 
-Um bom prompt e melhor do que tentar adivinhar.
+Um bom prompt é melhor do que tentar adivinhar.
 
-Neste desafio, a IA deve explicar o que esta fazendo.
+Neste desafio, a IA deve explicar o que está fazendo.
 
-Sempre que pedir algo para Claude ou Codex, inclua esta instrucao:
+Sempre que pedir algo para Claude ou Codex, inclua esta instrução:
 
 ```text
 Explique cada passo em linguagem simples.
-Antes de alterar arquivos, diga o que voce vai fazer e por que.
+Antes de alterar arquivos, diga o que você vai fazer e por quê.
 Depois de alterar, diga quais arquivos mudaram, por que mudaram e como eu confiro se funcionou.
 ```
 
-O objetivo nao e apenas terminar o painel.
+O objetivo não é apenas ver o painel funcionando.
 
-O objetivo e voce conseguir explicar:
+O objetivo é você conseguir explicar:
 
-1. de onde vieram os usuarios
+1. de onde vieram os usuários
 2. de onde veio o CSV
 3. como os dados foram cruzados
 4. por que o token fica protegido
-5. o que os cards e graficos mostram
+5. o que os cards e gráficos mostram
 
-## O que voce vai receber
+## O que você vai receber
 
 O instrutor vai entregar:
 
-1. Link do repositorio do projeto (use a branch `alunos`: `git clone -b alunos https://github.com/ASP-J/workshop-ai.git`).
-2. Token da API da Twygo (token so do workshop, revogado depois da aula).
-3. Arquivo CSV de capacitacao.
+1. Link do repositório do projeto (use a branch `alunos`: `git clone -b alunos https://github.com/ASP-J/workshop-ai.git`).
+2. Token da API da Twygo (token só do workshop, revogado depois da aula).
+3. Arquivo CSV de capacitação (`public/capacitacao_workshop.csv`, que já vem no projeto).
 4. Apostila de conceitos.
 
-O CSV ja vem pronto.
+O CSV já vem pronto.
 
-Voce nao precisa criar os dados da planilha.
+Você não precisa criar os dados da planilha.
 
-## Missao do desafio
+## Missão do desafio
 
 Rodar, entender, conferir e evoluir o painel local chamado:
 
 ```text
-Painel de capacitacao
+Painel de capacitação
 ```
 
-Esse painel ja faz (e voce precisa conferir que funciona):
+Esse painel já faz (e você confere que funciona):
 
-1. Buscar usuarios reais na API da Twygo.
-2. Permitir anexar um CSV de capacitacao.
-3. Cruzar os usuarios da API com os dados do CSV usando o email.
-4. Mostrar uma listagem de usuarios com os dados cruzados.
-5. Mostrar cards de resumo.
-6. Mostrar graficos por setor, area, categoria e "Concluiu x nao concluiu".
-7. Proteger o token da API usando `.env`.
+1. Busca todos os usuários reais na API da Twygo (todas as páginas).
+2. Permite anexar um CSV de capacitação.
+3. Cruza os usuários da API com os dados do CSV usando o e-mail.
+4. Mostra uma listagem de usuários com os dados cruzados.
+5. Mostra cards de resumo.
+6. Mostra gráficos por setor, área, categoria e "Concluiu x não concluiu".
+7. Protege o token da API usando `.env`.
 
 ## Regra principal do cruzamento
 
-O cruzamento deve ser feito pelo campo:
+O cruzamento é feito pelo campo:
 
 ```text
 email
 ```
 
-Se o email do usuario na Twygo for igual ao email de uma linha do CSV, os dados devem ser juntados.
+Se o e-mail do usuário na Twygo for igual ao e-mail de uma linha do CSV, os dados são juntados.
 
 Exemplo:
 
@@ -115,32 +126,34 @@ API da Twygo:
 ana@empresa.com - Ana Silva
 
 CSV:
-ana@empresa.com - 6 horas de capacitacao
+ana@empresa.com - 6 horas de capacitação
 
 Resultado:
-Ana Silva - 6 horas de capacitacao
+Ana Silva - 6 horas de capacitação
 ```
 
-## Regra sobre area
+Se o e-mail do CSV não existir na Twygo, a linha fica de fora. O CSV do workshop tem, de propósito, 10 e-mails `@anonimizado.com` que não existem na plataforma, para você ver isso acontecer.
 
-A area deve vir do perfil do usuario na Twygo sempre que existir.
+## Regra sobre área
+
+A área vem do perfil do usuário na Twygo sempre que existir.
 
 Regra esperada:
 
-1. Se o usuario tem area/departamento no perfil, usar essa area.
-2. Se nao tiver area, tentar usar algum campo parecido do perfil.
-3. Se nao existir nada, mostrar `Sem area no perfil`.
+1. Se o usuário tem área/departamento no perfil, usar essa área.
+2. Se não tiver área, tentar usar algum campo parecido do perfil.
+3. Se não existir nada, mostrar `Sem area no perfil`.
 
-Areas esperadas no desafio:
+Áreas esperadas no desafio:
 
 - Diretoria Executiva
 - Backoffice
 - Financeiro
 - Recursos Humanos
-- Gestao de conteudo
-- Conteudo
+- Gestão de conteúdo
+- Conteúdo
 - Marketing
-- Geracao de Leads
+- Geração de Leads
 - Design de Marketing
 - Sucesso do Cliente
 - Atendimento
@@ -148,117 +161,137 @@ Areas esperadas no desafio:
 - Produto e Qualidade
 - Engenharia de Produto
 - Qualidade e Testes
-- Sustentacao
+- Sustentação
 - Vendas
-- Qualificacao
-- Solucoes
+- Qualificação
+- Soluções
 - Engenharia
-- Arquitetura Tecnologica
+- Arquitetura Tecnológica
 - Desenvolvimento
 - Business Intelligence
 - Dados e Hubspot
 
-## Formato esperado do CSV
+## Formato do CSV
 
-O CSV deve ter estas colunas:
+O CSV tem estas colunas:
 
 ```text
 email,area,categoria,curso,horas_capacitacao,status_capacitacao,nota,concluido_em
 ```
 
-O instrutor vai fornecer o arquivo pronto.
+O instrutor fornece o arquivo pronto: `public/capacitacao_workshop.csv`.
 
-Voce deve apenas anexar o CSV no painel.
+Você só precisa anexar o CSV no painel (ou clicar em "Usar CSV exemplo").
 
 ## O que a tela tem (confira cada item)
 
-O painel ja vem com:
+O painel já vem com:
 
-1. Titulo claro do painel.
-2. Area para anexar o CSV.
-3. Status da conexao com a API da Twygo.
+1. Título claro do painel.
+2. Área para anexar o CSV.
+3. Status da conexão com a API da Twygo.
 4. Cards de resumo.
-5. Lista ou tabela de usuarios.
-6. Dados cruzados de capacitacao.
-7. Grafico de pizza ou donut.
-8. Grafico de barras.
-9. Mensagem amigavel quando faltar CSV.
-10. Mensagem amigavel quando acontecer erro.
+5. Lista ou tabela de usuários.
+6. Dados cruzados de capacitação.
+7. Gráfico de pizza ou donut.
+8. Gráfico de barras.
+9. Mensagem amigável quando faltar CSV.
+10. Mensagem amigável quando acontecer erro.
+
+## Números esperados
+
+Com o token do workshop e o CSV `capacitacao_workshop.csv`:
+
+- 186 usuários vindos da API (todas as páginas)
+- 287 linhas no CSV, de 160 e-mails diferentes
+- 150 e-mails cruzados (271 linhas); 10 e-mails `@anonimizado.com` não cruzam
+- 36 usuários sem capacitação no CSV
+- Cards: Concluíram 96 · Não concluíram 54 · Horas totais 2020h · Cobertura 81% · Setores 34
+
+A explicação completa (incluindo a diferença entre **pessoas** e **linhas**) está na seção "Como saber se deu certo" do `README.md`.
 
 ## Cards de resumo
 
-O painel ja traz cards de resumo. Ideias de cards extras, se quiser evoluir (opcional):
+O painel já traz cards de resumo. Ideias de cards extras, se quiser evoluir (opcional):
 
-- Total de usuarios da Twygo
-- Usuarios encontrados no CSV
-- Total de horas de capacitacao
-- Media de horas por usuario
-- Cursos concluidos
-- Areas com capacitacao
+- Total de usuários da Twygo
+- Usuários encontrados no CSV
+- Total de horas de capacitação
+- Média de horas por usuário
+- Cursos concluídos
+- Áreas com capacitação
 
-## Graficos
+## Gráficos
 
-O painel ja traz graficos (incluindo "Concluiu x nao concluiu"). Ideias de graficos extras, se quiser evoluir (opcional):
+O painel já traz gráficos (incluindo "Concluiu x não concluiu"). Ideias de gráficos extras, se quiser evoluir (opcional):
 
-- Donut por area
-- Donut "Concluiu x nao concluiu" (ja existe)
+- Donut por área
+- Donut "Concluiu x não concluiu" (já existe)
 - Barras por categoria
-- Barras por horas de capacitacao por area
+- Barras por horas de capacitação por área
 
-## O que nao pode fazer
+## O que não pode fazer
 
-Nao coloque o token da Twygo dentro do frontend.
+Não cole o token no chat da IA: a IA abre o `.env` e você cola o token direto no arquivo.
 
-Nao publique o token no GitHub.
+Não coloque o token da Twygo dentro do frontend.
 
-Nao use token pessoal: use so o token do workshop entregue pelo instrutor.
+Não publique o token no GitHub.
 
-Nao publique o painel em servidor ou nuvem: ele roda so no seu computador (localhost).
+Não use token pessoal: use só o token do workshop entregue pelo instrutor.
 
-Nao cole token, nomes ou e-mails reais em prints.
+Não publique o painel em servidor ou nuvem: ele roda só no seu computador (localhost).
 
-Antes de publicar qualquer coisa, peca auditoria para o Joao, a Adriana ou um dev.
+Não cole token, nomes ou e-mails reais em prints.
 
-Nao apague arquivos do projeto sem pedir para a IA explicar antes.
+Antes de publicar qualquer coisa, peça auditoria para o João, a Adriana ou um dev.
 
-Nao use dados negativos, ofensivos ou constrangedores na planilha.
+Não apague arquivos do projeto sem pedir para a IA explicar antes.
 
-Nao crie busca manual como funcao principal. O objetivo e mostrar uma listagem cruzada e graficos.
+Não use dados negativos, ofensivos ou constrangedores na planilha.
 
-## Como pedir para Claude ou Codex comecar
+Não transforme o painel em uma busca manual. O objetivo é mostrar uma listagem cruzada e gráficos.
+
+## Como pedir para Claude ou Codex começar
 
 Use este prompt:
 
 ```text
-Quero rodar, entender e evoluir o Painel de capacitacao com API Twygo + CSV (ele ja vem pronto na branch alunos).
-Leia os arquivos do projeto e me explique o que ja existe.
-Depois me diga, em linguagem simples, qual sera o primeiro passo.
-Nao escreva explicacao tecnica demais.
-Explique tambem quais arquivos parecem importantes e para que cada um serve.
+Quero rodar, entender e evoluir o Painel de capacitação com API Twygo + CSV (ele já vem pronto na branch alunos).
+Leia os arquivos do projeto e me explique o que já existe.
+Depois me diga, em linguagem simples, qual será o primeiro passo.
+Não escreva explicação técnica demais.
+Explique também quais arquivos parecem importantes e para que cada um serve.
 ```
 
 Depois use:
 
 ```text
 Prepare o projeto para rodar localmente.
-Crie o arquivo .env a partir do .env.example.
-Configure o arquivo .env com este token da Twygo:
-[cole aqui o token recebido do instrutor]
-
-Salve esse valor na variavel TWYGO_API_TOKEN.
-Nao mostre, nao repita e nao imprima meu token na resposta.
-No final, apenas confirme que o .env foi configurado.
-Explique por que o token deve ficar no .env e nao dentro da tela.
+Instale as dependências necessárias.
+Explique por que o token deve ficar no .env e não dentro da tela.
 ```
 
-Atencao: use **somente o token do workshop** entregue pelo instrutor (ele sera revogado depois da aula). Nunca cole um token pessoal.
+Para o token, use **sempre** este fluxo (o token nunca vai para o chat):
 
-Depois que a IA confirmar que configurou o token:
+1. Envie para a IA:
+
+   ```text
+   Crie o .env a partir do .env.example e abra o arquivo para eu colar o token (não peça nem mostre o token no chat)
+   ```
+
+2. A IA abre o arquivo no editor (`open -e .env` no Mac, `notepad .env` no Windows).
+3. Cole o token logo depois de `TWYGO_API_TOKEN=`, salve e feche o editor.
+4. Volte para a IA e escreva `pronto`.
+
+Atenção: use **somente o token do workshop** entregue pelo instrutor (ele será revogado depois da aula). Nunca use um token pessoal.
+
+Depois do "pronto":
 
 ```text
-Abra o projeto local e confira se a API da Twygo esta respondendo.
+Abra o projeto local e confira se a API da Twygo está respondendo.
 Se der erro, explique em linguagem simples e corrija.
-Explique o que voce esta conferindo em cada parte: frontend, backend e API.
+Explique o que você está conferindo em cada parte: frontend, backend e API.
 ```
 
 ## Prompts permitidos durante o desafio
@@ -268,9 +301,9 @@ Para pedir que a IA explique antes de mexer:
 ```text
 Antes de alterar qualquer arquivo, me explique o plano.
 Diga:
-1. o que voce vai fazer
-2. por que isso e necessario
-3. quais arquivos provavelmente serao alterados
+1. o que você vai fazer
+2. por que isso é necessário
+3. quais arquivos provavelmente serão alterados
 4. como vamos conferir se deu certo
 Use linguagem simples.
 ```
@@ -278,13 +311,13 @@ Use linguagem simples.
 Para pedir que a IA explique depois de mexer:
 
 ```text
-Agora me explique o que voce acabou de fazer.
+Agora me explique o que você acabou de fazer.
 Diga:
 1. quais arquivos foram alterados
 2. o que mudou em cada arquivo
-3. por que essa mudanca ajuda no desafio
+3. por que essa mudança ajuda no desafio
 4. como eu confiro o resultado
-5. qual e o proximo passo
+5. qual é o próximo passo
 ```
 
 Para entender uma parte:
@@ -295,12 +328,12 @@ Fale como se eu nunca tivesse programado.
 Me diga se eu preciso mexer nele ou apenas entender.
 ```
 
-Para pedir uma melhoria:
+Para evoluir o painel (opcional):
 
 ```text
 Melhore essa tela para ficar mais clara para uma pessoa de RH ou treinamento.
-Nao mude a regra de cruzamento por email.
-Antes de alterar, explique o que voce vai melhorar.
+Não mude a regra de cruzamento por e-mail.
+Antes de alterar, explique o que você vai melhorar.
 Depois de alterar, explique como conferir na tela.
 ```
 
@@ -308,9 +341,9 @@ Para corrigir erro:
 
 ```text
 Deu este erro:
-[cole o erro aqui]
+[cole o erro aqui, sem o token]
 Explique o motivo em linguagem simples e corrija.
-Antes de corrigir, diga qual e a causa mais provavel.
+Antes de corrigir, diga qual é a causa mais provável.
 Depois de corrigir, diga como eu testo novamente.
 ```
 
@@ -318,51 +351,52 @@ Para validar:
 
 ```text
 Confira se o painel atende ao desafio:
-- busca usuarios da Twygo
+- busca todos os usuários da Twygo (todas as páginas)
 - anexa CSV
-- cruza por email
+- cruza por e-mail
 - mostra cards
 - mostra tabela
-- mostra graficos
+- mostra gráficos
 - protege o token no .env
+- os números batem com "Como saber se deu certo" do README
 Se algo estiver quebrado, explique o motivo e corrija.
 Depois explique o que foi corrigido e como eu apresento isso para o instrutor.
 ```
 
 ## Entrega esperada
 
-No final, voce deve conseguir mostrar:
+No final, você deve conseguir mostrar:
 
 1. O painel aberto no navegador.
-2. Usuarios carregados da Twygo.
-3. CSV anexado.
+2. Usuários carregados da Twygo (186).
+3. CSV anexado (287 linhas lidas da planilha).
 4. Tabela com dados cruzados.
 5. Cards de resumo preenchidos.
-6. Graficos aparecendo.
+6. Gráficos aparecendo.
 7. Token protegido no `.env`.
 
-## Criterios de sucesso
+## Critérios de sucesso
 
-O desafio esta correto se:
+O desafio está correto se:
 
 - A tela abre sem erro.
 - A API da Twygo responde.
-- O CSV e aceito.
+- O CSV é aceito.
 - O cruzamento usa `email`.
-- A listagem mostra usuarios e capacitacoes.
-- Os cards fazem sentido.
-- Os graficos aparecem.
-- O token nao aparece na tela.
-- O token nao aparece no GitHub.
-- A explicacao final do aluno faz sentido.
+- A listagem mostra usuários e capacitações.
+- Os cards fazem sentido (e batem com os números esperados).
+- Os gráficos aparecem.
+- O token não aparece na tela nem no chat.
+- O token não aparece no GitHub.
+- A explicação final do aluno faz sentido.
 - O aluno consegue explicar, com suas palavras, o que a IA fez no projeto.
 
-## Apresentacao final
+## Apresentação final
 
 Quando terminar, explique em voz alta:
 
 ```text
-Eu rodei, entendi e evolui um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra indicadores em cards, tabela e graficos.
+Eu rodei, entendi e evoluí um painel local que busca usuários na API da Twygo, recebe um CSV de capacitação, cruza os dados pelo e-mail e mostra indicadores em cards, tabela e gráficos.
 ```
 
 Se perguntarem por que existe backend:
@@ -374,20 +408,20 @@ Porque o backend protege o token da API. A tela chama o backend, e o backend cha
 Se perguntarem por que usamos CSV:
 
 ```text
-Porque o CSV representa uma planilha externa de capacitacao que precisa ser cruzada com os usuarios da plataforma.
+Porque o CSV representa uma planilha externa de capacitação que precisa ser cruzada com os usuários da plataforma.
 ```
 
 ## Dica final
 
-Nao tente decorar o codigo.
+Não tente decorar o código.
 
 Tente entender o fluxo:
 
 ```text
-API da Twygo -> usuarios
-CSV -> capacitacoes
-email -> cruzamento
-painel -> cards, tabela e graficos
+API da Twygo (todas as páginas) -> usuários
+CSV -> capacitações
+e-mail -> cruzamento
+painel -> cards, tabela e gráficos
 ```
 
-Se voce consegue explicar esse fluxo, voce entendeu o desafio.
+Se você consegue explicar esse fluxo, você entendeu o desafio.
