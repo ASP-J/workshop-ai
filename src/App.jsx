@@ -150,21 +150,6 @@ export default function App() {
           <TrainingTable rows={dashboard.rows} status={status} />
         </section>
       </section>
-
-      <aside className="explain-panel">
-        <p className="eyebrow">O que esta tela ensina</p>
-        <h2>API + planilha = painel</h2>
-        <ol>
-          <li>O app busca usuários na API Twygo.</li>
-          <li>O aluno anexa um CSV de capacitação.</li>
-          <li>O sistema cruza tudo pelo e-mail.</li>
-          <li>Cards, tabela e gráficos nascem do cruzamento.</li>
-        </ol>
-        <div className="endpoint">
-          <span>GET</span>
-          <code>/api/v2/users + capacitacao_workshop.csv</code>
-        </div>
-      </aside>
     </main>
   );
 }
