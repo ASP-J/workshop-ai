@@ -35,6 +35,52 @@ O objetivo é aprender este fluxo:
 prompt para a IA -> a IA roda/explica/ajusta o projeto -> você confere no navegador -> você pede ajustes
 ```
 
+## Preparar o computador (uma vez só, antes da aula)
+
+Você precisa de três coisas: **Node.js 22.12 ou mais novo**, **Git** e **Claude Code** (ou Codex). Escolha o seu sistema:
+
+### No Mac
+
+1. **Node.js:** baixe o instalador **LTS** em <https://nodejs.org/pt> e instale (avançar, avançar, concluir).
+2. **Git:** abra o Terminal e digite `git --version`. Se o Mac oferecer instalar as "ferramentas de linha de comando", aceite.
+3. Abra o **Terminal** (Cmd + Espaço, digite "Terminal", Enter) e crie a pasta do workshop:
+
+   ```bash
+   mkdir workshop && cd workshop && claude
+   ```
+
+### No Windows (10 ou 11)
+
+1. **Node.js:** baixe o instalador **LTS** (arquivo `.msi`) em <https://nodejs.org/pt> e instale com as opções padrão. **Depois feche e abra de novo** qualquer terminal que estiver aberto (senão ele não enxerga o Node).
+2. **Git para Windows:** baixe em <https://git-scm.com/downloads/win> e instale com as opções padrão (o Claude Code também precisa dele).
+3. Crie a pasta do workshop **fora do OneDrive**, num lugar curto como `C:\workshop`. Pastas dentro do OneDrive (às vezes a Área de Trabalho e os Documentos ficam lá sem você saber) deixam a instalação lenta e podem dar erro.
+4. Abra o **Prompt de Comando** (tecla Windows, digite `cmd`, Enter) e digite, uma linha de cada vez:
+
+   ```bat
+   mkdir C:\workshop
+   cd C:\workshop
+   claude
+   ```
+
+   (No `cmd` também funciona tudo numa linha: `mkdir C:\workshop && cd C:\workshop && claude`.)
+
+> **PowerShell:** se o seu terminal for o PowerShell (o padrão do "Terminal" no Windows 11), digite um comando por linha — o `&&` não funciona no PowerShell antigo. Se aparecer erro de "execução de scripts foi desabilitada" ao usar `npm`, veja [Problemas comuns no Windows](#problemas-comuns-no-windows).
+
+Para conferir se ficou tudo certo (Mac ou Windows): `node -v` deve mostrar `v22.12` ou mais (ex.: `v24.x`) e `git --version` deve mostrar uma versão.
+
+### Mac × Windows: os mesmos comandos, nomes diferentes
+
+A IA faz isso por você, mas se precisar fazer na mão:
+
+| O que fazer | Mac (Terminal) | Windows (Prompt de Comando) |
+|---|---|---|
+| Criar o `.env` a partir do exemplo | `cp .env.example .env` | `copy .env.example .env` |
+| Abrir o `.env` para colar o token | `open -e .env` | `notepad .env` |
+| Instalar as dependências | `npm install` | `npm install` |
+| Rodar o projeto | `npm run dev` | `npm run dev` |
+| Rodar os testes | `npm test` | `npm test` |
+| Parar o projeto | Ctrl + C | Ctrl + C (e depois `S` ou `Y` + Enter, se perguntar) |
+
 ## Regras de ouro (segurança e dados)
 
 - **Tudo roda local.** O painel abre só no seu computador (`localhost` / `127.0.0.1`). Ele não fica visível para outras pessoas da rede/Wi-Fi.
@@ -219,8 +265,8 @@ Agora o token. **Você nunca cola o token no chat da IA.** O fluxo é sempre est
    ```
 
 2. A IA cria o arquivo e abre ele num editor de texto:
-   - no Mac: `open -e .env`
-   - no Windows: `notepad .env`
+   - no Mac: `cp .env.example .env` e `open -e .env`
+   - no Windows: `copy .env.example .env` e `notepad .env`
 3. No editor, cole o token recebido do instrutor logo depois de `TWYGO_API_TOKEN=` (substituindo o texto de exemplo), sem espaços. Fica assim: `TWYGO_API_TOKEN=seu_token_aqui`.
 4. Salve o arquivo (Cmd+S no Mac, Ctrl+S no Windows) e feche o editor.
 5. Volte para a IA e escreva:
@@ -443,7 +489,19 @@ Antes de corrigir, me diga:
 Depois de corrigir, me diga como eu confiro que resolveu.
 ```
 
-O projeto precisa do Node.js 22.12 ou mais novo. Se aparecer erro de versão do Node, peça para a IA verificar e instalar uma versão compatível.
+O projeto precisa do Node.js 22.12 ou mais novo. Se aparecer erro de versão do Node, instale a versão **LTS** de <https://nodejs.org/pt> (veja [Preparar o computador](#preparar-o-computador-uma-vez-só-antes-da-aula)), feche e abra o terminal de novo.
+
+### Problemas comuns no Windows
+
+| Sintoma | O que fazer |
+|---|---|
+| `'node' não é reconhecido como um comando interno` (ou `npm`, `git`) | O Node (ou o Git) não está instalado, ou o terminal foi aberto **antes** da instalação. Instale (veja [Preparar o computador](#preparar-o-computador-uma-vez-só-antes-da-aula)), **feche e abra o terminal de novo** e, se continuar, reinicie o computador |
+| PowerShell: `npm.ps1 não pode ser carregado porque a execução de scripts foi desabilitada` | Use o **Prompt de Comando** (`cmd`) em vez do PowerShell, ou rode `npm.cmd` no lugar de `npm`. Para liberar de vez só para o seu usuário: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` (responda `S`) |
+| PowerShell: `O token '&&' não é um separador de instrução válido` | Digite os comandos um por linha, ou use o Prompt de Comando (`cmd`) |
+| `Port 5183 is already in use` / `EADDRINUSE ... 5184` | Outra cópia do projeto (ou outro programa) já usa a porta. Feche o outro terminal que está rodando `npm run dev`. Para descobrir quem é: `netstat -ano \| findstr :5183` (o último número é o PID) e `taskkill /PID <número> /F`. Ou troque a porta no `.env`: `PORT=5194` (backend) e `CLIENT_PORT=5193` (tela) — o endereço muda para o número novo |
+| `npm install` muito lento, `EPERM` ou `EBUSY` | A pasta está no **OneDrive** ou o antivírus está vigiando a pasta. Mova o projeto para `C:\workshop` e rode `npm install` de novo |
+| `'concurrently' não é reconhecido` ou `Cannot find module` | As dependências não foram instaladas nesta pasta: rode `npm install` e depois `npm run dev` |
+| O `notepad .env` abre um arquivo vazio perguntando se quer criar | O `.env` ainda não existe: feche, rode `copy .env.example .env` e depois `notepad .env` de novo |
 
 ## Prompt para pedir explicação de qualquer coisa
 

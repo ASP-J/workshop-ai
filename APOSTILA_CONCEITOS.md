@@ -787,11 +787,13 @@ Scripts importantes:
 ```json
 {
   "dev": "concurrently \"npm:server\" \"npm:client\"",
-  "client": "vite --host 127.0.0.1 --port 5183",
+  "client": "vite",
   "server": "node server/index.js",
   "test": "vitest run"
 }
 ```
+
+O endereço da tela (`127.0.0.1`, porta 5183) fica no `vite.config.js`. Esses scripts funcionam igual no Mac e no Windows.
 
 ## 28. O que é node_modules
 
