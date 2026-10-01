@@ -7,7 +7,6 @@ export function presentUsers(payload) {
       id: value(user.user_id ?? user.id),
       name: joinName(user.name, user.first_name, user.last_name),
       email: value(user.email),
-      cpf: value(user.cpf),
       status: value(user.status ?? user.situation ?? user.active),
       sector: sectorOf(user.department ?? user.sector)
     })),

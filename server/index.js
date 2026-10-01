@@ -5,7 +5,7 @@ import { fetchAllUsers, fetchUsers } from "./twygoApi.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 5184);
-// So o proprio computador acessa: os dados de pessoas nao ficam expostos na rede/Wi-Fi.
+// Só o próprio computador acessa: os dados de pessoas não ficam expostos na rede/Wi-Fi.
 const host = "127.0.0.1";
 const baseUrl = process.env.TWYGO_API_BASE_URL ?? "https://api.twygo.com";
 
@@ -27,12 +27,12 @@ app.get("/api/users", async (request, response) => {
     response.status(result.status).json(result.body);
   } catch (error) {
     response.status(502).json({
-      message: "Nao foi possivel consultar a API da Twygo.",
+      message: "Não foi possível consultar a API da Twygo.",
       detail: error instanceof Error ? error.message : String(error)
     });
   }
 });
 
 app.listen(port, host, () => {
-  console.log(`Twygo Users Lab API em http://${host}:${port} (somente este computador)`);
+  console.log(`Painel de capacitação (API local) em http://${host}:${port} (somente este computador)`);
 });

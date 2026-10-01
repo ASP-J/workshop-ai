@@ -85,7 +85,7 @@ describe("buildTrainingDashboard", () => {
         trainingStatus: "Com dados",
         completedCourses: 0,
         totalCourses: 1,
-        completionStatus: "Nao concluiu"
+        completionStatus: "Não concluiu"
       },
       {
         id: "3",
@@ -138,7 +138,7 @@ describe("buildTrainingDashboard", () => {
     ]);
     expect(dashboard.charts.completionCount).toEqual([
       { label: "Concluiu", value: 1 },
-      { label: "Nao concluiu", value: 1 }
+      { label: "Não concluiu", value: 1 }
     ]);
   });
 

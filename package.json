@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "concurrently \"npm:server\" \"npm:client\"",
     "client": "vite --host 127.0.0.1 --port 5183",
@@ -13,13 +16,13 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.1",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.5",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "vite": "^7.2.7"
+    "vite": "^7.3.6"
   },
   "devDependencies": {
     "vitest": "^4.0.15"
