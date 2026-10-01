@@ -10,7 +10,7 @@ Demo de workshop para mostrar como sair de uma collection Postman e chegar em um
 - Manter o Bearer token no backend local via `.env`.
 - Evitar operacoes destrutivas ou que mudem dados.
 - Remover busca manual: o foco e listar usuarios, anexar CSV e cruzar fontes.
-- Criar `public/sample-capacitacao.csv` com dados positivos e categorias uteis para graficos.
+- Criar `public/capacitacao_workshop.csv` com dados positivos e categorias uteis para graficos.
 - Usar visual de painel de trabalho: upload no topo, cards, graficos, tabela no centro e explicacao lateral curta.
 
 ## Fluxo

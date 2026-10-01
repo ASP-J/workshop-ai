@@ -58,9 +58,9 @@ export default function App() {
   }
 
   async function loadSampleCsv() {
-    const response = await fetch("/sample-capacitacao.csv");
+    const response = await fetch("/capacitacao_workshop.csv");
     const text = await response.text();
-    applyCsv(text, "sample-capacitacao.csv");
+    applyCsv(text, "capacitacao_workshop.csv");
   }
 
   function applyCsv(text, fileName) {
@@ -162,7 +162,7 @@ export default function App() {
         </ol>
         <div className="endpoint">
           <span>GET</span>
-          <code>/api/v2/users + sample-capacitacao.csv</code>
+          <code>/api/v2/users + capacitacao_workshop.csv</code>
         </div>
       </aside>
     </main>
