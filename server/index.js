@@ -5,6 +5,8 @@ import { fetchAllUsers, fetchUsers } from "./twygoApi.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 5184);
+// So o proprio computador acessa: os dados de pessoas nao ficam expostos na rede/Wi-Fi.
+const host = "127.0.0.1";
 const baseUrl = process.env.TWYGO_API_BASE_URL ?? "https://api.twygo.com";
 
 app.use(cors({ origin: ["http://localhost:5183", "http://127.0.0.1:5183"] }));
@@ -31,6 +33,6 @@ app.get("/api/users", async (request, response) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Twygo Users Lab API em http://localhost:${port}`);
+app.listen(port, host, () => {
+  console.log(`Twygo Users Lab API em http://${host}:${port} (somente este computador)`);
 });
