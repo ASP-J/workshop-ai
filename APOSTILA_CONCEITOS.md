@@ -289,7 +289,7 @@ Ele mostra:
 - usuários vindos da Twygo
 - dados vindos do CSV
 - cruzamento entre usuários e capacitações
-- gráficos por área, categoria e status
+- gráficos por setor, área, categoria e "Concluiu x não concluiu"
 
 ## 9. O que é Vite
 
@@ -746,7 +746,7 @@ Scripts importantes:
 ```json
 {
   "dev": "concurrently \"npm:server\" \"npm:client\"",
-  "client": "vite --host 0.0.0.0 --port 5183",
+  "client": "vite --host 127.0.0.1 --port 5183",
   "server": "node server/index.js",
   "test": "vitest run"
 }
