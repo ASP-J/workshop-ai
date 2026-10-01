@@ -1,7 +1,7 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-import { fetchUsers } from "./twygoApi.js";
+import { fetchAllUsers, fetchUsers } from "./twygoApi.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 5184);
@@ -15,7 +15,9 @@ app.get("/health", (_request, response) => {
 
 app.get("/api/users", async (request, response) => {
   try {
-    const result = await fetchUsers({
+    // ?all=true busca todas as paginas da API (usado pelo painel para cruzar com o CSV)
+    const loader = request.query.all === "true" ? fetchAllUsers : fetchUsers;
+    const result = await loader({
       filters: request.query,
       token: process.env.TWYGO_API_TOKEN,
       baseUrl

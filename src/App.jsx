@@ -7,9 +7,10 @@ import { parseTrainingCsv } from "./trainingCsv.js";
 import { presentUsers } from "./userPresenter.js";
 import "./styles.css";
 
+// all=true: o servidor local busca TODAS as paginas da API Twygo,
+// para o cruzamento com o CSV enxergar todos os usuarios.
 const platformQuery = {
-  page: "1",
-  per_page: "50"
+  all: "true"
 };
 
 export default function App() {
