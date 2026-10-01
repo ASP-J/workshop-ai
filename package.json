@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12"
   },
   "scripts": {
     "dev": "concurrently \"npm:server\" \"npm:client\"",
-    "client": "vite --host 127.0.0.1 --port 5183",
+    "client": "vite --host 127.0.0.1 --port 5183 --strictPort",
     "server": "node server/index.js",
     "build": "vite build",
     "test": "vitest run",

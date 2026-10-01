@@ -117,7 +117,7 @@ http://localhost:5183
 
 (A tela usa a porta 5183 e o backend local usa a porta 5184.)
 
-Se aparecer erro de versão do Node: o projeto precisa do Node.js 22 ou mais novo. Peça para a IA verificar e instalar uma versão compatível.
+Se aparecer erro de versão do Node: o projeto precisa do Node.js 22.12 ou mais novo. Peça para a IA verificar e instalar uma versão compatível.
 
 ## Passo 3 - Se você recebeu o token mas não sabe onde colocar
 

@@ -443,7 +443,7 @@ Antes de corrigir, me diga:
 Depois de corrigir, me diga como eu confiro que resolveu.
 ```
 
-O projeto precisa do Node.js 22 ou mais novo. Se aparecer erro de versão do Node, peça para a IA verificar e instalar uma versão compatível.
+O projeto precisa do Node.js 22.12 ou mais novo. Se aparecer erro de versão do Node, peça para a IA verificar e instalar uma versão compatível.
 
 ## Prompt para pedir explicação de qualquer coisa
 
