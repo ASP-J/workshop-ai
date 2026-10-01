@@ -450,6 +450,20 @@ Endereço completo:
 https://api.twygo.com/api/v2/users
 ```
 
+### Paginação: a API entrega os dados em páginas
+
+A API não devolve todos os usuários de uma vez. Ela entrega em **páginas**:
+
+```text
+https://api.twygo.com/api/v2/users?page=1&per_page=50
+```
+
+- `page=1` é a primeira página.
+- `per_page=50` traz 50 usuários por página (o máximo é 100).
+- A resposta traz `pagination.total_pages` (quantas páginas existem) e `pagination.total_entries` (quantos usuários existem no total).
+
+No workshop são **186 usuários em 4 páginas** de 50. Se o sistema buscar só a página 1, vêm só 50 usuários e o cruzamento com o CSV fica incompleto. O projeto do workshop já busca **todas as páginas** (`/api/users?all=true`) antes de cruzar.
+
 ## 15. O que é método HTTP
 
 Método HTTP é o tipo de ação que você quer fazer em uma API.
@@ -510,7 +524,7 @@ ana@empresa.com,Marketing,Produto,Curso de onboarding,6,Concluido,9.1,2026-05-10
 
 ### No workshop
 
-O CSV contém dados de capacitação.
+O CSV do workshop se chama `capacitacao_workshop.csv`. Ele contém dados de capacitação: 287 linhas e 160 e-mails diferentes. Os e-mails são **reais** da Twygo; os cursos, horas e notas são de exemplo. Use o arquivo só no workshop e não compartilhe fora dele.
 
 Ele é cruzado com os usuários da Twygo usando o email.
 
@@ -543,6 +557,24 @@ Resultado cruzado:
 ```text
 Ana Silva - Marketing - 6 horas de capacitação
 ```
+
+### Como saber se deu certo (números esperados)
+
+Com o CSV do workshop, a tela deve mostrar mais ou menos isto:
+
+| O quê | Número esperado |
+|---|---|
+| Usuários vindos da API | 186 |
+| Linhas do CSV | 287 |
+| E-mails diferentes no CSV | 160 |
+| E-mails que cruzam (todas as páginas) | 150 |
+| E-mails que cruzam se buscar só a página 1 | 50 |
+| E-mails que nunca cruzam (de propósito) | 10, de `pessoa01` a `pessoa10@anonimizado.com` |
+| Usuários da Twygo sem nenhuma capacitação no CSV | 36 |
+
+**Pessoas e linhas são coisas diferentes:** uma pessoa pode ter vários cursos, então aparece em várias linhas do CSV. São 150 **pessoas** cruzadas, mas 271 **linhas** cruzadas.
+
+Os 10 e-mails de teste (`pessoa01` a `pessoa10@anonimizado.com`) estão no CSV de propósito, para você ver como o sistema mostra quem **não** foi encontrado na Twygo.
 
 ## 19. O que é .env
 
@@ -596,18 +628,22 @@ PORT=5184
 
 ### Como usar com Claude ou Codex
 
-O aluno pode pedir:
+**Regra do workshop:** o token **nunca** vai no chat com a IA. É você quem cola o token no arquivo.
+
+Peça:
 
 ```text
-Crie meu arquivo .env a partir do .env.example.
-Configure o arquivo .env com este token:
-[cole aqui o token recebido do instrutor]
-
-Salve esse valor na variável TWYGO_API_TOKEN.
-Não mostre, não repita e não imprima meu token na resposta.
+Crie o .env a partir do .env.example e abra o arquivo para eu colar o token.
+Não peça nem mostre o token no chat.
 ```
 
-Assim o aluno não precisa abrir o `.env` manualmente.
+A IA abre o arquivo para você (no Mac, com `open -e .env`; no Windows, com `notepad .env`). Aí é só:
+
+1. Colar o token logo depois de `TWYGO_API_TOKEN=`, sem espaços.
+2. Salvar o arquivo (Cmd+S ou Ctrl+S) e fechar.
+3. Avisar a IA: "pronto, colei o token".
+
+Se você colou o token no chat sem querer, avise o instrutor: o token do workshop é desativado no final.
 
 ## 21. O que é token
 
@@ -996,7 +1032,7 @@ Lê e interpreta o CSV.
 
 Cruza dados e calcula indicadores.
 
-`public/sample-capacitacao.csv`
+`public/capacitacao_workshop.csv`
 
 CSV de exemplo usado na aula.
 
@@ -1145,7 +1181,7 @@ Primeiro pedido no Claude Code, dentro da pasta `boilerplate-workshop`:
 Leia o CLAUDE.md e o README, instale o que precisar, rode o sistema e me diga qual endereço abrir.
 ```
 
-O sistema abre em `http://localhost:5193`. Ele precisa do Node 22 ou mais novo.
+O sistema abre em `http://localhost:5193`. Ele precisa do Node 22.12 ou mais novo.
 
 Se depois o projeto crescer e precisar de banco de dados, use o `kpi-boilerplate` (seção 44).
 
@@ -1175,8 +1211,8 @@ Se depois o projeto crescer e precisar de banco de dados, use o `kpi-boilerplate
 Antes de chamar o instrutor, conferir:
 
 1. Pedi para a IA instalar as dependências?
-2. Passei o token para a IA configurar o `.env`?
-3. A IA confirmou que salvou o token em `TWYGO_API_TOKEN`?
+2. Colei o token no `.env`, depois de `TWYGO_API_TOKEN=` (sem passar pelo chat)?
+3. Salvei o arquivo `.env` e avisei a IA?
 4. Pedi para a IA abrir o projeto local?
 5. Abri `http://localhost:5183`?
 6. O backend abriu em `http://localhost:5184/health`?

@@ -1,4 +1,4 @@
-# Twygo Users Lab - Design
+# Painel de capacitação · Workshop Twygo - Design
 
 ## Proposito
 
