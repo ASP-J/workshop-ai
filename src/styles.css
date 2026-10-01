@@ -55,7 +55,7 @@ input:focus-visible,
 
 .app-shell {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 330px;
+  grid-template-columns: minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -464,65 +464,13 @@ td {
   padding: 28px 14px;
 }
 
-.explain-panel {
-  background: #172b25;
-  color: #eef3ef;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 28px;
-}
 
-.explain-panel .eyebrow {
-  color: #aac7bb;
-}
 
-.explain-panel h2 {
-  font-size: 2rem;
-  line-height: 1;
-  margin-bottom: 18px;
-}
 
-.explain-panel ol {
-  display: grid;
-  gap: 12px;
-  margin: 0 0 28px;
-  padding-left: 20px;
-}
 
-.explain-panel li {
-  color: #d8e6df;
-}
 
-.endpoint {
-  background: #0f1d19;
-  border: 1px solid #355a4f;
-  border-radius: 8px;
-  display: grid;
-  gap: 8px;
-  padding: 14px;
-}
 
-.endpoint span {
-  color: #d8b23f;
-  font-weight: 900;
-}
 
-.endpoint code {
-  color: #ffffff;
-  white-space: normal;
-  word-break: break-word;
-}
-
-@media (max-width: 1120px) {
-  .app-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .explain-panel {
-    min-height: 320px;
-  }
-}
 
 @media (max-width: 860px) {
   .upload-panel,
