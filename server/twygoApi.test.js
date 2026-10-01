@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { fetchAllUsers, fetchUsers } from "./twygoApi.js";
+import { fetchAllUsers, fetchUsers, projectUser } from "./twygoApi.js";
 
 describe("fetchUsers", () => {
   it("calls Twygo users endpoint with bearer auth and sanitized query", async () => {
@@ -81,5 +81,49 @@ describe("fetchAllUsers", () => {
 
     expect(result.status).toBe(401);
     expect(result.body.message).toBe("unauthorized");
+  });
+});
+
+describe("projectUser (privacidade)", () => {
+  const fullUser = {
+    user_id: 7,
+    name: "Pessoa Teste",
+    email: "pessoa@example.test",
+    department: "RH",
+    situation: "active",
+    phone: "41 0000-0000",
+    cell_phone: "41 90000-0000",
+    document_1: "000.000.000-00",
+    cep: "00000-000",
+    address: "Rua X",
+    city: "Cidade",
+    spaces: [{ id: 1 }]
+  };
+
+  it("keeps only the fields the panel uses", () => {
+    expect(projectUser(fullUser)).toEqual({
+      user_id: 7,
+      name: "Pessoa Teste",
+      email: "pessoa@example.test",
+      department: "RH",
+      situation: "active"
+    });
+  });
+
+  it("strips personal data from fetchUsers and fetchAllUsers but keeps pagination", async () => {
+    const pagination = { current_page: 1, total_pages: 1, total_entries: 1 };
+    const fetcher = vi.fn(async () => ({
+      status: 200,
+      json: async () => ({ message: "success", data: { users: [fullUser], pagination } })
+    }));
+
+    const single = await fetchUsers({ token: "secret", filters: {}, fetcher });
+    expect(Object.keys(single.body.data.users[0]).sort()).toEqual(["department", "email", "name", "situation", "user_id"]);
+    expect(single.body.data.pagination).toEqual(pagination);
+
+    const all = await fetchAllUsers({ token: "secret", fetcher });
+    expect(all.body.data.users[0]).not.toHaveProperty("phone");
+    expect(all.body.data.users[0]).not.toHaveProperty("document_1");
+    expect(all.body.data.pagination.total_entries).toBe(1);
   });
 });

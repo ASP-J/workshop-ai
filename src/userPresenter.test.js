@@ -24,7 +24,6 @@ describe("presentUsers", () => {
         id: "7",
         name: "Maria Silva",
         email: "maria@example.com",
-        cpf: "-",
         status: "Ativo",
         sector: "Sem setor"
       }

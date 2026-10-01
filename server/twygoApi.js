@@ -3,6 +3,24 @@ import { buildUsersQuery } from "./query.js";
 const ALL_PAGES_PER_PAGE = 100;
 const MAX_PAGES = 50;
 
+// Privacidade: a API da Twygo devolve muitos dados pessoais (telefone, endereco,
+// CEP, documentos...). O painel so usa estes campos, entao o servidor local
+// repassa apenas eles para o navegador.
+export const PUBLIC_USER_FIELDS = ["user_id", "name", "email", "department", "situation"];
+
+export function projectUser(user = {}) {
+  return PUBLIC_USER_FIELDS.reduce((projected, field) => {
+    if (user?.[field] !== undefined) projected[field] = user[field];
+    return projected;
+  }, {});
+}
+
+function projectBody(body) {
+  const users = body?.data?.users;
+  if (!Array.isArray(users)) return body;
+  return { ...body, data: { ...body.data, users: users.map(projectUser) } };
+}
+
 export async function fetchUsers({ filters, token, baseUrl = "https://api.twygo.com", fetcher = fetch }) {
   if (!token) {
     return {
@@ -21,7 +39,7 @@ export async function fetchUsers({ filters, token, baseUrl = "https://api.twygo.
     }
   });
 
-  const body = await readJson(response);
+  const body = projectBody(await readJson(response));
   return {
     status: response.status,
     body
