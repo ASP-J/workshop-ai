@@ -41,7 +41,7 @@ export function buildTrainingDashboard(users, trainingRecords) {
   const rowsWithData = rows.filter((row) => row.totalCourses > 0);
   const completedUsers = rows.filter((row) => row.completionStatus === "Concluiu");
   const partialUsers = rows.filter((row) => row.completionStatus === "Parcial");
-  const notCompletedUsers = rows.filter((row) => row.completionStatus === "Nao concluiu");
+  const notCompletedUsers = rows.filter((row) => row.completionStatus === "Não concluiu");
   const totalHours = sum(rows.map((row) => row.hours));
   const scoredRows = rows.filter((row) => row.averageScore > 0);
 
@@ -71,7 +71,7 @@ export function buildTrainingDashboard(users, trainingRecords) {
       completionCount: [
         { label: "Concluiu", value: completedUsers.length },
         { label: "Parcial", value: partialUsers.length },
-        { label: "Nao concluiu", value: notCompletedUsers.length }
+        { label: "Não concluiu", value: notCompletedUsers.length }
       ].filter((item) => item.value > 0),
       usersBySector: sortChart(countBy(rows, "sector")),
       hoursBySector: sortChart(sumBy(rows, "sector", "hours")),
@@ -126,7 +126,7 @@ function completionStatusFor(totalCourses, completedCourses) {
   if (totalCourses === 0) return "Sem dados no CSV";
   if (completedCourses === totalCourses) return "Concluiu";
   if (completedCourses > 0) return "Parcial";
-  return "Nao concluiu";
+  return "Não concluiu";
 }
 
 function groupByEmail(records) {

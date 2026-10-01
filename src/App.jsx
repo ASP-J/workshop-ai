@@ -8,8 +8,8 @@ import { parseTrainingCsv } from "./trainingCsv.js";
 import { presentUsers } from "./userPresenter.js";
 import "./styles.css";
 
-// all=true: o servidor local busca TODAS as paginas da API Twygo,
-// para o cruzamento com o CSV enxergar todos os usuarios.
+// all=true: o servidor local busca TODAS as páginas da API Twygo,
+// para o cruzamento com o CSV enxergar todos os usuários.
 const platformQuery = {
   all: "true"
 };
@@ -82,24 +82,24 @@ export default function App() {
         <header className="topbar">
           <div>
             <p className="eyebrow">Workshop Twygo API + CSV</p>
-            <h1>Painel de capacitacao</h1>
+            <h1>Painel de capacitação</h1>
           </div>
           <div className="top-actions">
             <StatusBadge status={status} />
             <button type="button" className="secondary-button" onClick={refreshUsers} disabled={status === "loading"}>
-              Recarregar usuarios
+              Recarregar usuários
             </button>
           </div>
         </header>
 
         {error ? <div className="notice danger">{error}</div> : null}
 
-        <section className="upload-panel" aria-label="Anexar CSV de capacitacao">
+        <section className="upload-panel" aria-label="Anexar CSV de capacitação">
           <div>
             <p className="eyebrow">Entrada da planilha</p>
-            <h2>Anexe o CSV de capacitacao</h2>
+            <h2>Anexe o CSV de capacitação</h2>
             <p>
-              O cruzamento usa o email como chave entre os usuarios da plataforma e a planilha.
+              O cruzamento usa o e-mail como chave entre os usuários da plataforma e a planilha.
             </p>
           </div>
           <div className="upload-actions">
@@ -115,7 +115,7 @@ export default function App() {
             </button>
           </div>
           <div className={`csv-state ${csvStatus}`}>
-            {csvName ? `${csvName} · ${trainingRecords.length} linhas positivas` : "Nenhum CSV anexado ainda"}
+            {csvName ? `${csvName} · ${trainingRecords.length} linhas lidas da planilha` : "Nenhum CSV anexado ainda"}
           </div>
         </section>
 
@@ -123,26 +123,26 @@ export default function App() {
 
         <HrSummaryCards summary={dashboard.summary} />
 
-        <section className="charts-grid" aria-label="Graficos por setor">
-          <p className="section-title">Visao por setor (RH)</p>
+        <section className="charts-grid" aria-label="Gráficos por setor">
+          <p className="section-title">Visão por setor (RH)</p>
           <PieChart title="Pessoas por setor" data={dashboard.charts.usersBySector} />
           <BarChart title="Horas por setor" data={dashboard.charts.hoursBySector} suffix="h" />
-          <BarChart title="Taxa de conclusao por setor" data={dashboard.charts.completionRateBySector} suffix="%" />
+          <BarChart title="Taxa de conclusão por setor" data={dashboard.charts.completionRateBySector} suffix="%" />
         </section>
 
-        <section className="charts-grid" aria-label="Graficos de capacitacao">
-          <PieChart title="Concluiu x nao concluiu" data={dashboard.charts.completionCount} />
-          <PieChart title="Horas por area" data={dashboard.charts.hoursByArea} suffix="h" />
-          <PieChart title="Usuarios por categoria" data={dashboard.charts.usersByCategory} />
+        <section className="charts-grid" aria-label="Gráficos de capacitação">
+          <PieChart title="Concluiu x não concluiu" data={dashboard.charts.completionCount} />
+          <PieChart title="Horas por área" data={dashboard.charts.hoursByArea} suffix="h" />
+          <PieChart title="Usuários por categoria" data={dashboard.charts.usersByCategory} />
           <BarChart title="Top cursos por horas" data={dashboard.charts.topCourses} suffix="h" />
         </section>
 
-        <section className="table-panel" aria-label="Usuarios cruzados com CSV">
+        <section className="table-panel" aria-label="Usuários cruzados com CSV">
           <div className="table-header">
             <div>
-              <h2>Usuarios + capacitacao</h2>
+              <h2>Usuários + capacitação</h2>
               <p>
-                {presented.users.length} usuarios da plataforma · {dashboard.summary.totalHours} horas cruzadas
+                {presented.users.length} usuários da plataforma · {dashboard.summary.totalHours} horas cruzadas
               </p>
             </div>
           </div>
@@ -155,10 +155,10 @@ export default function App() {
         <p className="eyebrow">O que esta tela ensina</p>
         <h2>API + planilha = painel</h2>
         <ol>
-          <li>O app busca usuarios na API Twygo.</li>
-          <li>O aluno anexa um CSV de capacitacao.</li>
-          <li>O sistema cruza tudo pelo email.</li>
-          <li>Cards, tabela e graficos nascem do cruzamento.</li>
+          <li>O app busca usuários na API Twygo.</li>
+          <li>O aluno anexa um CSV de capacitação.</li>
+          <li>O sistema cruza tudo pelo e-mail.</li>
+          <li>Cards, tabela e gráficos nascem do cruzamento.</li>
         </ol>
         <div className="endpoint">
           <span>GET</span>
@@ -182,10 +182,10 @@ function StatusBadge({ status }) {
 
 function SummaryCards({ summary }) {
   return (
-    <section className="summary-grid" aria-label="Resumo de capacitacao">
-      <MetricCard label="Usuarios na tela" value={summary.totalUsers} />
-      <MetricCard label="Concluiram" value={summary.usersCompleted} />
-      <MetricCard label="Nao concluiram" value={summary.usersNotCompleted} />
+    <section className="summary-grid" aria-label="Resumo de capacitação">
+      <MetricCard label="Usuários na tela" value={summary.totalUsers} />
+      <MetricCard label="Concluíram" value={summary.usersCompleted} />
+      <MetricCard label="Não concluíram" value={summary.usersNotCompleted} />
       <MetricCard label="Horas totais" value={`${summary.totalHours}h`} />
       <MetricCard label="Cobertura" value={`${summary.coveragePercent}%`} />
     </section>
@@ -195,9 +195,9 @@ function SummaryCards({ summary }) {
 function HrSummaryCards({ summary }) {
   return (
     <section className="summary-grid" aria-label="Indicadores de RH">
-      <MetricCard label="Taxa de conclusao" value={`${summary.completionRate}%`} />
+      <MetricCard label="Taxa de conclusão" value={`${summary.completionRate}%`} />
       <MetricCard label="Horas por pessoa" value={`${summary.hoursPerUser}h`} />
-      <MetricCard label="Nota media" value={summary.averageScore || "-"} />
+      <MetricCard label="Nota média" value={summary.averageScore || "-"} />
       <MetricCard label="Setores" value={summary.sectorsCount} />
     </section>
   );
@@ -234,7 +234,7 @@ function BarChart({ title, data, suffix = "" }) {
           ))}
         </div>
       ) : (
-        <div className="empty small">Anexe o CSV para gerar este grafico.</div>
+        <div className="empty small">Anexe o CSV para gerar este gráfico.</div>
       )}
     </article>
   );
@@ -270,7 +270,7 @@ function PieChart({ title, data, suffix = "" }) {
           </div>
         </div>
       ) : (
-        <div className="empty small">Anexe o CSV para gerar este grafico.</div>
+        <div className="empty small">Anexe o CSV para gerar este gráfico.</div>
       )}
     </article>
   );
@@ -284,11 +284,11 @@ function completionClass(completionStatus) {
 
 function TrainingTable({ rows, status }) {
   if (status === "loading") {
-    return <div className="empty">Carregando usuarios da plataforma...</div>;
+    return <div className="empty">Carregando usuários da plataforma...</div>;
   }
 
   if (!rows.length) {
-    return <div className="empty">Nenhum usuario retornou da plataforma.</div>;
+    return <div className="empty">Nenhum usuário retornou da plataforma.</div>;
   }
 
   return (
@@ -297,14 +297,14 @@ function TrainingTable({ rows, status }) {
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Email</th>
+            <th>E-mail</th>
             <th>Setor</th>
-            <th>Area</th>
+            <th>Área</th>
             <th>Categorias</th>
             <th>Horas</th>
-            <th>Nota media</th>
+            <th>Nota média</th>
             <th>Cursos</th>
-            <th>Conclusao</th>
+            <th>Conclusão</th>
           </tr>
         </thead>
         <tbody>

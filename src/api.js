@@ -10,7 +10,7 @@ export async function loadUsers(filters, fetcher = fetch) {
   const payload = await response.json();
 
   if (!response.ok) {
-    throw new Error(payload.message || "Nao foi possivel carregar usuarios.");
+    throw new Error(payload.message || "Não foi possível carregar os usuários.");
   }
 
   return payload;

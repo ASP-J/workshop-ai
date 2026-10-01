@@ -3,8 +3,8 @@ import { buildUsersQuery } from "./query.js";
 const ALL_PAGES_PER_PAGE = 100;
 const MAX_PAGES = 50;
 
-// Privacidade: a API da Twygo devolve muitos dados pessoais (telefone, endereco,
-// CEP, documentos...). O painel so usa estes campos, entao o servidor local
+// Privacidade: a API da Twygo devolve muitos dados pessoais (telefone, endereço,
+// CEP, documentos...). O painel só usa estes campos, entao o servidor local
 // repassa apenas eles para o navegador.
 export const PUBLIC_USER_FIELDS = ["user_id", "name", "email", "department", "situation"];
 
@@ -26,7 +26,7 @@ export async function fetchUsers({ filters, token, baseUrl = "https://api.twygo.
     return {
       status: 500,
       body: {
-        message: "TWYGO_API_TOKEN nao configurado no servidor local."
+        message: "TWYGO_API_TOKEN não configurado no servidor local (arquivo .env)."
       }
     };
   }
@@ -97,6 +97,6 @@ async function readJson(response) {
   try {
     return await response.json();
   } catch {
-    return { message: "A API retornou uma resposta que nao parece JSON." };
+    return { message: "A API retornou uma resposta que não parece JSON." };
   }
 }
