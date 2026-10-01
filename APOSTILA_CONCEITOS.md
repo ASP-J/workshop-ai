@@ -1180,11 +1180,13 @@ O `boilerplate-workshop` é um painel pronto feito para este desafio. Ele roda s
 - **Minha automação:** página modelo para o seu desafio.
 - O `CLAUDE.md` e as skills já explicam as regras para o agente, e o `PROMPTS.md` traz pedidos prontos por área.
 
-Primeiro pedido no Claude Code, dentro da pasta `06-boilerplate-workshop` do kit:
+Primeiro pedido no Claude Code, numa pasta nova:
 
 ```text
-Leia o CLAUDE.md e o README, instale o que precisar, rode o sistema e me diga qual endereço abrir.
+Clone https://github.com/ASP-J/workshop-boilerplate.git, leia o CLAUDE.md e o README, instale o que precisar, rode o sistema e me diga qual endereço abrir.
 ```
+
+O código está em `https://github.com/ASP-J/workshop-boilerplate` e também na pasta `06-boilerplate-workshop` do kit.
 
 O sistema abre em `http://localhost:5193`. Ele precisa do Node 22.12 ou mais novo.
 
