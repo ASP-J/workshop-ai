@@ -1,20 +1,23 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { loadUsers } from "./api.js";
+import { barWidthPercent } from "./barWidth.js";
 import { buildPieSlices } from "./chartSlices.js";
 import { buildTrainingDashboard } from "./trainingDashboard.js";
 import { parseTrainingCsv } from "./trainingCsv.js";
 import { presentUsers } from "./userPresenter.js";
 import "./styles.css";
 
+// all=true: o servidor local busca TODAS as paginas da API Twygo,
+// para o cruzamento com o CSV enxergar todos os usuarios.
 const platformQuery = {
-  page: "1",
-  per_page: "50"
+  all: "true"
 };
 
 export default function App() {
   const [rawPayload, setRawPayload] = useState(null);
   const [trainingRecords, setTrainingRecords] = useState([]);
+  const [csvText, setCsvText] = useState("");
   const [csvName, setCsvName] = useState("");
   const [status, setStatus] = useState("idle");
   const [csvStatus, setCsvStatus] = useState("empty");
@@ -45,10 +48,13 @@ export default function App() {
   }
 
   async function uploadCsv(event) {
-    const file = event.target.files?.[0];
+    const input = event.target;
+    const file = input.files?.[0];
     if (!file) return;
     const text = await file.text();
     applyCsv(text, file.name);
+    // reseta o input para reanexar o mesmo arquivo disparar o onChange de novo
+    input.value = "";
   }
 
   async function loadSampleCsv() {
@@ -60,8 +66,14 @@ export default function App() {
   function applyCsv(text, fileName) {
     const records = parseTrainingCsv(text);
     setTrainingRecords(records);
+    setCsvText(text);
     setCsvName(fileName);
     setCsvStatus(records.length ? "ready" : "empty");
+  }
+
+  function reprocessCsv() {
+    if (!csvText) return;
+    applyCsv(csvText, csvName);
   }
 
   return (
@@ -98,6 +110,9 @@ export default function App() {
             <button type="button" className="secondary-button" onClick={loadSampleCsv}>
               Usar CSV exemplo
             </button>
+            <button type="button" className="secondary-button" onClick={reprocessCsv} disabled={!csvText}>
+              Atualizar painel
+            </button>
           </div>
           <div className={`csv-state ${csvStatus}`}>
             {csvName ? `${csvName} · ${trainingRecords.length} linhas positivas` : "Nenhum CSV anexado ainda"}
@@ -106,10 +121,19 @@ export default function App() {
 
         <SummaryCards summary={dashboard.summary} />
 
+        <HrSummaryCards summary={dashboard.summary} />
+
+        <section className="charts-grid" aria-label="Graficos por setor">
+          <p className="section-title">Visao por setor (RH)</p>
+          <PieChart title="Pessoas por setor" data={dashboard.charts.usersBySector} />
+          <BarChart title="Horas por setor" data={dashboard.charts.hoursBySector} suffix="h" />
+          <BarChart title="Taxa de conclusao por setor" data={dashboard.charts.completionRateBySector} suffix="%" />
+        </section>
+
         <section className="charts-grid" aria-label="Graficos de capacitacao">
+          <PieChart title="Concluiu x nao concluiu" data={dashboard.charts.completionCount} />
           <PieChart title="Horas por area" data={dashboard.charts.hoursByArea} suffix="h" />
           <PieChart title="Usuarios por categoria" data={dashboard.charts.usersByCategory} />
-          <PieChart title="Situacao do cruzamento" data={dashboard.charts.statusCount} />
           <BarChart title="Top cursos por horas" data={dashboard.charts.topCourses} suffix="h" />
         </section>
 
@@ -160,9 +184,21 @@ function SummaryCards({ summary }) {
   return (
     <section className="summary-grid" aria-label="Resumo de capacitacao">
       <MetricCard label="Usuarios na tela" value={summary.totalUsers} />
-      <MetricCard label="Com capacitacao" value={summary.usersWithTraining} />
+      <MetricCard label="Concluiram" value={summary.usersCompleted} />
+      <MetricCard label="Nao concluiram" value={summary.usersNotCompleted} />
       <MetricCard label="Horas totais" value={`${summary.totalHours}h`} />
       <MetricCard label="Cobertura" value={`${summary.coveragePercent}%`} />
+    </section>
+  );
+}
+
+function HrSummaryCards({ summary }) {
+  return (
+    <section className="summary-grid" aria-label="Indicadores de RH">
+      <MetricCard label="Taxa de conclusao" value={`${summary.completionRate}%`} />
+      <MetricCard label="Horas por pessoa" value={`${summary.hoursPerUser}h`} />
+      <MetricCard label="Nota media" value={summary.averageScore || "-"} />
+      <MetricCard label="Setores" value={summary.sectorsCount} />
     </section>
   );
 }
@@ -188,7 +224,7 @@ function BarChart({ title, data, suffix = "" }) {
             <div className="bar-row" key={item.label}>
               <span>{item.label}</span>
               <div className="bar-track">
-                <div className="bar-fill" style={{ width: `${Math.max(8, (item.value / max) * 100)}%` }} />
+                <div className="bar-fill" style={{ width: `${barWidthPercent(item.value, max)}%` }} />
               </div>
               <strong>
                 {item.value}
@@ -240,6 +276,12 @@ function PieChart({ title, data, suffix = "" }) {
   );
 }
 
+function completionClass(completionStatus) {
+  if (completionStatus === "Concluiu") return "matched";
+  if (completionStatus === "Parcial") return "partial";
+  return "missing";
+}
+
 function TrainingTable({ rows, status }) {
   if (status === "loading") {
     return <div className="empty">Carregando usuarios da plataforma...</div>;
@@ -256,12 +298,13 @@ function TrainingTable({ rows, status }) {
           <tr>
             <th>Nome</th>
             <th>Email</th>
+            <th>Setor</th>
             <th>Area</th>
             <th>Categorias</th>
             <th>Horas</th>
             <th>Nota media</th>
             <th>Cursos</th>
-            <th>Cruzamento</th>
+            <th>Conclusao</th>
           </tr>
         </thead>
         <tbody>
@@ -269,13 +312,21 @@ function TrainingTable({ rows, status }) {
             <tr key={`${row.id}-${row.email}`}>
               <td>{row.name}</td>
               <td>{row.email}</td>
+              <td>{row.sector}</td>
               <td>{row.area}</td>
               <td>{row.categories}</td>
               <td>{row.hours}h</td>
               <td>{row.averageScore || "-"}</td>
               <td>{row.courses}</td>
               <td>
-                <span className={`match-pill ${row.hours ? "matched" : "missing"}`}>{row.trainingStatus}</span>
+                <span className={`match-pill ${completionClass(row.completionStatus)}`}>
+                  {row.completionStatus}
+                </span>
+                {row.totalCourses ? (
+                  <small className="completion-count">
+                    {row.completedCourses}/{row.totalCourses} cursos
+                  </small>
+                ) : null}
               </td>
             </tr>
           ))}

@@ -12,7 +12,9 @@ A empresa quer um painel simples para responder perguntas como:
 - Quais categorias de curso aparecem mais?
 - Quais usuarios estao com dados cruzados corretamente?
 
-O objetivo do desafio e criar um sisteminha local que conecte a API da Twygo com uma planilha CSV e mostre os resultados de forma visual.
+O painel ja vem pronto na branch `alunos`: ele conecta a API da Twygo com uma planilha CSV e mostra os resultados de forma visual.
+
+O objetivo do desafio e **rodar, entender, conferir e evoluir** esse painel com ajuda da IA.
 
 Quando este documento falar em **API da Twygo**, entenda assim:
 
@@ -45,12 +47,32 @@ Nao tenha vergonha de pedir explicacao.
 
 Um bom prompt e melhor do que tentar adivinhar.
 
+Neste desafio, a IA deve explicar o que esta fazendo.
+
+Sempre que pedir algo para Claude ou Codex, inclua esta instrucao:
+
+```text
+Explique cada passo em linguagem simples.
+Antes de alterar arquivos, diga o que voce vai fazer e por que.
+Depois de alterar, diga quais arquivos mudaram, por que mudaram e como eu confiro se funcionou.
+```
+
+O objetivo nao e apenas terminar o painel.
+
+O objetivo e voce conseguir explicar:
+
+1. de onde vieram os usuarios
+2. de onde veio o CSV
+3. como os dados foram cruzados
+4. por que o token fica protegido
+5. o que os cards e graficos mostram
+
 ## O que voce vai receber
 
 O instrutor vai entregar:
 
-1. Link do repositorio do projeto.
-2. Token da API da Twygo.
+1. Link do repositorio do projeto (use a branch `alunos`: `git clone -b alunos https://github.com/ASP-J/workshop-ai.git`).
+2. Token da API da Twygo (token so do workshop, revogado depois da aula).
 3. Arquivo CSV de capacitacao.
 4. Apostila de conceitos.
 
@@ -60,20 +82,20 @@ Voce nao precisa criar os dados da planilha.
 
 ## Missao do desafio
 
-Criar um painel local chamado:
+Rodar, entender, conferir e evoluir o painel local chamado:
 
 ```text
 Painel de capacitacao
 ```
 
-Esse painel precisa:
+Esse painel ja faz (e voce precisa conferir que funciona):
 
 1. Buscar usuarios reais na API da Twygo.
 2. Permitir anexar um CSV de capacitacao.
 3. Cruzar os usuarios da API com os dados do CSV usando o email.
 4. Mostrar uma listagem de usuarios com os dados cruzados.
 5. Mostrar cards de resumo.
-6. Mostrar graficos por area, categoria e status.
+6. Mostrar graficos por setor, area, categoria e "Concluiu x nao concluiu".
 7. Proteger o token da API usando `.env`.
 
 ## Regra principal do cruzamento
@@ -148,9 +170,9 @@ O instrutor vai fornecer o arquivo pronto.
 
 Voce deve apenas anexar o CSV no painel.
 
-## O que a tela precisa ter
+## O que a tela tem (confira cada item)
 
-Seu painel deve ter:
+O painel ja vem com:
 
 1. Titulo claro do painel.
 2. Area para anexar o CSV.
@@ -163,11 +185,9 @@ Seu painel deve ter:
 9. Mensagem amigavel quando faltar CSV.
 10. Mensagem amigavel quando acontecer erro.
 
-## Cards de resumo sugeridos
+## Cards de resumo
 
-Crie pelo menos 4 cards.
-
-Sugestoes:
+O painel ja traz cards de resumo. Ideias de cards extras, se quiser evoluir (opcional):
 
 - Total de usuarios da Twygo
 - Usuarios encontrados no CSV
@@ -176,14 +196,12 @@ Sugestoes:
 - Cursos concluidos
 - Areas com capacitacao
 
-## Graficos sugeridos
+## Graficos
 
-Crie pelo menos 2 graficos.
-
-Sugestoes:
+O painel ja traz graficos (incluindo "Concluiu x nao concluiu"). Ideias de graficos extras, se quiser evoluir (opcional):
 
 - Donut por area
-- Donut por status de capacitacao
+- Donut "Concluiu x nao concluiu" (ja existe)
 - Barras por categoria
 - Barras por horas de capacitacao por area
 
@@ -192,6 +210,14 @@ Sugestoes:
 Nao coloque o token da Twygo dentro do frontend.
 
 Nao publique o token no GitHub.
+
+Nao use token pessoal: use so o token do workshop entregue pelo instrutor.
+
+Nao publique o painel em servidor ou nuvem: ele roda so no seu computador (localhost).
+
+Nao cole token, nomes ou e-mails reais em prints.
+
+Antes de publicar qualquer coisa, peca auditoria para o Joao, a Adriana ou um dev.
 
 Nao apague arquivos do projeto sem pedir para a IA explicar antes.
 
@@ -204,10 +230,11 @@ Nao crie busca manual como funcao principal. O objetivo e mostrar uma listagem c
 Use este prompt:
 
 ```text
-Quero construir o desafio do Painel de capacitacao com API Twygo + CSV.
+Quero rodar, entender e evoluir o Painel de capacitacao com API Twygo + CSV (ele ja vem pronto na branch alunos).
 Leia os arquivos do projeto e me explique o que ja existe.
 Depois me diga, em linguagem simples, qual sera o primeiro passo.
 Nao escreva explicacao tecnica demais.
+Explique tambem quais arquivos parecem importantes e para que cada um serve.
 ```
 
 Depois use:
@@ -221,22 +248,51 @@ Configure o arquivo .env com este token da Twygo:
 Salve esse valor na variavel TWYGO_API_TOKEN.
 Nao mostre, nao repita e nao imprima meu token na resposta.
 No final, apenas confirme que o .env foi configurado.
+Explique por que o token deve ficar no .env e nao dentro da tela.
 ```
+
+Atencao: use **somente o token do workshop** entregue pelo instrutor (ele sera revogado depois da aula). Nunca cole um token pessoal.
 
 Depois que a IA confirmar que configurou o token:
 
 ```text
 Abra o projeto local e confira se a API da Twygo esta respondendo.
 Se der erro, explique em linguagem simples e corrija.
+Explique o que voce esta conferindo em cada parte: frontend, backend e API.
 ```
 
 ## Prompts permitidos durante o desafio
+
+Para pedir que a IA explique antes de mexer:
+
+```text
+Antes de alterar qualquer arquivo, me explique o plano.
+Diga:
+1. o que voce vai fazer
+2. por que isso e necessario
+3. quais arquivos provavelmente serao alterados
+4. como vamos conferir se deu certo
+Use linguagem simples.
+```
+
+Para pedir que a IA explique depois de mexer:
+
+```text
+Agora me explique o que voce acabou de fazer.
+Diga:
+1. quais arquivos foram alterados
+2. o que mudou em cada arquivo
+3. por que essa mudanca ajuda no desafio
+4. como eu confiro o resultado
+5. qual e o proximo passo
+```
 
 Para entender uma parte:
 
 ```text
 Explique o que esse arquivo faz usando o exemplo do nosso desafio.
 Fale como se eu nunca tivesse programado.
+Me diga se eu preciso mexer nele ou apenas entender.
 ```
 
 Para pedir uma melhoria:
@@ -244,6 +300,8 @@ Para pedir uma melhoria:
 ```text
 Melhore essa tela para ficar mais clara para uma pessoa de RH ou treinamento.
 Nao mude a regra de cruzamento por email.
+Antes de alterar, explique o que voce vai melhorar.
+Depois de alterar, explique como conferir na tela.
 ```
 
 Para corrigir erro:
@@ -252,6 +310,8 @@ Para corrigir erro:
 Deu este erro:
 [cole o erro aqui]
 Explique o motivo em linguagem simples e corrija.
+Antes de corrigir, diga qual e a causa mais provavel.
+Depois de corrigir, diga como eu testo novamente.
 ```
 
 Para validar:
@@ -265,7 +325,8 @@ Confira se o painel atende ao desafio:
 - mostra tabela
 - mostra graficos
 - protege o token no .env
-Se faltar algo, corrija.
+Se algo estiver quebrado, explique o motivo e corrija.
+Depois explique o que foi corrigido e como eu apresento isso para o instrutor.
 ```
 
 ## Entrega esperada
@@ -294,13 +355,14 @@ O desafio esta correto se:
 - O token nao aparece na tela.
 - O token nao aparece no GitHub.
 - A explicacao final do aluno faz sentido.
+- O aluno consegue explicar, com suas palavras, o que a IA fez no projeto.
 
 ## Apresentacao final
 
 Quando terminar, explique em voz alta:
 
 ```text
-Eu criei um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra indicadores em cards, tabela e graficos.
+Eu rodei, entendi e evolui um painel local que busca usuarios na API da Twygo, recebe um CSV de capacitacao, cruza os dados pelo email e mostra indicadores em cards, tabela e graficos.
 ```
 
 Se perguntarem por que existe backend:
