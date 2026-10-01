@@ -1172,7 +1172,7 @@ Escolha uma tarefa repetitiva ou manual da sua área e faça uma demonstração 
 
 ### Comece pelo boilerplate-workshop
 
-O `boilerplate-workshop` é um painel pronto feito para este desafio. Ele roda só com Node, sem Docker e sem banco de dados, e só no seu computador.
+O `boilerplate-workshop` é um painel pronto feito para este desafio, na mesma receita do restaurante: **React** (o salão), **FastAPI** (a cozinha) e **PostgreSQL** (o estoque). Tudo roda no **Docker**, só no seu computador, e você não precisa instalar Node nem Python.
 
 - **Minha planilha:** carregue um CSV ou Excel e veja cards, gráfico e tabela.
 - **Usuários Twygo:** lista os usuários da API, com o token protegido no backend.
@@ -1183,12 +1183,12 @@ O `boilerplate-workshop` é um painel pronto feito para este desafio. Ele roda s
 Primeiro pedido no Claude Code, numa pasta nova:
 
 ```text
-Clone https://github.com/ASP-J/workshop-boilerplate.git, leia o CLAUDE.md e o README, instale o que precisar, rode o sistema e me diga qual endereço abrir.
+Clone https://github.com/ASP-J/workshop-boilerplate.git, leia o CLAUDE.md e o README, suba o sistema com Docker e me diga qual endereço abrir.
 ```
 
 O código está em `https://github.com/ASP-J/workshop-boilerplate` e também na pasta `06-boilerplate-workshop` do kit.
 
-O sistema abre em `http://localhost:5193`. Ele precisa do Node 22.12 ou mais novo.
+O sistema sobe com `make up` e abre em `http://localhost:5193`. Ele precisa do **Docker Desktop aberto**. A primeira vez baixa cerca de 1,5 GB, então suba uma vez antes do workshop. As planilhas que você salvar no banco ficam no seu computador até você apagar (ou rodar `make reset`).
 
 Se depois o projeto crescer e precisar de banco de dados, use o `kpi-boilerplate` (seção 44).
 
